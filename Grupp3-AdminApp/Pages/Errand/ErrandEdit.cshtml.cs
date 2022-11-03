@@ -22,10 +22,11 @@ namespace Grupp3_Elevator.Pages.Errand
         public ErrandModel Errand { get; set; }
         [BindProperty]
         public List<SelectListItem> SelectTechnician { get; set; }
+        [BindProperty]
         public TechnicianModel Technician { get; set; }
 
 
-        public async Task<IActionResult> OnGetAsync(string? errandId, string technicianId)
+        public async Task<IActionResult> OnGetAsync(string? errandId)
         {
             Errand = await _errandService.GetErrandByIdAsync(errandId);
 

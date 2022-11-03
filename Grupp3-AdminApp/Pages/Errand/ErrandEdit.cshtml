@@ -31,9 +31,8 @@
                             <tr>
                                 <td>
                                     <label asp-for="@Model.Errand.Technician" for="exampleFormControlSelect1"></label>
-                                    <input asp-for="@Model.Errand.Technician" class="form-control" />
-                                    <select asp-for="@Model.Errand.Technician" class="form-control" asp-items="@Model.SelectTechnician">
-                                        <option value="@Model.Errand.Status"></option>
+                                    <select asp-for="@Model.Errand.Technician" class="form-control" asp-items="@Model.Errand.Technician">
+                                        <option value="@Model.Errand.Technician"></option>
                                     </select>
                                 </td>
                             </tr>
