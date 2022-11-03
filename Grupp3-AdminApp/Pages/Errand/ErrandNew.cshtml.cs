@@ -40,6 +40,24 @@ namespace Grupp3_Elevator.Pages.Errand
         public Guid TechnicianId { get; set; }
         public List<SelectListItem> SelectTechnician { get; set; }
 
+        
+        public void OnGet()
+        {
+            SelectTechnician = _errandService.SelectTechnician();
+        }
+
+        public IActionResult OnPost(string elevatorId)
+        {
+
+            if (ModelState.IsValid)
+            {
+                var id = CreateErrandAsync(elevatorId, Title, Description, CreatedBy);
+                return RedirectToPage("ErrandDetails", new { errandId = id });
+            }
+            SelectTechnician = _errandService.SelectTechnician();
+            return Page();
+        }
+
         public string CreateErrandAsync(string elevatorId, string Title, string Description, string CreatedBy)
         {
             var elevator = _elevatorService.GetElevatorById(elevatorId);
@@ -62,21 +80,6 @@ namespace Grupp3_Elevator.Pages.Errand
 
             var id = errand.Id.ToString();
             return id;
-        }
-        
-        public void OnGet()
-        {
-            SelectTechnician = _errandService.SelectTechnician();
-        }
-        public IActionResult OnPost()
-        {
-            if (ModelState.IsValid)
-            {
-                var id = CreateErrandAsync("04ddc77d-d1c3-41dd-a3e8-14896f1d9b63", Title, Description, CreatedBy);
-                return RedirectToPage("ErrandDetails", new { errandId = id });
-            }
-            SelectTechnician = _errandService.SelectTechnician();
-            return Page();
         }
     }
 }

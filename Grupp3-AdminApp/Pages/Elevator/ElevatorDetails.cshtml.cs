@@ -2,6 +2,7 @@ using Grupp3_Elevator.Data;
 using Grupp3_Elevator.Models;
 using Grupp3_Elevator.Services;
 using Grupp3_Elevator.Services.Errand;
+using Grupp3_Elevator.Services.Technician;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;

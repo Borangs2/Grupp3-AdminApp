@@ -1,6 +1,7 @@
 ﻿using Grupp3_Elevator.Data;
 using Grupp3_Elevator.Services;
 using Grupp3_Elevator.Services.Errand;
+using Grupp3_Elevator.Services.Technician;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -20,7 +21,7 @@ namespace AdminAppTests.Services.Errand
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase("AdminApp").Options;
             _context = new ApplicationDbContext(options);
-            _errandService = new ErrandService(_context, new ElevatorService(_context));
+            _errandService = new ErrandService(_context, new TechnicianService(_context));
         }
 
         [TestMethod]
