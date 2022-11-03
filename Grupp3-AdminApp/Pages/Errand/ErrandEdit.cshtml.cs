@@ -20,11 +20,12 @@ namespace Grupp3_Elevator.Pages.Errand
 
         [BindProperty]
         public ErrandModel Errand { get; set; }
-
+        [BindProperty]
         public List<SelectListItem> SelectTechnician { get; set; }
+        public TechnicianModel Technician { get; set; }
 
 
-        public async Task<IActionResult> OnGetAsync(string? errandId)
+        public async Task<IActionResult> OnGetAsync(string? errandId, string technicianId)
         {
             Errand = await _errandService.GetErrandByIdAsync(errandId);
 
@@ -37,11 +38,12 @@ namespace Grupp3_Elevator.Pages.Errand
         }
 
 
-        public async Task<IActionResult> OnPost(string errandId)
+        public async Task<IActionResult> OnPost(string errandId, string technicianId)
         {
             try
             {
-                await _errandService.EditErrandAsync(errandId, Errand);
+                await _errandService.EditErrandAsync(errandId, Errand, technicianId);
+
                 return RedirectToPage("/Errand/Index");
             }
             catch

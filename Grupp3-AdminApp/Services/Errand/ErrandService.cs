@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using NToastNotify;
 using System.Data;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Xml.Linq;
+using Grupp3_Elevator.Services.Technician;
 
 namespace Grupp3_Elevator.Services.Errand
 {
@@ -13,6 +15,7 @@ namespace Grupp3_Elevator.Services.Errand
     {
         private readonly ApplicationDbContext _context;
         private readonly IElevatorService _elevatorService;
+        private readonly ITechnicianService _technicianService;
 
 
         public ErrandService(ApplicationDbContext context, IElevatorService elevatorService)
@@ -48,7 +51,7 @@ namespace Grupp3_Elevator.Services.Errand
         }
         
 
-        public async Task<ErrandModel> EditErrandAsync(string errandId, ErrandModel errand)
+        public async Task<ErrandModel> EditErrandAsync(string errandId, ErrandModel errand, string technicianId)
         {
             ErrandModel errandToEdit = await GetErrandByIdAsync(errandId);
 
@@ -57,6 +60,9 @@ namespace Grupp3_Elevator.Services.Errand
             errandToEdit.LastEdited = DateTime.Now;
             errandToEdit.Status = errand.Status;
             errandToEdit.CreatedBy = errand.CreatedBy;
+            errandToEdit.Technician = errand.Technician;
+            //errandToEdit.Technician = _technicianService.GetTechnicianById(Guid.Parse(technicianId));
+                //Comments = new List<ErrandCommentModel>();
 
             _context.SaveChanges();
 
