@@ -4,7 +4,37 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="row" style="padding-top: 5rem;">
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title" style="text-align: center;">Errands</h5>
+                <p class="card-text" style="text-align: center;">@Model.ErrandsAmount</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title" style="text-align: center;">Elevators</h5>
+                <p class="card-text" style="text-align: center;">@Model.ElevatorsAmount</p>
+            </div>
+        </div>
+    </div>
+        <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title" style="text-align: center;">Technichans</h5>
+                <p class="card-text" style="text-align: center;">@Model.TechnichansAmount</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title" style="text-align: center;">Comments</h5>
+                <p class="card-text" style="text-align: center;">@Model.CommentsAmount</p>
+            </div>
+        </div>
+    </div>
 </div>

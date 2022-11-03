@@ -1,0 +1,55 @@
+﻿@page
+@model Grupp3_Elevator.Pages.Errand.IndexModel
+@{
+}
+
+<h1>Errands</h1>
+
+<div class="container mb-5">
+    <div class="row">
+        @foreach (var errand in Model.Errands)
+        {
+            <div class="col-3 p-3 border bg-transparent text-center">
+                <h5 class="card-title">@errand.Title</h5>
+                <p class="card-text">@errand.Description</p>
+                <p class="card-text">Status: @errand.Status</p>
+                <p class="card-text">Last Edited: @errand.LastEdited</p>
+                <p class="card-text">Created By: @errand.CreatedBy</p>
+                <p class="card-text">Technician: @errand.Technician</p>
+                <p class="card-text">Comments: @errand.Comments.Count()</p>
+                <a asp-page="/Errand/ErrandDetails" asp-route-errandId="@errand.Id" class="btn btn-primary">Select</a>
+            </div>
+        }
+    </div>
+</div>
+
+@*<h1>Errands</h1>
+<table class="table mb-5 text-center">
+    <tr>
+        <th>Guid</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Status</th>
+        <th>Last Edited</th>
+        <th>Created By</th>
+        <th>Technician</th>
+        <th>Comments</th>
+    </tr>
+
+    @foreach (var errand in Model.Errands)
+    {
+        <tr>
+            <td>@errand.Id</td>
+            <td>@errand.Title</td>
+            <td>@errand.Description</td>
+            <td>@errand.Status</td>
+            <td>@errand.LastEdited</td>
+            <td>@errand.CreatedBy</td>
+            <td>@errand.Technician</td>
+            <td>@errand.Comments.Count()</td>
+            <td>
+                <a asp-page="/Errand/ErrandDetails" asp-route-errandId="" class="btn btn-primary">Select</a>
+            </td>
+        </tr>
+    }
+</table>*@

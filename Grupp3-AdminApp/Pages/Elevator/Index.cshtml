@@ -1,0 +1,48 @@
+﻿@page
+@model Grupp3_Elevator.Pages.Elevator.IndexModel
+@{
+}
+
+<h1>Elevators</h1>
+
+<div class="container mb-5">
+    <div class="row">
+        @foreach (var elevator in Model.ElevatorsTwin)
+        {
+            <div class="col-3 p-3 border bg-transparent text-center">
+                <h5 class="card-title">@elevator.Name</h5>
+                <p class="card-text">Status: @elevator.Status</p>
+                <p class="card-text">Door Status: @elevator.DoorStatus</p>
+                <p class="card-text">Level: @elevator.CurrentLevel - @elevator.TargetLevel</p>
+                <a asp-page="/Elevator/ElevatorDetails" asp-route-elevatorId="@elevator.Id" class="btn btn-primary">Select</a>
+            </div>
+        }
+    </div>
+</div>
+
+@*<h1>Elevators</h1>
+<table class="table mb-5 text-center">
+    <tr>
+        <th>Guid</th>
+        <th>Name</th>
+        <th>Status</th>
+        <th>Door Status</th>
+        <th>Current Level</th>
+        <th>Target Level</th>
+    </tr>
+
+    @foreach (var elevator in Model.ElevatorsTwin)
+    {
+        <tr>
+            <td>@elevator.Id</td>
+            <td>@elevator.Name</td>
+            <td>@elevator.Status</td>
+            <td>@elevator.DoorStatus</td>
+            <td>@elevator.CurrentLevel</td>
+            <td>@elevator.TargetLevel</td>
+            <td>
+                <a asp-page="/Elevator/ElevatorDetails" asp-route-elevatorTwinId="@elevator.Id" class="btn btn-primary">Select</a>
+            </td>
+        </tr>
+    }
+</table>*@

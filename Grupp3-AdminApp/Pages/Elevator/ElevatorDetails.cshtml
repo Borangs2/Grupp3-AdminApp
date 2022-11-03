@@ -1,0 +1,78 @@
+﻿@page
+@model Grupp3_Elevator.Pages.Elevator.ElevatorDetailsModel
+@{
+}
+
+<h1>
+    Elevator
+    <a asp-page="/Elevator/Index" class="btn btn-primary">Return</a>
+    <a asp-page="/Elevator/ElevatorEdit" asp-route-elevatorId="@Model.Elevator.Id" class="btn btn-danger">Edit XXX</a>
+</h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col-4">
+            <table class="table">
+                <tr><td>Id: @Model.Elevator.Id</td></tr>
+                <tr><td>Name: @Model.Elevator.Name</td></tr>
+                <tr><td>Status: @Model.Elevator.Status</td></tr>
+                <tr><td>Door Status: @Model.Elevator.DoorStatus</td></tr>
+                <tr><td>Current Level: @Model.Elevator.CurrentLevel</td></tr>
+                <tr><td>Target Level: @Model.Elevator.TargetLevel</td></tr>
+
+            </table>
+        </div>
+
+
+        <div class="col-8 border">
+            <div class="bg-transparent col-6">
+                <button type="submit" class="btn btn-primary">E</button>
+                <button type="submit" class="btn btn-primary">1</button>
+                <button type="submit" class="btn btn-primary">2</button>
+                <button type="submit" class="btn btn-primary">3</button>
+                <button type="submit" class="btn btn-primary">4</button>
+                <button type="submit" class="btn btn-primary">5</button>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-success">Open</button>
+                <button type="submit" class="btn btn-success">Close</button>
+                <button type="submit" class="btn btn-danger">Reset</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h1>
+    Errands
+    <a asp-page="/Errand/ErrandNew" asp-route-elevatordId="@Model.Elevator.Id" class="btn btn-success">New</a>
+</h1>
+<table class="table mb-5 text-center">
+    <tr>
+        <th>Guid</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Status</th>
+        <th>Last Edited</th>
+        <th>Created By</th>
+        <th>Technician</th>
+        <th>Comments</th>
+        <th></th>
+        <th></th>
+    </tr>
+
+    @foreach (var errand in Model.Errands)
+    {
+        <tr>
+            <td>@errand.Id</td>
+            <td>@errand.Title</td>
+            <td>@errand.Description</td>
+            <td>@errand.Status</td>
+            <td>@errand.LastEdited.Year-@errand.LastEdited.Month-@errand.LastEdited.Day-@errand.LastEdited.TimeOfDay</td>
+            <td>@errand.CreatedBy</td>
+            <td>@errand.Technician XXX</td>
+            <td>@errand.Comments XXX</td>
+            <td><a asp-page="/Errand/ErrandDetails" asp-route-elevatordId="@Model.Elevator.Id" asp-route-errandId="@errand.Id" class="btn btn-primary">Select</a></td>
+            <td><a asp-page="/Errand/ErrandEdit" asp-route-elevatordId="@Model.Elevator.Id" asp-route-errandId="@errand.Id" class="btn btn-success">Edit</a></td>
+        </tr>
+    }
+</table>
