@@ -44,7 +44,7 @@
 
 <h1>
     Errands
-    <a asp-page="/Errand/ErrandNew" asp-route-elevatordId="@Model.Elevator.Id" class="btn btn-success">New</a>
+    <a asp-page="/Errand/ErrandNew" asp-route-elevatorId="@Model.Elevator.Id" class="btn btn-success">New</a>
 </h1>
 <table class="table mb-5 text-center">
     <tr>
@@ -69,10 +69,10 @@
             <td>@errand.Status</td>
             <td>@errand.LastEdited.Year-@errand.LastEdited.Month-@errand.LastEdited.Day-@errand.LastEdited.TimeOfDay</td>
             <td>@errand.CreatedBy</td>
-            <td>@errand.Technician XXX</td>
-            <td>@errand.Comments XXX</td>
-            <td><a asp-page="/Errand/ErrandDetails" asp-route-elevatordId="@Model.Elevator.Id" asp-route-errandId="@errand.Id" class="btn btn-primary">Select</a></td>
-            <td><a asp-page="/Errand/ErrandEdit" asp-route-elevatordId="@Model.Elevator.Id" asp-route-errandId="@errand.Id" class="btn btn-success">Edit</a></td>
+            <td>@errand.Technician.Name</td>
+            <td>@errand.Comments</td>
+            <td><a asp-page="/Errand/ErrandDetails" asp-route-elevatorId="@Model.Elevator.Id" asp-route-errandId="@errand.Id" class="btn btn-primary">Select</a></td>
+            <td><a asp-page="/Errand/ErrandEdit" asp-route-elevatorId="@Model.Elevator.Id" asp-route-errandId="@errand.Id" class="btn btn-success">Edit</a></td>
         </tr>
     }
 </table>
