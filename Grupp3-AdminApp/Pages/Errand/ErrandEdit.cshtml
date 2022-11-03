@@ -15,7 +15,7 @@
                         <table class="table">
                             <tr>
                                 <td>
-                                    <label asp-for="@Model.Errand.Title">Title</label>
+                                    <label >Title</label>
                                     <input asp-for="@Model.Errand.Title" class="form-control" />
                                     <span asp-validation-for="@Model.Errand.Title" class="text-danger"></span>
                                 </td>
@@ -31,7 +31,8 @@
                             <tr>
                                 <td>
                                     <label asp-for="@Model.Errand.Technician" for="exampleFormControlSelect1"></label>
-                                    <select asp-for="@Model.Errand.Technician" class="form-control" asp-items="@Model.Errand.Technician">
+                                    <input asp-for="Errand.Technician" class="form-control"/>
+                                    <select asp-for="@Model.Errand.Technician.Name" class="form-control" >
                                         <option value="@Model.Errand.Technician"></option>
                                     </select>
                                 </td>
