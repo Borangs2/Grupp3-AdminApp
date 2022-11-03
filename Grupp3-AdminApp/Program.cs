@@ -1,6 +1,7 @@
 using Grupp3_Elevator.Data;
 using Grupp3_Elevator.Services;
 using Grupp3_Elevator.Services.Errand;
+using Grupp3_Elevator.Services.Technician;
 using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,6 +17,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddTransient<IElevatorService, ElevatorService>();
 builder.Services.AddTransient<IErrandService, ErrandService>();
+builder.Services.AddTransient<ITechnicianService, TechnicianService>();
 
 var app = builder.Build();
 
