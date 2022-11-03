@@ -57,6 +57,15 @@ namespace Grupp3_Elevator.Services.Errand
         //    return errand.Id.ToString();
         //}
 
+        public List<ErrandModel> GetErrandsFromElevatorId(string elevatorId)
+        {
+            var result = _context.Elevators.Include(c => c.Errands).FirstOrDefault(e => e.Id.ToString() == elevatorId);
+
+            if (result == null)
+                return null!;
+            return result.Errands;
+        }
+
         public List<SelectListItem> SelectTechnician()
         {
             var technicians = _context.Technicians.Select(t => new SelectListItem
@@ -74,7 +83,7 @@ namespace Grupp3_Elevator.Services.Errand
             return technicians;
         }
 
-        public Task<EditErrandModel> EditErrandAsync(string errandId)
+        public Task<EditErrandModel> EditErrandAsync(Guid errandId)
         {
             throw new NotImplementedException();
         }
