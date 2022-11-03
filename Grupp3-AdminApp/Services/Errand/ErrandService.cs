@@ -14,14 +14,15 @@ namespace Grupp3_Elevator.Services.Errand
         private readonly ApplicationDbContext _context;
         private readonly IElevatorService _elevatorService;
 
+
         public ErrandService(ApplicationDbContext context, IElevatorService elevatorService)
         {
             _context = context;
             _elevatorService = elevatorService;
         }
-        public async Task<ErrandModel>? GetErrandByIdAsync(Guid errandId)
+        public async Task<ErrandModel>? GetErrandByIdAsync(string errandId)
         {
-            var result = _context.Errands.Include(c => c.Comments).FirstOrDefault(e => e.Id == errandId);
+            var result = _context.Errands.Include(c => c.Comments).FirstOrDefault(e => e.Id.ToString() == errandId);
 
             if (result == null)
                 return null!;
@@ -35,27 +36,7 @@ namespace Grupp3_Elevator.Services.Errand
                 return null!;
             return result;
         }
-        //public string CreateErrandAsync(string elevatorId, string Title, string Description, string CreatedBy, Guid TechnicianId)
-        //{
-        //    var elevator = _elevatorService.GetElevatorById(elevatorId);
-
-        //    var errand = new ErrandModel
-        //    {
-        //        Id = Guid.NewGuid(),
-        //        Title = Title,
-        //        Description = Description,
-        //        Status = ErrandStatus.NotStarted,
-        //        CreatedAt = DateTime.Now,
-        //        LastEdited = DateTime.Now,
-        //        CreatedBy = CreatedBy,
-        //        TechnicianId = TechnicianId,
-        //        Comments = new List<ErrandCommentModel>()
-        //    };
-        //    elevator.Errands.Add(errand);
-        //    _context.SaveChanges();
-
-        //    return errand.Id.ToString();
-        //}
+       
 
         public List<ErrandModel> GetErrandsFromElevatorId(string elevatorId)
         {
@@ -64,6 +45,24 @@ namespace Grupp3_Elevator.Services.Errand
             if (result == null)
                 return null!;
             return result.Errands;
+        }
+        
+
+        public async Task<ErrandModel> EditErrandAsync(string errandId, ErrandModel errand)
+        {
+            ErrandModel errandToEdit = await GetErrandByIdAsync(errandId);
+
+            errandToEdit.Title = errand.Title;
+            errandToEdit.Description = errand.Description;
+            errandToEdit.LastEdited = DateTime.Now;
+            errandToEdit.Status = errand.Status;
+            errandToEdit.CreatedBy = errand.CreatedBy;
+
+            _context.SaveChanges();
+
+            return errand;
+
+            //return RedirectToPage("/Errand/ErrandDetails", new { Id = errandId });
         }
 
         public List<SelectListItem> SelectTechnician()
@@ -81,11 +80,6 @@ namespace Grupp3_Elevator.Services.Errand
                 Text = "Please select technician"
             });
             return technicians;
-        }
-
-        public Task<EditErrandModel> EditErrandAsync(Guid errandId)
-        {
-            throw new NotImplementedException();
         }
     }
 }
