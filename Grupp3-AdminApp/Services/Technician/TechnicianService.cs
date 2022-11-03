@@ -1,5 +1,6 @@
 ﻿using Grupp3_Elevator.Data;
 using Grupp3_Elevator.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Grupp3_Elevator.Services.Technician;
 
@@ -29,5 +30,10 @@ class TechnicianService : ITechnicianService
     public List<TechnicianModel> GetTechnicians()
     {
         return _context.Technicians.ToList();
+    }
+    public TechnicianModel GetTechnicanFromErrandId(string errandId)
+    {
+        var result = _context.Errands.Include(e => e.Technician).FirstOrDefault(e => e.Id == Guid.Parse(errandId));
+        return result.Technician;
     }
 }

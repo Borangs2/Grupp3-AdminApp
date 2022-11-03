@@ -6,18 +6,19 @@ using Microsoft.EntityFrameworkCore;
 using NToastNotify;
 using System.Data;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Grupp3_Elevator.Services.Technician;
 
 namespace Grupp3_Elevator.Services.Errand
 {
     public class ErrandService : IErrandService
     {
         private readonly ApplicationDbContext _context;
-        private readonly IElevatorService _elevatorService;
+        private readonly ITechnicianService _technicianService;
 
-        public ErrandService(ApplicationDbContext context, IElevatorService elevatorService)
+        public ErrandService(ApplicationDbContext context, ITechnicianService technicianService)
         {
             _context = context;
-            _elevatorService = elevatorService;
+            _technicianService = technicianService;
         }
         public async Task<ErrandModel>? GetErrandByIdAsync(Guid errandId)
         {
@@ -59,7 +60,13 @@ namespace Grupp3_Elevator.Services.Errand
 
         public List<ErrandModel> GetErrandsFromElevatorId(string elevatorId)
         {
-            var result = _context.Elevators.Include(c => c.Errands).FirstOrDefault(e => e.Id.ToString() == elevatorId);
+            var result = _context.Elevators.Include(c => c.Errands).FirstOrDefault(e => e.Id == Guid.Parse(elevatorId));
+
+            foreach (var errand in result.Errands)
+            {
+                errand.Technician = _technicianService.GetTechnicanFromErrandId(errand.Id.ToString());
+                //errand.Comments = _commentService.GetCommentFromErrandId(errand.Id.ToString());
+            }
 
             if (result == null)
                 return null!;
