@@ -74,7 +74,7 @@ namespace Grupp3_Elevator.Services.Errand
             return technicians;
         }
 
-        public Task<EditErrandModel> EditErrandAsync(string errandId)
+        public Task<EditErrandModel> EditErrandAsync(Guid errandId)
         {
             throw new NotImplementedException();
         }
