@@ -18,9 +18,9 @@ public class TechnicianService : ITechnicianService
     /// </summary>
     /// <param name="technicianId"></param>
     /// <returns>A <see cref="TechnicianModel"/></returns>
-    public TechnicianModel? GetTechnicianById(Guid technicianId)
+    public TechnicianModel? GetTechnicianById(string technicianId)
     {
-        return _context.Technicians.FirstOrDefault(t => t.Id == technicianId);
+        return _context.Technicians.FirstOrDefault(t => t.Id == Guid.Parse(technicianId));
     }
 
     /// <summary>
@@ -31,9 +31,17 @@ public class TechnicianService : ITechnicianService
     {
         return _context.Technicians.ToList();
     }
-    public TechnicianModel GetTechnicanFromErrandId(string errandId)
+
+    /// <summary>
+    /// Gets the technician assigned to a specific errand
+    /// </summary>
+    /// <param name="errandId"></param>
+    /// <returns>A <see cref="TechnicianModel"/> or <see langword="null"></see> if none exists</returns>
+    public TechnicianModel? GetTechnicianFromErrandId(string errandId)
     {
         var result = _context.Errands.Include(e => e.Technician).FirstOrDefault(e => e.Id == Guid.Parse(errandId));
+        if(result == null || result.Technician.Id == Guid.Empty)
+            return null;
         return result.Technician;
     }
 }
