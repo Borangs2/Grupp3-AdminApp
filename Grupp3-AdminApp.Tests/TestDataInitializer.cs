@@ -25,7 +25,7 @@ namespace AdminAppTests
             _context.Elevators.Add(
             new ElevatorModel
             {
-                Id = Guid.NewGuid(),
+                Id = Guid.Parse("5435f3c3-56f7-49da-8ef4-24937f71fd70"),
                 ConnectionString = "totally real connectionString",
                 Errands = new List<ErrandModel>
                 {
@@ -45,7 +45,7 @@ namespace AdminAppTests
             _context.Elevators.Add(
                 new ElevatorModel
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.Parse("8fd4e759-daf2-4fa7-b4a7-58ee9657160d"),
                     ConnectionString = "totally real connectionString",
                     Errands = new List<ErrandModel>
                     {
