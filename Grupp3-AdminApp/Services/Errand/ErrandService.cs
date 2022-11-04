@@ -87,5 +87,18 @@ namespace Grupp3_Elevator.Services.Errand
             });
             return technicians;
         }
+
+        public List<SelectListItem> SelectTechnicianEdit(string technicianId)
+        {
+            var technicians = _context.Technicians.Select(t => new SelectListItem
+            {
+                Text = t.Name.ToString(),
+                Value = t.Id.ToString()
+
+            }).OrderBy(t => t.Value != technicianId).ToList();
+
+
+            return technicians;
+        }
     }
 }

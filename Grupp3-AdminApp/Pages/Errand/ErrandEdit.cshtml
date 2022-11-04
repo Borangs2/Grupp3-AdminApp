@@ -30,11 +30,10 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <label asp-for="@Model.Errand.Technician" for="exampleFormControlSelect1"></label>
-                                    <input asp-for="Errand.Technician" class="form-control"/>
-                                    <select asp-for="@Model.Errand.Technician.Name" class="form-control" >
-                                        <option value="@Model.Errand.Technician"></option>
+                                    <label asp-for="@Model.TechnicianId">Technician</label>
+                                    <select class="form-control" asp-for="@Model.TechnicianId" asp-items="@Model.SelectTechnicianEdit">
                                     </select>
+                                    <span asp-validation-for="@Model.TechnicianId" class="field-validation-error"></span>
                                 </td>
                             </tr>
                             <tr>

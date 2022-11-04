@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Grupp3_Elevator.Pages.Errand
 {
+    [BindProperties]
     public class ErrandEditModel : PageModel
     {
         private readonly ApplicationDbContext _context;
@@ -18,12 +19,10 @@ namespace Grupp3_Elevator.Pages.Errand
             _errandService = errandService;
         }
 
-        [BindProperty]
+        
         public ErrandModel Errand { get; set; }
-        [BindProperty]
         public List<SelectListItem> SelectTechnician { get; set; }
-        [BindProperty]
-        public TechnicianModel Technician { get; set; }
+        public Guid TechnicianId { get; set; }
 
 
         public async Task<IActionResult> OnGetAsync(string? errandId)

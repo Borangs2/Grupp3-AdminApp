@@ -13,6 +13,8 @@ namespace Grupp3_Elevator.Services.Errand
         List<ErrandModel> GetErrandsFromElevatorId(string elevatorId);
         Task<ErrandModel> EditErrandAsync(string errandId, ErrandModel errand, string TechnicianId);
         List<SelectListItem> SelectTechnician();
+
+        List<SelectListItem> SelectTechnicianEdit(string technicianId);
     }
 
 }
