@@ -31,8 +31,6 @@ namespace AdminAppTests.Services.Elevator
 
             var data = new TestDataInitializer(_context);
             data.SeedData();
-
-
         }
 
         [TestMethod]
