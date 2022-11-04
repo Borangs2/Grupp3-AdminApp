@@ -21,13 +21,16 @@ namespace Grupp3_Elevator.Services.Errand
             _technicianService = technicianService;
         }
         public async Task<ErrandModel>? GetErrandByIdAsync(Guid errandId)
-        {
+        {          
             var result = _context.Errands.Include(c => c.Comments).FirstOrDefault(e => e.Id == errandId);
+
+            result.Technician = _technicianService.GetTechnicanFromErrandId(errandId.ToString());
 
             if (result == null)
                 return null!;
             return result;
         }
+
         public List<ErrandModel> GetErrands()
         {
             var result = _context.Errands.Include(c => c.Comments).ToList();

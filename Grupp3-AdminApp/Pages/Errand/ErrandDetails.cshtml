@@ -14,13 +14,13 @@
                 <div class="container card">
                     <h4>Info</h4>
                     <table class="table">
-                        <tr><td>Status: @Model.Errand.Id</td></tr>
-                        <tr><td>Status: @Model.Errand.Title</td></tr>
-                        <tr><td>Status: @Model.Errand.Description</td></tr>
-                        <tr><td>Elevator Id: 846151651651</td></tr>
-                        <tr><td>Last Edited: 25/10/2022</td></tr>
-                        <tr><td>Created at: 20/10/2022</td></tr>
-                        <tr><td>Created by: Pierre Åkerman</td></tr>
+                        <tr><td>Id: @Model.Errand.Id</td></tr>
+                        <tr><td>Title: @Model.Errand.Title</td></tr>
+                        <tr><td>Status: @Model.Errand.Status</td></tr>
+                        <tr><td>Last Edited: @Model.Errand.LastEdited</td></tr>
+                        <tr><td>Created at: @Model.Errand.CreatedAt</td></tr>
+                        <tr><td>Created by: @Model.Errand.CreatedBy</td></tr>
+                        <tr><td>Technician: @Model.Errand.Technician.Name</td></tr>
                     </table>
                 </div>
             </div>
@@ -28,12 +28,7 @@
                 <div class="container card">
                     <h4>Description</h4>
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-                        dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-                        anim id est laborum.
+                        @Model.Errand.Description
                     </p>
                 </div>
             </div>
@@ -44,27 +39,15 @@
         <div class="col">
             <div class="container card">
                 <table class="table">
-                    <tr class="d-flex flex-column">
-                        <th>Onsdag 2022/10/25 Kl.12:45</th>
-                        <td>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                            magna aliqua.
-                        </td>
-                    </tr>
-                    <tr class="d-flex flex-column">
-                        <th>Onsdag 2022/10/25 Kl.12:45</th>
-                        <td>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                            magna aliqua.
-                        </td>
-                    </tr>
-                    <tr class="d-flex flex-column">
-                        <th>Onsdag 2022/10/25 Kl.12:45</th>
-                        <td>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                            magna aliqua.
-                        </td>
-                    </tr>
+                    @foreach(var comment in Model.Errand.Comments) 
+                    {
+                        <tr class="d-flex flex-column">
+                            <th>@comment.PostedAt, @comment.Author</th>
+                            <td>
+                                @comment.Content
+                            </td>
+                        </tr>
+                    }
                 </table>
                 <div class="mx-auto">
                     <form>

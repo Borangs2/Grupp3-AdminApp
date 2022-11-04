@@ -1,3 +1,4 @@
+using Grupp3_AdminApp.Services.ErrandComment;
 using Grupp3_Elevator.Data;
 using Grupp3_Elevator.Services;
 using Grupp3_Elevator.Services.Errand;
@@ -19,6 +20,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddTransient<IElevatorService, ElevatorService>();
 builder.Services.AddTransient<IErrandService, ErrandService>();
 builder.Services.AddTransient<ITechnicianService, TechnicianService>();
+builder.Services.AddTransient<IErrandCommentService, ErrandCommentService>();
 
 builder.Services.AddMvc().AddNToastNotifyToastr(new ToastrOptions()
 {
