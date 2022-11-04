@@ -17,6 +17,7 @@ namespace AdminAppTests.Services.Errand
     {
         private readonly ApplicationDbContext _context;
         private readonly ErrandService _errandService;
+        private readonly IElevatorService _elevatorService;
 
         public ErrandServiceTests()
         {
