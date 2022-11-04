@@ -16,13 +16,14 @@ namespace Grupp3_Elevator.Services.Errand
     public class ErrandService : IErrandService
     {
         private readonly ApplicationDbContext _context;
+        private readonly IElevatorService _elevatorService;
         private readonly ITechnicianService _technicianService;
         private readonly IErrandCommentService _errandCommentService;
 
-        public ErrandService(ApplicationDbContext context, ITechnicianService technicianService, IErrandCommentService errandCommentService)
+        public ErrandService(ApplicationDbContext context, IElevatorService elevatorService, ITechnicianService technicianService, IErrandCommentService errandCommentService)
         {
-
             _context = context;
+            _elevatorService = elevatorService;
             _technicianService = technicianService;
             _errandCommentService = errandCommentService;
         }
@@ -30,7 +31,7 @@ namespace Grupp3_Elevator.Services.Errand
         {          
             var result = _context.Errands.Include(c => c.Technician).Include(t => t.Comments).FirstOrDefault(e => e.Id == Guid.Parse(errandId));
 
-            result.Technician = _technicianService.GetTechnicanFromErrandId(errandId);
+            result.Technician = _technicianService.GetTechnicianFromErrandId(errandId);
             result.Comments = _errandCommentService.GetErrandCommentsFromErrandId(errandId);
 
             if (result == null)
@@ -76,7 +77,7 @@ namespace Grupp3_Elevator.Services.Errand
                 CreatedAt = DateTime.Now,
                 LastEdited = DateTime.Now,
                 CreatedBy = CreatedBy,
-                Technician = _technicianService.GetTechnicianById(Guid.Parse(TechnicianId)),
+                Technician = _technicianService.GetTechnicianById(TechnicianId),
                 Comments = new List<ErrandCommentModel>()
             };
             elevator?.Errands.Add(errand);
@@ -95,7 +96,7 @@ namespace Grupp3_Elevator.Services.Errand
             errandToEdit.LastEdited = DateTime.Now;
             errandToEdit.Status = errand.Status;
             errandToEdit.CreatedBy = errand.CreatedBy;
-            errandToEdit.Technician = _technicianService.GetTechnicianById(Guid.Parse(technicianId));
+            errandToEdit.Technician = _technicianService.GetTechnicianById(technicianId);
 
             _context.SaveChanges();
 
