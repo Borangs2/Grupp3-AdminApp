@@ -16,12 +16,13 @@ namespace AdminAppTests.Services.Errand
     {
         private readonly ApplicationDbContext _context;
         private readonly ErrandService _errandService;
+        private readonly IElevatorService _elevatorService;
 
         public ErrandServiceTests()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase("AdminApp").Options;
             _context = new ApplicationDbContext(options);
-            _errandService = new ErrandService(_context, new TechnicianService(_context));
+            _errandService = new ErrandService(_context, new TechnicianService(_context), new ElevatorService(_context));
         }
 
         [TestMethod]

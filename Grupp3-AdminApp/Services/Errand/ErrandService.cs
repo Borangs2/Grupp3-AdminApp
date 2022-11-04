@@ -17,14 +17,12 @@ namespace Grupp3_Elevator.Services.Errand
         private readonly ApplicationDbContext _context;
         private readonly ITechnicianService _technicianService;
         private readonly IElevatorService _elevatorService;
-        private readonly IToastNotification _toastNotification;
 
-        public ErrandService(ApplicationDbContext context, ITechnicianService technicianService, IElevatorService elevatorService, IToastNotification toastNotification)
+        public ErrandService(ApplicationDbContext context, ITechnicianService technicianService, IElevatorService elevatorService)
         {
             _context = context;
             _technicianService = technicianService;
             _elevatorService = elevatorService;
-            _toastNotification = toastNotification;
         }
         public async Task<ErrandModel>? GetErrandByIdAsync(string errandId)
         {
@@ -77,7 +75,6 @@ namespace Grupp3_Elevator.Services.Errand
             };
             elevator?.Errands.Add(errand);
             _context.SaveChanges();
-            _toastNotification.AddSuccessToastMessage("New errand created!");
 
             var id = errand.Id.ToString();
             return id;
