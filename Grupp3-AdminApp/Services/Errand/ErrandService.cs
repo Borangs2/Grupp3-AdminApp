@@ -7,6 +7,7 @@ using NToastNotify;
 using System.Data;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Grupp3_Elevator.Services.Technician;
+using Grupp3_AdminApp.Services.ErrandComment;
 
 namespace Grupp3_Elevator.Services.Errand
 {
@@ -14,17 +15,20 @@ namespace Grupp3_Elevator.Services.Errand
     {
         private readonly ApplicationDbContext _context;
         private readonly ITechnicianService _technicianService;
+        private readonly IErrandCommentService _errandCommentService;
 
-        public ErrandService(ApplicationDbContext context, ITechnicianService technicianService)
+        public ErrandService(ApplicationDbContext context, ITechnicianService technicianService, IErrandCommentService errandCommentService)
         {
             _context = context;
             _technicianService = technicianService;
+            _errandCommentService = errandCommentService;
         }
         public async Task<ErrandModel>? GetErrandByIdAsync(string errandId)
         {          
-            var result = _context.Errands.Include(c => c.Comments).FirstOrDefault(e => e.Id == Guid.Parse(errandId));
+            var result = _context.Errands.Include(c => c.Technician).Include(t => t.Comments).FirstOrDefault(e => e.Id == Guid.Parse(errandId));
 
-            result.Technician = _technicianService.GetTechnicanFromErrandId(errandId.ToString());
+            result.Technician = _technicianService.GetTechnicanFromErrandId(errandId);
+            result.Comments = _errandCommentService.GetErrandCommentsFromErrandId(errandId);
 
             if (result == null)
                 return null!;

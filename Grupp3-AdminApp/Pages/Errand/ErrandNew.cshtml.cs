@@ -71,7 +71,7 @@ namespace Grupp3_Elevator.Pages.Errand
                 CreatedAt = DateTime.Now,
                 LastEdited = DateTime.Now,
                 CreatedBy = CreatedBy,
-                Technician = _technicianService.GetTechnicianById(TechnicianId),
+                Technician = _technicianService.GetTechnicianById(TechnicianId.ToString()),
                 Comments = new List<ErrandCommentModel>()
             };
             elevator?.Errands.Add(errand);

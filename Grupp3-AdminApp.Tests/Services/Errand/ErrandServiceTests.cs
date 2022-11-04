@@ -1,4 +1,5 @@
-﻿using Grupp3_Elevator.Data;
+﻿using Grupp3_AdminApp.Services.ErrandComment;
+using Grupp3_Elevator.Data;
 using Grupp3_Elevator.Services;
 using Grupp3_Elevator.Services.Errand;
 using Grupp3_Elevator.Services.Technician;
@@ -21,7 +22,7 @@ namespace AdminAppTests.Services.Errand
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase("AdminApp").Options;
             _context = new ApplicationDbContext(options);
-            _errandService = new ErrandService(_context, new TechnicianService(_context));
+            _errandService = new ErrandService(_context, new TechnicianService(_context), new ErrandCommentService(_context));
         }
 
         [TestMethod]

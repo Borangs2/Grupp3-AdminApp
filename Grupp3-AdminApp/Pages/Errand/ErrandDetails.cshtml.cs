@@ -17,30 +17,20 @@ namespace Grupp3_Elevator.Pages.Errand
     {
         private readonly IElevatorService _elevatorService;
         private readonly IErrandService _errandService;
-        private readonly ITechnicianService _technicianService;
-        private readonly IErrandCommentService _errandCommentService;
 
-        public ErrandDetailsModel(IElevatorService elevatorService, IErrandService errandService, ITechnicianService technicianService, IErrandCommentService errandCommentService)
+        public ErrandDetailsModel(IElevatorService elevatorService, IErrandService errandService)
         {
             _elevatorService = elevatorService;
             _errandService = errandService;
-            _technicianService = technicianService;
-            _errandCommentService = errandCommentService;
         }
 
         public ErrandModel Errand { get; set; }
-        public TechnicianModel Technician { get; set; }
-        public List<ErrandCommentModel> Comments { get; set; }
         public ElevatorDeviceItem Elevator { get; set; }
-
-
 
         public async Task OnGetAsync(string elevatorId, string errandId)
         {
             Elevator = await _elevatorService.GetElevatorDeviceByIdAsync(elevatorId);
             Errand = await _errandService.GetErrandByIdAsync(errandId);
-            Technician = _technicianService.GetTechnicianById(Errand.Technician.Id.ToString());
-            Comments = _errandCommentService.GetErrandCommentsFromErrandId(errandId);
         }
     }
 }
