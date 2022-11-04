@@ -68,7 +68,7 @@ namespace Grupp3_AdminApp.Tests.Services.Technician
             var result = _sut.GetTechnicianById(guid)!;
 
             //Assert
-            Assert.AreEqual(result.Id, guid);
+            Assert.AreEqual(result.Id.ToString(), guid);
         }
 
         [TestMethod]
