@@ -12,12 +12,19 @@ namespace Grupp3_Elevator.Services;
 public class ElevatorService : IElevatorService
 {
     private readonly ApplicationDbContext _context;
+    private readonly IConfiguration _config;
     private readonly RegistryManager _registryManager;
+
+    public ElevatorService(ApplicationDbContext context, IConfiguration config)
+    {
+        _context = context;
+        _config = config;
+        _registryManager = RegistryManager.CreateFromConnectionString(_config.GetValue<string>("IoTHubConnection"));
+    }
 
     public ElevatorService(ApplicationDbContext context)
     {
         _context = context;
-        _registryManager = RegistryManager.CreateFromConnectionString(GlobalVariables.IoTHubConnectionString);
     }
 
     /// <summary>

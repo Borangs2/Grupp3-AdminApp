@@ -17,6 +17,7 @@ namespace Grupp3_Elevator.Services.Errand
 
         public ErrandService(ApplicationDbContext context, ITechnicianService technicianService)
         {
+
             _context = context;
             _technicianService = technicianService;
         }
