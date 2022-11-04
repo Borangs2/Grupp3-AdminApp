@@ -22,7 +22,7 @@ steps:
   displayName: 'Unit tests'
   inputs:
     command: test
-    projects: 'AdminAppTests/AdminAppTests.csproj'
+    projects: 'AdminAppTests/Grupp3-AdminApp.Tests.csproj'
     arguments: '--configuration $(buildConfiguration)'
 
 
