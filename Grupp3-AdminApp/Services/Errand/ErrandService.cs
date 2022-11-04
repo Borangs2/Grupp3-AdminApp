@@ -7,6 +7,7 @@ using NToastNotify;
 using System.Data;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Xml.Linq;
+using Grupp3_Elevator.Pages.Errand;
 using Grupp3_Elevator.Services.Technician;
 
 namespace Grupp3_Elevator.Services.Errand
@@ -15,12 +16,14 @@ namespace Grupp3_Elevator.Services.Errand
     {
         private readonly ApplicationDbContext _context;
         private readonly ITechnicianService _technicianService;
+        private readonly IElevatorService _elevatorService;
 
-        public ErrandService(ApplicationDbContext context, ITechnicianService technicianService)
+        public ErrandService(ApplicationDbContext context, ITechnicianService technicianService, IElevatorService elevatorService)
         {
 
             _context = context;
             _technicianService = technicianService;
+            _elevatorService = elevatorService;
         }
         public async Task<ErrandModel>? GetErrandByIdAsync(string errandId)
         {
@@ -54,7 +57,29 @@ namespace Grupp3_Elevator.Services.Errand
                 return null!;
             return result.Errands;
         }
-        
+
+        public string CreateErrandAsync(string elevatorId, string Title, string Description, string CreatedBy, string TechnicianId)
+        {
+            var elevator = _elevatorService.GetElevatorById(elevatorId);
+
+            var errand = new ErrandModel
+            {
+                Id = Guid.NewGuid(),
+                Title = Title,
+                Description = Description,
+                Status = ErrandStatus.NotStarted,
+                CreatedAt = DateTime.Now,
+                LastEdited = DateTime.Now,
+                CreatedBy = CreatedBy,
+                Technician = _technicianService.GetTechnicianById(Guid.Parse(TechnicianId)),
+                Comments = new List<ErrandCommentModel>()
+            };
+            elevator?.Errands.Add(errand);
+            _context.SaveChanges();
+
+            var id = errand.Id.ToString();
+            return id;
+        }
 
         public async Task<ErrandModel> EditErrandAsync(string errandId, ErrandModel errand, string technicianId)
         {
