@@ -21,13 +21,15 @@ namespace Grupp3_Elevator.Pages.Errand
 
         
         public ErrandModel Errand { get; set; }
-        public List<SelectListItem> SelectTechnician { get; set; }
+        public List<SelectListItem> SelectTechnicianEdit { get; set; }
         public Guid TechnicianId { get; set; }
 
 
         public async Task<IActionResult> OnGetAsync(string? errandId)
         {
             Errand = await _errandService.GetErrandByIdAsync(errandId);
+
+            SelectTechnicianEdit = _errandService.SelectTechnicianEdit(Errand.Technician.Id.ToString());
 
             if (Errand == null)
             {
@@ -38,11 +40,11 @@ namespace Grupp3_Elevator.Pages.Errand
         }
 
 
-        public async Task<IActionResult> OnPost(string errandId, string technicianId)
+        public async Task<IActionResult> OnPost(string errandId)
         {
             try
             {
-                await _errandService.EditErrandAsync(errandId, Errand, technicianId);
+                await _errandService.EditErrandAsync(errandId, Errand, TechnicianId.ToString());
 
                 return RedirectToPage("/Errand/Index");
             }
@@ -50,28 +52,6 @@ namespace Grupp3_Elevator.Pages.Errand
             {
                 return Page();
             }
-
-
-
-            // !!!THIS WORKS!!!
-
-            //try
-            //{
-            //    var errandToEdit = _context.Errands.FirstOrDefault(e => e.Id.ToString() == errandId);
-            //    //var errandToEdit = _errandService.GetErrandByIdAsync(errandId);
-            //    errandToEdit.Title = Errand.Title;
-            //    errandToEdit.Description = Errand.Description;
-
-            //    _context.SaveChanges();
-
-            //    return RedirectToPage("/Errand/Index");
-            //    //return RedirectToPage("/Errand/ErrandDetails", new { Id = errandId });
-            //}
-            //catch
-            //{
-            //    return Page();
-            //}
-
 
         }
     }

@@ -18,14 +18,15 @@ namespace Grupp3_Elevator.Services.Errand
         private readonly ITechnicianService _technicianService;
 
 
-        public ErrandService(ApplicationDbContext context, IElevatorService elevatorService)
+        public ErrandService(ApplicationDbContext context, IElevatorService elevatorService, ITechnicianService technicianService)
         {
             _context = context;
             _elevatorService = elevatorService;
+            _technicianService = technicianService;
         }
         public async Task<ErrandModel>? GetErrandByIdAsync(string errandId)
         {
-            var result = _context.Errands.Include(c => c.Comments).FirstOrDefault(e => e.Id.ToString() == errandId);
+            var result = _context.Errands.Include(c => c.Comments).Include(t => t.Technician).FirstOrDefault(e => e.Id.ToString() == errandId);
 
             if (result == null)
                 return null!;
@@ -60,9 +61,7 @@ namespace Grupp3_Elevator.Services.Errand
             errandToEdit.LastEdited = DateTime.Now;
             errandToEdit.Status = errand.Status;
             errandToEdit.CreatedBy = errand.CreatedBy;
-            errandToEdit.Technician = errand.Technician;
-            //errandToEdit.Technician = _technicianService.GetTechnicianById(Guid.Parse(technicianId));
-                //Comments = new List<ErrandCommentModel>();
+            errandToEdit.Technician = _technicianService.GetTechnicianById(Guid.Parse(technicianId));
 
             _context.SaveChanges();
 
