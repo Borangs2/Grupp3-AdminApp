@@ -18,9 +18,9 @@ public class TechnicianService : ITechnicianService
     /// </summary>
     /// <param name="technicianId"></param>
     /// <returns>A <see cref="TechnicianModel"/></returns>
-    public TechnicianModel? GetTechnicianById(Guid technicianId)
+    public TechnicianModel? GetTechnicianById(string technicianId)
     {
-        return _context.Technicians.FirstOrDefault(t => t.Id == technicianId);
+        return _context.Technicians.FirstOrDefault(t => t.Id == Guid.Parse(technicianId));
     }
 
     /// <summary>

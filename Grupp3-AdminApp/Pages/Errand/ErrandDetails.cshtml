@@ -6,8 +6,8 @@
     <div class="container">
         <h1 class="mb-5">
             Errand Title
-                <a asp-page="/Elevator/ElevatorDetail" asp-route-elevatorId="" class="btn btn-primary">Return</a>
-                <a asp-page="/Errand/ErrandEdit" asp-route-elevatorId="" asp-route-errandId="@Model.Errand.Id" class="btn btn-success">Edit</a>
+            <a asp-page="/Elevator/ElevatorDetails" asp-route-elevatorId="@Model.Elevator.Id" class="btn btn-primary">Return</a>
+            <a asp-page="/Errand/ErrandEdit" asp-route-elevatorId="@Model.Elevator.Id" asp-route-errandId="@Model.Errand.Id" class="btn btn-success">Edit</a>
             </h1>
         <div class="row mb-5">
             <div class="col-4">
@@ -39,13 +39,11 @@
         <div class="col">
             <div class="container card">
                 <table class="table">
-                    @foreach(var comment in Model.Errand.Comments) 
+                    @foreach (var comment in Model.Errand.Comments)
                     {
                         <tr class="d-flex flex-column">
-                            <th>@comment.PostedAt, @comment.Author</th>
-                            <td>
-                                @comment.Content
-                            </td>
+                            <th>(PostedAt:@comment.PostedAt) - (Author ID:@comment.Author) - (Comment ID:@comment.Id)</th>
+                            <td>@comment.Content</td>
                         </tr>
                     }
                 </table>

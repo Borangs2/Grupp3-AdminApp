@@ -8,45 +8,39 @@ using Grupp3_Elevator.Data;
 using Grupp3_Elevator.Services.Errand;
 using Grupp3_Elevator.Services;
 using Grupp3_Elevator.Services.Technician;
+using Grupp3_AdminApp.Services.ErrandComment;
 
 namespace Grupp3_Elevator.Pages.Errand
 {
     [BindProperties]
     public class ErrandDetailsModel : PageModel
-    {      
-        private readonly ApplicationDbContext _context;
+    {
+        private readonly IElevatorService _elevatorService;
         private readonly IErrandService _errandService;
         private readonly ITechnicianService _technicianService;
+        private readonly IErrandCommentService _errandCommentService;
 
-        public ErrandDetailsModel(ApplicationDbContext context, IErrandService errandService, ITechnicianService technicianService)
+        public ErrandDetailsModel(IElevatorService elevatorService, IErrandService errandService, ITechnicianService technicianService, IErrandCommentService errandCommentService)
         {
-            _context = context;
+            _elevatorService = elevatorService;
             _errandService = errandService;
             _technicianService = technicianService;
+            _errandCommentService = errandCommentService;
         }
+
         public ErrandModel Errand { get; set; }
-        public Guid Id { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public ErrandStatus Status { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime LastEdited { get; set; }
-        public string CreatedBy { get; set; }
         public TechnicianModel Technician { get; set; }
         public List<ErrandCommentModel> Comments { get; set; }
+        public ElevatorDeviceItem Elevator { get; set; }
 
 
 
         public async Task OnGetAsync(string elevatorId, string errandId)
         {
-            Errand = await _errandService.GetErrandByIdAsync(Guid.Parse(errandId));
-            //Title = Errand.Title;
-            //Description = Errand.Description;
-            //Status = Errand.Status;
-            //CreatedAt = Errand.CreatedAt;
-            //LastEdited = Errand.LastEdited;
-            //CreatedBy = Errand.CreatedBy;
-            Technician = _technicianService.GetTechnicianById(Errand.Technician.Id);
+            Elevator = await _elevatorService.GetElevatorDeviceByIdAsync(elevatorId);
+            Errand = await _errandService.GetErrandByIdAsync(errandId);
+            Technician = _technicianService.GetTechnicianById(Errand.Technician.Id.ToString());
+            Comments = _errandCommentService.GetErrandCommentsFromErrandId(errandId);
         }
     }
 }

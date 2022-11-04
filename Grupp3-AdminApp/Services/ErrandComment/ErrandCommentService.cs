@@ -13,9 +13,9 @@ namespace Grupp3_AdminApp.Services.ErrandComment
             _context = context;
         }
 
-        public ErrandCommentModel GetCommentsById(Guid commentId)
+        public ErrandCommentModel GetCommentsById(string commentId)
         {
-            return _context.ErrandComments.FirstOrDefault(e => e.Id == commentId);
+            return _context.ErrandComments.FirstOrDefault(e => e.Id == Guid.Parse(commentId));
         }
        
         public List<ErrandCommentModel> GetComments()
@@ -23,12 +23,10 @@ namespace Grupp3_AdminApp.Services.ErrandComment
             return _context.ErrandComments.ToList();
         }
 
-        //public ErrandCommentModel GetErrandCommentFromErrandId(string errandId)
-        //{
-
-        //    var result = _context.Errands.Include(e => e.Comments).FirstOrDefault(e => e.Id == Guid.Parse(errandId));
-        //    return test;
-
-        //}
+        public List<ErrandCommentModel> GetErrandCommentsFromErrandId(string errandId)
+        {
+            var result = _context.Errands.Include(e => e.Comments).FirstOrDefault(e => e.Id == Guid.Parse(errandId));
+            return result.Comments;
+        }
     }
 }

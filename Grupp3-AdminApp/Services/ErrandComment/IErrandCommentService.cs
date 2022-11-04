@@ -4,9 +4,9 @@ namespace Grupp3_AdminApp.Services.ErrandComment
 {
     public interface IErrandCommentService
     {
+        ErrandCommentModel GetCommentsById(string commentId);
+        List<ErrandCommentModel> GetErrandCommentsFromErrandId(string errandId);
 
-        ErrandCommentModel GetCommentsById(Guid commentId);
-        List<ErrandCommentModel> GetComments();
         //ErrandCommentModel GetErrandCommentFromErrandId(string errandId);
 
     }
