@@ -52,7 +52,7 @@ namespace Grupp3_AdminApp.Tests.Services.Technician
             //Arrange
 
             //Act
-            var result = _sut.GetTechnicianById(("62e4a265-ceb7-4254-81f9-7d4a78cfbed8");
+            var result = _sut.GetTechnicianById("62e4a265-ceb7-4254-81f9-7d4a78cfbed8");
 
             //Assert
             Assert.IsNotNull(result);
