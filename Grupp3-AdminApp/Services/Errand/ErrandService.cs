@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using NToastNotify;
 using System.Data;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Xml.Linq;
 using Grupp3_Elevator.Services.Technician;
 
 namespace Grupp3_Elevator.Services.Errand
@@ -20,9 +21,9 @@ namespace Grupp3_Elevator.Services.Errand
             _context = context;
             _technicianService = technicianService;
         }
-        public async Task<ErrandModel>? GetErrandByIdAsync(Guid errandId)
+        public async Task<ErrandModel>? GetErrandByIdAsync(string errandId)
         {
-            var result = _context.Errands.Include(c => c.Comments).FirstOrDefault(e => e.Id == errandId);
+            var result = _context.Errands.Include(c => c.Comments).Include(t => t.Technician).FirstOrDefault(e => e.Id.ToString() == errandId);
 
             if (result == null)
                 return null!;
@@ -36,27 +37,7 @@ namespace Grupp3_Elevator.Services.Errand
                 return null!;
             return result;
         }
-        //public string CreateErrandAsync(string elevatorId, string Title, string Description, string CreatedBy, Guid TechnicianId)
-        //{
-        //    var elevator = _elevatorService.GetElevatorById(elevatorId);
-
-        //    var errand = new ErrandModel
-        //    {
-        //        Id = Guid.NewGuid(),
-        //        Title = Title,
-        //        Description = Description,
-        //        Status = ErrandStatus.NotStarted,
-        //        CreatedAt = DateTime.Now,
-        //        LastEdited = DateTime.Now,
-        //        CreatedBy = CreatedBy,
-        //        TechnicianId = TechnicianId,
-        //        Comments = new List<ErrandCommentModel>()
-        //    };
-        //    elevator.Errands.Add(errand);
-        //    _context.SaveChanges();
-
-        //    return errand.Id.ToString();
-        //}
+       
 
         public List<ErrandModel> GetErrandsFromElevatorId(string elevatorId)
         {
@@ -71,6 +52,25 @@ namespace Grupp3_Elevator.Services.Errand
             if (result == null)
                 return null!;
             return result.Errands;
+        }
+        
+
+        public async Task<ErrandModel> EditErrandAsync(string errandId, ErrandModel errand, string technicianId)
+        {
+            ErrandModel errandToEdit = await GetErrandByIdAsync(errandId);
+
+            errandToEdit.Title = errand.Title;
+            errandToEdit.Description = errand.Description;
+            errandToEdit.LastEdited = DateTime.Now;
+            errandToEdit.Status = errand.Status;
+            errandToEdit.CreatedBy = errand.CreatedBy;
+            errandToEdit.Technician = _technicianService.GetTechnicianById(Guid.Parse(technicianId));
+
+            _context.SaveChanges();
+
+            return errand;
+
+            //return RedirectToPage("/Errand/ErrandDetails", new { Id = errandId });
         }
 
         public List<SelectListItem> SelectTechnician()
@@ -90,9 +90,17 @@ namespace Grupp3_Elevator.Services.Errand
             return technicians;
         }
 
-        public Task<EditErrandModel> EditErrandAsync(Guid errandId)
+        public List<SelectListItem> SelectTechnicianEdit(string technicianId)
         {
-            throw new NotImplementedException();
+            var technicians = _context.Technicians.Select(t => new SelectListItem
+            {
+                Text = t.Name.ToString(),
+                Value = t.Id.ToString()
+
+            }).OrderBy(t => t.Value != technicianId).ToList();
+
+
+            return technicians;
         }
     }
 }

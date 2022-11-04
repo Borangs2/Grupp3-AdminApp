@@ -31,7 +31,7 @@ public class ErrandModel
     [Column(TypeName = "nvarchar(200)")]
     public string CreatedBy { get; set; }
     [Required]
-    public TechnicianModel Technician { get; set; } = null!;
+    public TechnicianModel Technician { get; set; }
     [Required]
-    public List<ErrandCommentModel> Comments { get; set; } = null!;
+    public List<ErrandCommentModel> Comments { get; set; }
 }
