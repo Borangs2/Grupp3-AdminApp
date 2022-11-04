@@ -6,6 +6,7 @@
 <section>
     <div class="container">
         <h1 class="mb-5">Edit Errand Title</h1>
+        <a asp-page="/Errand/ErrandDetails" asp-route-elevatorId="@Model.Elevator.Id" asp-route-errandId="@Model.Errand.Id" class="btn btn-primary">Return</a>
         <div class="row mb-5">
             <div class="col-4">
                 <div class="container card">
@@ -56,8 +57,5 @@
             </div>
 
         </div>
-    </div>
-    <div>
-        <a asp-page="/Errand/ErrandDetails" asp-route-userId="" class="btn btn-primary">Return</a>
     </div>
 </section>

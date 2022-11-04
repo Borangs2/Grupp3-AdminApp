@@ -53,7 +53,6 @@
         <th>Description</th>
         <th>Status</th>
         <th>Last Edited</th>
-        <th>Created By</th>
         <th>Technician</th>
         <th>Comments</th>
         <th></th>
@@ -67,10 +66,9 @@
             <td>@errand.Title</td>
             <td>@errand.Description</td>
             <td>@errand.Status</td>
-            <td>@errand.LastEdited.Year-@errand.LastEdited.Month-@errand.LastEdited.Day-@errand.LastEdited.TimeOfDay</td>
-            <td>@errand.CreatedBy</td>
+            <td>@errand.LastEdited</td>
             <td>@errand.Technician.Name</td>
-            <td>@errand.Comments</td>
+            <td>@errand.Comments.Count()</td>
             <td><a asp-page="/Errand/ErrandDetails" asp-route-elevatorId="@Model.Elevator.Id" asp-route-errandId="@errand.Id" class="btn btn-primary">Select</a></td>
             <td><a asp-page="/Errand/ErrandEdit" asp-route-elevatorId="@Model.Elevator.Id" asp-route-errandId="@errand.Id" class="btn btn-success">Edit</a></td>
         </tr>

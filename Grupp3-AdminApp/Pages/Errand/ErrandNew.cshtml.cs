@@ -34,11 +34,15 @@ namespace Grupp3_Elevator.Pages.Errand
         public string CreatedBy { get; set; }
         public Guid TechnicianId { get; set; }
         public List<SelectListItem> SelectTechnician { get; set; }
+        public ElevatorDeviceItem Elevator { get; set; }
 
-        
-        public void OnGet()
+
+        public async Task<IActionResult> OnGetAsync(string elevatorId)
         {
+            Elevator = await _elevatorService.GetElevatorDeviceByIdAsync(elevatorId);
+
             SelectTechnician = _errandService.SelectTechnician();
+            return Page();
         }
 
         public IActionResult OnPost(string elevatorId)
