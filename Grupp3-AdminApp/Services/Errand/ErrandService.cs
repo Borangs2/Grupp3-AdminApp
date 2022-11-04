@@ -132,7 +132,6 @@ namespace Grupp3_Elevator.Services.Errand
 
             }).OrderBy(t => t.Value != technicianId).ToList();
 
-
             return technicians;
         }
     }
