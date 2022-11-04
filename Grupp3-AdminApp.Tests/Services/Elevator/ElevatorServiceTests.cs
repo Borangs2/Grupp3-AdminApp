@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +10,7 @@ using Grupp3_Elevator.Data;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.EntityFrameworkCore;
 using Grupp3_Elevator.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace AdminAppTests.Services.Elevator
 {
@@ -33,34 +36,32 @@ namespace AdminAppTests.Services.Elevator
             data.SeedData();
         }
 
+        //NOTE: Do not test any method that uses the IoTHub. It is more work then worth if it is even possible.
+
         [TestMethod]
-        public async Task CheckIfElevatorsIsNotNull_ReturnsNotNull()
+        public void EnsureGetElevatorByIdReturns_ReturnsNotNull()
         {
             //Arrange
 
 
             //Act
-            var result = await _sut.GetElevatorsAsync();
+            var result = _sut.GetElevatorById("5435f3c3-56f7-49da-8ef4-24937f71fd70");
 
             //Assert
             Assert.IsNotNull(result);
-            Assert.IsNotNull(result[0]);
         }
 
-
         [TestMethod]
-        public async Task CheckIfElevatorGetsNonNullId_ReturnsNotEmptyGuid()
+        public void EnsureGetElevatorByIdReturnsAnElevatorModel_ReturnselevatorModel()
         {
             //Arrange
 
 
             //Act
-            var result = await _sut.GetElevatorsAsync();
+            var result = _sut.GetElevatorById("5435f3c3-56f7-49da-8ef4-24937f71fd70");
 
             //Assert
-            Assert.AreNotEqual(Guid.Empty, result[0].Id);
+            Assert.IsInstanceOfType(result, typeof(ElevatorModel));
         }
-
-
     }
 }
