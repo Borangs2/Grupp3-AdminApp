@@ -42,7 +42,6 @@ namespace Grupp3_Elevator.Pages.Errand
         public async Task OnGetAsync(string elevatorId, string errandId)
         {
             Errand = await _errandService.GetErrandByIdAsync(errandId);
-
         }
     }
 }

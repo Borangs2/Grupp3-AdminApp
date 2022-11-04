@@ -6,5 +6,6 @@ namespace Grupp3_Elevator.Services.Technician
     {
         TechnicianModel? GetTechnicianById(Guid technicianId);
         List<TechnicianModel> GetTechnicians();
+        TechnicianModel GetTechnicanFromErrandId(string errandId);
     }
 }
