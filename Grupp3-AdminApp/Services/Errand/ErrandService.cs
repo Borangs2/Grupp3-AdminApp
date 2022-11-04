@@ -9,30 +9,36 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Xml.Linq;
 using Grupp3_Elevator.Pages.Errand;
 using Grupp3_Elevator.Services.Technician;
+using Grupp3_AdminApp.Services.ErrandComment;
 
 namespace Grupp3_Elevator.Services.Errand
 {
     public class ErrandService : IErrandService
     {
         private readonly ApplicationDbContext _context;
-        private readonly ITechnicianService _technicianService;
         private readonly IElevatorService _elevatorService;
+        private readonly ITechnicianService _technicianService;
+        private readonly IErrandCommentService _errandCommentService;
 
-        public ErrandService(ApplicationDbContext context, ITechnicianService technicianService, IElevatorService elevatorService)
+        public ErrandService(ApplicationDbContext context, IElevatorService elevatorService, ITechnicianService technicianService, IErrandCommentService errandCommentService)
         {
-
             _context = context;
-            _technicianService = technicianService;
             _elevatorService = elevatorService;
+            _technicianService = technicianService;
+            _errandCommentService = errandCommentService;
         }
         public async Task<ErrandModel>? GetErrandByIdAsync(string errandId)
-        {
-            var result = _context.Errands.Include(c => c.Comments).Include(t => t.Technician).FirstOrDefault(e => e.Id.ToString() == errandId);
+        {          
+            var result = _context.Errands.Include(c => c.Technician).Include(t => t.Comments).FirstOrDefault(e => e.Id == Guid.Parse(errandId));
+
+            result.Technician = _technicianService.GetTechnicianFromErrandId(errandId);
+            result.Comments = _errandCommentService.GetErrandCommentsFromErrandId(errandId);
 
             if (result == null)
                 return null!;
             return result;
         }
+
         public List<ErrandModel> GetErrands()
         {
             var result = _context.Errands.Include(c => c.Comments).ToList();
@@ -71,7 +77,7 @@ namespace Grupp3_Elevator.Services.Errand
                 CreatedAt = DateTime.Now,
                 LastEdited = DateTime.Now,
                 CreatedBy = CreatedBy,
-                Technician = _technicianService.GetTechnicianById(Guid.Parse(TechnicianId)),
+                Technician = _technicianService.GetTechnicianById(TechnicianId),
                 Comments = new List<ErrandCommentModel>()
             };
             elevator?.Errands.Add(errand);
@@ -90,7 +96,7 @@ namespace Grupp3_Elevator.Services.Errand
             errandToEdit.LastEdited = DateTime.Now;
             errandToEdit.Status = errand.Status;
             errandToEdit.CreatedBy = errand.CreatedBy;
-            errandToEdit.Technician = _technicianService.GetTechnicianById(Guid.Parse(technicianId));
+            errandToEdit.Technician = _technicianService.GetTechnicianById(technicianId);
 
             _context.SaveChanges();
 

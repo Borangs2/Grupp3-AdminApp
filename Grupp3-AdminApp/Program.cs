@@ -1,3 +1,4 @@
+using Grupp3_AdminApp.Services.ErrandComment;
 using Grupp3_Elevator.Data;
 using Grupp3_Elevator.Services;
 using Grupp3_Elevator.Services.Errand;
@@ -11,7 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-    
+
 var connectionString = builder.Configuration.GetConnectionString("DbConnectionString");
 builder.Configuration.AddAzureKeyVault(new Uri(builder.Configuration["KeyVaultUri"]), new DefaultAzureCredential());
 
@@ -22,6 +23,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddTransient<IElevatorService, ElevatorService>();
 builder.Services.AddTransient<IErrandService, ErrandService>();
 builder.Services.AddTransient<ITechnicianService, TechnicianService>();
+builder.Services.AddTransient<IErrandCommentService, ErrandCommentService>();
 
 builder.Services.AddMvc().AddNToastNotifyToastr(new ToastrOptions()
 {
