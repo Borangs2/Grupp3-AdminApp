@@ -42,7 +42,7 @@ namespace Grupp3_Elevator.Pages.Errand
 
         public async Task<IActionResult> OnPost(string errandId)
         {
-            var comments = _errandService.Get
+            //var comments = 
 
             if(ModelState.IsValid)
             {

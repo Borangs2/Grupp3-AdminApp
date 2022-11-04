@@ -34,9 +34,6 @@ namespace Grupp3_Elevator.Services.Errand
             result.Technician = _technicianService.GetTechnicianFromErrandId(errandId);
             result.Comments = _errandCommentService.GetErrandCommentsFromErrandId(errandId);
 
-            result.Technician = _technicianService.GetTechnicanFromErrandId(errandId);
-            result.Comments = _errandCommentService.GetErrandCommentsFromErrandId(errandId);
-
             if (result == null)
                 return null!;
             return result;
