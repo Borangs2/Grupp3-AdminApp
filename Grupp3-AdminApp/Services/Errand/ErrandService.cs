@@ -25,6 +25,9 @@ namespace Grupp3_Elevator.Services.Errand
         {
             var result = _context.Errands.Include(c => c.Comments).Include(t => t.Technician).FirstOrDefault(e => e.Id.ToString() == errandId);
 
+            result.Technician = _technicianService.GetTechnicanFromErrandId(errandId);
+            result.Comments = _errandCommentService.GetErrandCommentsFromErrandId(errandId);
+
             if (result == null)
                 return null!;
             return result;
@@ -55,7 +58,7 @@ namespace Grupp3_Elevator.Services.Errand
         }
         
 
-        public async Task<ErrandModel> EditErrandAsync(string errandId, ErrandModel errand, string technicianId)
+        public async Task<string> EditErrandAsync(string errandId, ErrandModel errand, string technicianId)
         {
             ErrandModel errandToEdit = await GetErrandByIdAsync(errandId);
 
@@ -68,7 +71,8 @@ namespace Grupp3_Elevator.Services.Errand
 
             _context.SaveChanges();
 
-            return errand;
+            var id = errandToEdit.Id.ToString();
+            return id;
 
             //return RedirectToPage("/Errand/ErrandDetails", new { Id = errandId });
         }

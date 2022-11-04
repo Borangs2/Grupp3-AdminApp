@@ -42,16 +42,16 @@ namespace Grupp3_Elevator.Pages.Errand
 
         public async Task<IActionResult> OnPost(string errandId)
         {
-            try
-            {
-                await _errandService.EditErrandAsync(errandId, Errand, TechnicianId.ToString());
+            var comments = _errandService.Get
 
-                return RedirectToPage("/Errand/Index");
-            }
-            catch
+            if(ModelState.IsValid)
             {
-                return Page();
+                var id = await _errandService.EditErrandAsync(errandId, Errand, TechnicianId.ToString());
+
+                return RedirectToPage("ErrandDetails", new { errandId = id });
             }
+
+            return Page();
 
         }
     }
