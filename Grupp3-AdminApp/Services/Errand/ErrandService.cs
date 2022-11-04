@@ -64,7 +64,7 @@ namespace Grupp3_Elevator.Services.Errand
 
             foreach (var errand in result.Errands)
             {
-                errand.Technician = _technicianService.GetTechnicanFromErrandId(errand.Id.ToString());
+                errand.Technician = _technicianService.GetTechnicianFromErrandId(errand.Id.ToString());
                 //errand.Comments = _commentService.GetCommentFromErrandId(errand.Id.ToString());
             }
 
