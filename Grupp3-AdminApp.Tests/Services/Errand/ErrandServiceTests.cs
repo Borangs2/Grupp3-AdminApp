@@ -32,20 +32,19 @@ namespace AdminAppTests.Services.Errand
         }
 
         [TestMethod]
-        public void CreateErrandAsync_Should_Return_ErrandId()
+        public void CreateErrandAsync_ShouldReturnErrandId()
         {
             //ARRANGE
 
             //ACT
             var errandId = _sut.CreateErrandAsync("5435f3c3-56f7-49da-8ef4-24937f71fd70", "TestTitle", "TestDescription", "TestCreatedBy", "62e4a265-ceb7-4254-81f9-7d4a78cfbed8");
             var errand = _sut.GetErrands().Last();
-
             //ASSERT
             Assert.AreEqual(errandId, errand.Id.ToString());
         }
 
         [TestMethod]
-        public void GetErrands_Should_Return_All_Errands()
+        public void GetErrands_ShouldReturnAllErrands()
         {
             //ARRANGE
             var allErrands = _context.Errands.Count();
@@ -53,6 +52,18 @@ namespace AdminAppTests.Services.Errand
             var errands = _sut.GetErrands().Count();
             //ASSERT
             Assert.AreEqual(allErrands,errands);
+        }
+
+        [TestMethod]
+        public void GetErrandByIdAsync_ShouldReturnCorrectErrand()
+        {
+            //ARRANGE
+            var errandIdToCompare = _sut.CreateErrandAsync("5435f3c3-56f7-49da-8ef4-24937f71fd70", "TestTitle", "TestDescription", "TestCreatedBy", "62e4a265-ceb7-4254-81f9-7d4a78cfbed8");
+            //ACT
+            var errand = _sut.GetErrandByIdAsync(errandIdToCompare);
+            var myErrandId = errand.Result.Id.ToString();
+            //ASSERT
+            Assert.AreEqual(errandIdToCompare, myErrandId);
         }
 
         //[TestMethod]
