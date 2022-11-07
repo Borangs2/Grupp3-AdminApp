@@ -4,6 +4,7 @@ using Grupp3_Elevator.Models;
 using Grupp3_Elevator.Services;
 using Grupp3_Elevator.Services.Errand;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -48,19 +49,33 @@ namespace Grupp3_Elevator.Pages.Errand
             return Page();
         }
 
-
+        // TO DO: ModelState, RedirectToPage("ElevatorDetails")
         public async Task<IActionResult> OnPost(string errandId)
         {
             Comments = _errandCommentService.GetErrandCommentsFromErrandId(errandId).ToList();
 
-            if(ModelState.IsValid)
+            try
             {
-                var id = await _errandService.EditErrandAsync(errandId, Errand, TechnicianId.ToString(), Comments);
+                var editedErrandId = await _errandService.EditErrandAsync(errandId, Errand, TechnicianId.ToString(), Comments);
 
-                return RedirectToPage("ErrandDetails", new { errandId = id });
+                return RedirectToPage("/Elevator/Index");
+                
+                //return RedirectToPage("ErrandDetails", new { elevatorId = Elevator.Id, editedErrandId });
             }
+            catch
+            {
 
-            return Page();
+                return Page();
+            }
+            
+            //if(ModelState.IsValid)
+            //{
+            //    var id = await _errandService.EditErrandAsync(errandId, Errand, TechnicianId.ToString(), Comments);
+
+            //    return RedirectToPage("ErrandDetails", new { errandId = id });
+            //}
+
+            //return Page();
 
         }
     }
