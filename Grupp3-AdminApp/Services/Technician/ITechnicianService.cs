@@ -4,7 +4,7 @@ namespace Grupp3_Elevator.Services.Technician
 {
     public interface ITechnicianService
     {
-        TechnicianModel? GetTechnicianById(Guid technicianId);
+        TechnicianModel? GetTechnicianById(string technicianId);
         List<TechnicianModel> GetTechnicians();
         TechnicianModel GetTechnicianFromErrandId(string errandId);
     }

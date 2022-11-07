@@ -20,18 +20,13 @@ namespace Grupp3_Elevator.Pages.Errand
         private readonly IErrandService _errandService;
         private readonly IElevatorService _elevatorService;
         private readonly ITechnicianService _technicianService;
-        private readonly IToastNotification _toastNotification;
 
-        private string elevatorId;
-        private TechnicianModel technician;
-
-        public ErrandNewModel(ApplicationDbContext context, IErrandService errandService, IElevatorService elevatorService, ITechnicianService technicianService, IToastNotification toastNotification)
+        public ErrandNewModel(ApplicationDbContext context, IErrandService errandService, IElevatorService elevatorService, ITechnicianService technicianService)
         {
             _context = context;
             _errandService = errandService;
             _elevatorService = elevatorService;
             _technicianService = technicianService;
-            _toastNotification = toastNotification;
         }
 
         public string Title { get; set; }
@@ -39,47 +34,26 @@ namespace Grupp3_Elevator.Pages.Errand
         public string CreatedBy { get; set; }
         public Guid TechnicianId { get; set; }
         public List<SelectListItem> SelectTechnician { get; set; }
+        public ElevatorDeviceItem Elevator { get; set; }
 
-        
-        public void OnGet()
+
+        public async Task<IActionResult> OnGetAsync(string elevatorId)
         {
-            SelectTechnician = _errandService.SelectTechnician();
-        }
+            Elevator = await _elevatorService.GetElevatorDeviceByIdAsync(elevatorId);
 
-        public IActionResult OnPost(string elevatorId)
-        {
-
-            if (ModelState.IsValid)
-            {
-                var id = CreateErrandAsync(elevatorId, Title, Description, CreatedBy);
-                return RedirectToPage("ErrandDetails", new { errandId = id });
-            }
             SelectTechnician = _errandService.SelectTechnician();
             return Page();
         }
 
-        public string CreateErrandAsync(string elevatorId, string Title, string Description, string CreatedBy)
+        public IActionResult OnPost(string elevatorId)
         {
-            var elevator = _elevatorService.GetElevatorById(elevatorId);
-
-            var errand = new ErrandModel
+            if (ModelState.IsValid)
             {
-                Id = Guid.NewGuid(),
-                Title = Title,
-                Description = Description,
-                Status = ErrandStatus.NotStarted,
-                CreatedAt = DateTime.Now,
-                LastEdited = DateTime.Now,
-                CreatedBy = CreatedBy,
-                Technician = _technicianService.GetTechnicianById(TechnicianId),
-                Comments = new List<ErrandCommentModel>()
-            };
-            elevator?.Errands.Add(errand);
-            _context.SaveChanges();
-            _toastNotification.AddSuccessToastMessage("New errand created!");
-
-            var id = errand.Id.ToString();
-            return id;
+                var id = _errandService.CreateErrandAsync(elevatorId, Title, Description, CreatedBy, TechnicianId.ToString());
+                return RedirectToPage("ErrandDetails", new { elevatorId = elevatorId, errandId = id });
+            }
+            SelectTechnician = _errandService.SelectTechnician();
+            return Page();
         }
     }
 }

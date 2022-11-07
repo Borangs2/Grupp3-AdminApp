@@ -40,7 +40,7 @@ namespace Grupp3_AdminApp.Tests.Services.Technician
 
 
             //Act
-            var result = _sut.GetTechnicianById(Guid.Parse("62e4a265-ceb7-4254-81f9-7d4a78cfbed8"));
+            var result = _sut.GetTechnicianById("62e4a265-ceb7-4254-81f9-7d4a78cfbed8");
 
             //Assert
             Assert.IsInstanceOfType(result, typeof(TechnicianModel));
@@ -52,7 +52,7 @@ namespace Grupp3_AdminApp.Tests.Services.Technician
             //Arrange
 
             //Act
-            var result = _sut.GetTechnicianById(Guid.Parse("62e4a265-ceb7-4254-81f9-7d4a78cfbed8"));
+            var result = _sut.GetTechnicianById("62e4a265-ceb7-4254-81f9-7d4a78cfbed8");
 
             //Assert
             Assert.IsNotNull(result);
@@ -62,13 +62,13 @@ namespace Grupp3_AdminApp.Tests.Services.Technician
         public void EnsureCorrectTechnicianIsReturned_ReturnsCorrectTechnician()
         {
             //Arrange
-            var guid = Guid.Parse("62e4a265-ceb7-4254-81f9-7d4a78cfbed8");
+            var guid = "62e4a265-ceb7-4254-81f9-7d4a78cfbed8";
 
             //Act
             var result = _sut.GetTechnicianById(guid)!;
 
             //Assert
-            Assert.AreEqual(result.Id, guid);
+            Assert.AreEqual(result.Id.ToString(), guid);
         }
 
         [TestMethod]
