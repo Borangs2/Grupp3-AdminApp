@@ -99,10 +99,16 @@ namespace Grupp3_Elevator.Services.Errand
             errandToEdit.Comments = comments;
             errandToEdit.Technician = _technicianService.GetTechnicianById(technicianId);
 
+            _context.Update(errandToEdit);
             _context.SaveChanges();
 
             var id = errandToEdit.Id.ToString();
             return id;
+            
+
+
+            //var id = errandToEdit.Id.ToString();
+            //return id;
 
             //return RedirectToPage("/Errand/ErrandDetails", new { Id = errandId });
         }
@@ -129,7 +135,7 @@ namespace Grupp3_Elevator.Services.Errand
             var technicians = _context.Technicians.Select(t => new SelectListItem
             {
                 Text = t.Name.ToString(),
-                Value = t.Id.ToString()
+                Value = t.Id.ToString(),
 
             }).OrderBy(t => t.Value != technicianId).ToList();
 
