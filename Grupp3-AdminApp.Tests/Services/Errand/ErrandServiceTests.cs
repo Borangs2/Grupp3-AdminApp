@@ -16,28 +16,47 @@ namespace AdminAppTests.Services.Errand
     [TestClass]
     public class ErrandServiceTests
     {
-        private ApplicationDbContext _context;
-        private ErrandService _sut;
-        private readonly ErrandService _errandService;
+        private readonly ApplicationDbContext _context;
+        private readonly ErrandService _sut;
         private readonly IElevatorService _elevatorService;
-        private readonly ITechnicianService _technicianService;
-        private readonly IErrandCommentService _errandCommentService;
 
-        [TestInitialize]
-        public void Initialize()
+        public ErrandServiceTests()
         {
-            var contextOptions = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                .Options;
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase("AdminApp").Options;
+            _context = new ApplicationDbContext(options);
 
-            _context = new ApplicationDbContext(contextOptions);
-            _context.Database.EnsureCreated();
+            _sut = new ErrandService(_context, new ElevatorService(_context), new TechnicianService(_context), new ErrandCommentService(_context));
 
-            _sut = new ErrandService(_context, _elevatorService, _technicianService, _errandCommentService);
+            var data = new TestDataInitializer(_context);
+            data.SeedData();
         }
 
         [TestMethod]
-        public void EditErrand_Should_Return
+        public void CreateErrandAsync_Should_Return_ErrandId()
+        {
+            //ARRANGE
+
+            //ACT
+            var errandId = _sut.CreateErrandAsync("5435f3c3-56f7-49da-8ef4-24937f71fd70", "TestTitle", "TestDescription", "TestCreatedBy", "62e4a265-ceb7-4254-81f9-7d4a78cfbed8");
+            var errand = _sut.GetErrands().Last();
+
+            //ASSERT
+            Assert.AreEqual(errandId, errand.Id.ToString());
+        }
+
+        [TestMethod]
+        public void GetErrands_Should_Return_All_Errands()
+        {
+            //ARRANGE
+            var allErrands = _context.Errands.Count();
+            //ACT
+            var errands = _sut.GetErrands().Count();
+            //ASSERT
+            Assert.AreEqual(allErrands,errands);
+        }
+
+        //[TestMethod]
+        //public void EditErrand_Should_Return
 
         //private readonly ErrandService _errandService;
         //private readonly IElevatorService _elevatorService;
@@ -49,21 +68,5 @@ namespace AdminAppTests.Services.Errand
         //    _context = new ApplicationDbContext(options);
         //    _errandService = new ErrandService(_context, new ElevatorService(_context), new TechnicianService(_context), new ErrandCommentService(_context));
         //}
-
-        [TestMethod]
-        public void CreateErrand_Should_Return_ErrandId()
-        {
-            //ARRANGE
-            var elevator = _elevatorService.GetElevatorById("TestElevatorId");
-            var technician = _technicianService.GetTechnicianById("testTechnician");
-
-            //ACT
-            var errandId = _errandService.CreateErrandAsync(elevator.Id.ToString(), "TestTitle", "TestDescription", "TestCreatedBy", technician);
-            var errand = _errandService.GetErrandByIdAsync(errandId);
-
-            //ASSERT
-            Assert.AreEqual(errandId, errand.Id);
-
-        }
     }
 }
