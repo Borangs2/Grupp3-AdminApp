@@ -16,7 +16,7 @@ namespace AdminAppTests.Services.Errand
     [TestClass]
     public class ErrandServiceTests
     {
-        private readonly ApplicationDbContext _context;
+        private ApplicationDbContext _context;
         private readonly ErrandService _sut;
         private readonly IElevatorService _elevatorService;
 
@@ -32,7 +32,7 @@ namespace AdminAppTests.Services.Errand
         }
 
         [TestMethod]
-        public void CreateErrandAsync_Should_Return_ErrandId()
+        public void CreateErrandAsync_ShouldReturnErrandId()
         {
             //ARRANGE
 
@@ -45,7 +45,7 @@ namespace AdminAppTests.Services.Errand
         }
 
         [TestMethod]
-        public void GetErrands_Should_Return_All_Errands()
+        public void GetErrands_ShouldReturnAllErrands()
         {
             //ARRANGE
             var allErrands = _context.Errands.Count();
@@ -55,18 +55,22 @@ namespace AdminAppTests.Services.Errand
             Assert.AreEqual(allErrands,errands);
         }
 
-        //[TestMethod]
-        //public void EditErrand_Should_Return
+        [TestMethod]
+        public void EditErrand_ReturnsErrandId()
 
-        //private readonly ErrandService _errandService;
-        //private readonly IElevatorService _elevatorService;
-        //private readonly ITechnicianService _technicianService;
+        {
 
-        //public ErrandServiceTests()
-        //{
-        //    var options = new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase("AdminApp").Options;
-        //    _context = new ApplicationDbContext(options);
-        //    _errandService = new ErrandService(_context, new ElevatorService(_context), new TechnicianService(_context), new ErrandCommentService(_context));
-        //}
+
+            //Arrange
+            var errandGuid = Guid.Parse("9f091fd6-9657-4db3-a41c-7bb9e24a43fd");
+            var errandTitle = "Loves test";
+            var errandDescription = "Testar EditErrand";
+
+            //Act
+            var result = _sut.EditErrandAsync();
+
+            //Assert
+            Assert.AreEqual(result.Id, )
+        }
     }
 }
