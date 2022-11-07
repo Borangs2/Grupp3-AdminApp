@@ -1,3 +1,4 @@
+using Grupp3_AdminApp.Services.ErrandComment;
 using Grupp3_Elevator.Data;
 using Grupp3_Elevator.Models;
 using Grupp3_Elevator.Services;
@@ -14,12 +15,14 @@ namespace Grupp3_Elevator.Pages.Errand
         private readonly ApplicationDbContext _context;
         private readonly IElevatorService _elevatorService;
         private readonly IErrandService _errandService;
+        private readonly IErrandCommentService _errandCommentService;
 
-        public ErrandEditModel(ApplicationDbContext context, IElevatorService elevatorService, IErrandService errandService)
+        public ErrandEditModel(ApplicationDbContext context, IElevatorService elevatorService, IErrandService errandService, IErrandCommentService errandCommentService)
         {
             _context = context;
             _elevatorService = elevatorService;
             _errandService = errandService;
+            _errandCommentService = errandCommentService;
         }
 
         
@@ -27,6 +30,7 @@ namespace Grupp3_Elevator.Pages.Errand
         public List<SelectListItem> SelectTechnicianEdit { get; set; }
         public Guid TechnicianId { get; set; }
         public ElevatorDeviceItem Elevator { get; set; }
+        public List<ErrandCommentModel> Comments { get; set; }
 
 
         public async Task<IActionResult> OnGetAsync(string elevatorId, string? errandId)
@@ -47,16 +51,16 @@ namespace Grupp3_Elevator.Pages.Errand
 
         public async Task<IActionResult> OnPost(string errandId)
         {
-            try
-            {
-                await _errandService.EditErrandAsync(errandId, Errand, TechnicianId.ToString());
+            Comments = _errandCommentService.GetErrandCommentsFromErrandId(errandId).ToList();
 
-                return RedirectToPage("/Errand/Index");
-            }
-            catch
+            if(ModelState.IsValid)
             {
-                return Page();
+                var id = await _errandService.EditErrandAsync(errandId, Errand, TechnicianId.ToString(), Comments);
+
+                return RedirectToPage("ErrandDetails", new { errandId = id });
             }
+
+            return Page();
 
         }
     }
