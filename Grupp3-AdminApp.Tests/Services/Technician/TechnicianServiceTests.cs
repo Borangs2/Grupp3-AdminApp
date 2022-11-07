@@ -50,9 +50,10 @@ namespace Grupp3_AdminApp.Tests.Services.Technician
         public void EnsureGetTechnicianByIdReturnsNotNull_ReturnsNotNull()
         {
             //Arrange
+            var guid = "62e4a265-ceb7-4254-81f9-7d4a78cfbed8";
 
             //Act
-            var result = _sut.GetTechnicianById("62e4a265-ceb7-4254-81f9-7d4a78cfbed8");
+            var result = _sut.GetTechnicianById(guid);
 
             //Assert
             Assert.IsNotNull(result);
