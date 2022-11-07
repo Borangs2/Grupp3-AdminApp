@@ -4,8 +4,8 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
 
 trigger:
+- development
 - master
-
 
 pool:
   vmImage: ubuntu-latest
@@ -21,7 +21,7 @@ steps:
   displayName: 'Unit tests'
   inputs:
     command: test
-    projects: 'AdminAppTests/AdminAppTests.csproj'
+    projects: '**/*Tests/*.csproj'
     arguments: '--configuration $(buildConfiguration)'
 
 
