@@ -97,7 +97,7 @@ namespace Grupp3_Elevator.Services.Errand
             errandToEdit.Status = errand.Status;
             errandToEdit.CreatedBy = errand.CreatedBy;
             errandToEdit.Comments = comments;
-            errandToEdit.Technician = _technicianService.GetTechnicianById(technicianId);
+            errandToEdit.Technician = errand.Technician;
 
             _context.SaveChanges();
 
@@ -129,7 +129,7 @@ namespace Grupp3_Elevator.Services.Errand
             var technicians = _context.Technicians.Select(t => new SelectListItem
             {
                 Text = t.Name.ToString(),
-                Value = t.Id.ToString()
+                Value = t.Id.ToString(),
 
             }).OrderBy(t => t.Value != technicianId).ToList();
 
