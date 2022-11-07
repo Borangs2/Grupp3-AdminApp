@@ -97,12 +97,18 @@ namespace Grupp3_Elevator.Services.Errand
             errandToEdit.Status = errand.Status;
             errandToEdit.CreatedBy = errand.CreatedBy;
             errandToEdit.Comments = comments;
-            errandToEdit.Technician = errand.Technician;
+            errandToEdit.Technician = _technicianService.GetTechnicianById(technicianId);
 
+            _context.Update(errandToEdit);
             _context.SaveChanges();
 
             var id = errandToEdit.Id.ToString();
             return id;
+            
+
+
+            //var id = errandToEdit.Id.ToString();
+            //return id;
 
             //return RedirectToPage("/Errand/ErrandDetails", new { Id = errandId });
         }

@@ -49,16 +49,18 @@ namespace Grupp3_Elevator.Pages.Errand
             return Page();
         }
 
-        // TO DO: ModelState
+        // TO DO: ModelState, RedirectToPage("ElevatorDetails")
         public async Task<IActionResult> OnPost(string errandId)
         {
             Comments = _errandCommentService.GetErrandCommentsFromErrandId(errandId).ToList();
 
             try
             {
-                var id = await _errandService.EditErrandAsync(errandId, Errand, TechnicianId.ToString(), Comments);
+                var editedErrandId = await _errandService.EditErrandAsync(errandId, Errand, TechnicianId.ToString(), Comments);
 
-                return RedirectToPage("ErrandDetails", new { errandId = id });
+                return RedirectToPage("/Elevator/Index");
+                
+                //return RedirectToPage("ErrandDetails", new { elevatorId = Elevator.Id, editedErrandId });
             }
             catch
             {
