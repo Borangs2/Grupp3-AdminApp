@@ -39,7 +39,6 @@ namespace AdminAppTests.Services.Errand
             //ACT
             var errandId = _sut.CreateErrandAsync("5435f3c3-56f7-49da-8ef4-24937f71fd70", "TestTitle", "TestDescription", "TestCreatedBy", "62e4a265-ceb7-4254-81f9-7d4a78cfbed8");
             var errand = _sut.GetErrands().Last();
-
             //ASSERT
             Assert.AreEqual(errandId, errand.Id.ToString());
         }
@@ -56,15 +55,19 @@ namespace AdminAppTests.Services.Errand
         }
 
         [TestMethod]
-        public void EditErrand_ReturnsErrandId()
-
+        public void GetErrandByIdAsync_ShouldReturnCorrectErrand()
         {
+            //ARRANGE
+            var errandIdToCompare = _sut.CreateErrandAsync("5435f3c3-56f7-49da-8ef4-24937f71fd70", "TestTitle", "TestDescription", "TestCreatedBy", "62e4a265-ceb7-4254-81f9-7d4a78cfbed8");
+            //ACT
+            var errand = _sut.GetErrandByIdAsync(errandIdToCompare);
+            var myErrandId = errand.Result.Id.ToString();
+            //ASSERT
+            Assert.AreEqual(errandIdToCompare, myErrandId);
+        }
 
-
-            //Arrange
-            var errandGuid = Guid.Parse("9f091fd6-9657-4db3-a41c-7bb9e24a43fd");
-            var errandTitle = "Loves test";
-            var errandDescription = "Testar EditErrand";
+        //[TestMethod]
+        //public void EditErrand_Should_Return
 
             //Act
             var result = _sut.EditErrandAsync();

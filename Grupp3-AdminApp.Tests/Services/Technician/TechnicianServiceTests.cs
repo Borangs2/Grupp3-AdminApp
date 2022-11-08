@@ -104,9 +104,7 @@ namespace Grupp3_AdminApp.Tests.Services.Technician
         public void EnsureGetTechnicianFromErrandIdReturnsNotNull_ReturnsNotNull()
         {
             //Arrange
-            var title = "tested";
-            _context.Errands.FirstOrDefault()!.Title = title;
-            _context.SaveChanges();
+
 
             //Act
             var result = _sut.GetTechnicianFromErrandId("9f091fd6-9657-4db3-a41c-7bb9e24a43fd");
@@ -134,11 +132,11 @@ namespace Grupp3_AdminApp.Tests.Services.Technician
         {
             var errandGuid = Guid.Parse("9f091fd6-9657-4db3-a41c-7bb9e24a43fd");
             var technicianName = "tested";
-            _context.SaveChanges();
 
             //Arrange
             _context.Errands.FirstOrDefault()!.Id = errandGuid;
             _context.Errands.Include(t => t.Technician).FirstOrDefault()!.Technician.Name = technicianName;
+            _context.SaveChanges();
 
             //Act
             var result = _sut.GetTechnicianFromErrandId(errandGuid.ToString())!;
