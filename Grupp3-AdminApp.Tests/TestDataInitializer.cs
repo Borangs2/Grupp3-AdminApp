@@ -38,7 +38,8 @@ namespace AdminAppTests
                             LastEdited = DateTime.Now,
                             CreatedAt = DateTime.Now,
                             CreatedBy = "Philip",
-                            Technician = new TechnicianModel(Guid.Parse("62e4a265-ceb7-4254-81f9-7d4a78cfbed8"), "Namn")
+                            Technician = new TechnicianModel(Guid.Parse("62e4a265-ceb7-4254-81f9-7d4a78cfbed8"), "Namn"),
+                            Comments = new List<ErrandCommentModel>()
                         }
                 }
             });
@@ -58,8 +59,8 @@ namespace AdminAppTests
                             LastEdited = DateTime.Now,
                             CreatedAt = DateTime.Now,
                             CreatedBy = "Philip",
-                            Technician = new TechnicianModel(Guid.Parse("dacf220b-2c9d-4d1a-a867-92a667de2a11"), "Namn")
-
+                            Technician = new TechnicianModel(Guid.Parse("dacf220b-2c9d-4d1a-a867-92a667de2a11"), "Namn"),
+                            Comments = new List<ErrandCommentModel>()
                         }
                     }
                 });
