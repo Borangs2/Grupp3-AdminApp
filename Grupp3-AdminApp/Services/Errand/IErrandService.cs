@@ -5,12 +5,14 @@ namespace Grupp3_Elevator.Services.Errand
 {
     public interface IErrandService
     {
+
         Task<ErrandModel>? GetErrandByIdAsync(string errandId);
         ErrandModel GetErrandById(string errandId);
+
         List<ErrandModel> GetErrands();
         string CreateErrandAsync(string elevatorId, string Title, string Description, string CreatedBy, string TechnicianId);
         List<ErrandModel> GetErrandsFromElevatorId(string elevatorId);
-        Task<ErrandModel> EditErrandAsync(string errandId, ErrandModel errand, string TechnicianId);
+        Task<string> EditErrandAsync(string errandId, ErrandModel errand, string TechnicianId, List<ErrandCommentModel> Comments);
         List<SelectListItem> SelectTechnician();
         List<SelectListItem> SelectTechnicianEdit(string technicianId);
     }

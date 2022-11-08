@@ -27,7 +27,7 @@ namespace Grupp3_Elevator.Services.Errand
             _technicianService = technicianService;
             _errandCommentService = errandCommentService;
         }
-        public async Task<ErrandModel>? GetErrandByIdAsync(string errandId)
+        public ErrandModel GetErrandByIdAsync(string errandId)
         {          
             var result = _context.Errands.Include(a => a.Technician).Include(b => b.Comments).FirstOrDefault(aa => aa.Id == Guid.Parse(errandId));
 
@@ -93,20 +93,28 @@ namespace Grupp3_Elevator.Services.Errand
             return id;
         }
 
-        public async Task<ErrandModel> EditErrandAsync(string errandId, ErrandModel errand, string technicianId)
+        public async Task<string> EditErrandAsync(string errandId, ErrandModel errand, string technicianId, List<ErrandCommentModel> comments)
         {
-            ErrandModel errandToEdit = await GetErrandByIdAsync(errandId);
+            ErrandModel errandToEdit = GetErrandByIdAsync(errandId);
 
             errandToEdit.Title = errand.Title;
             errandToEdit.Description = errand.Description;
             errandToEdit.LastEdited = DateTime.Now;
             errandToEdit.Status = errand.Status;
             errandToEdit.CreatedBy = errand.CreatedBy;
+            errandToEdit.Comments = comments;
             errandToEdit.Technician = _technicianService.GetTechnicianById(technicianId);
 
-            _context.SaveChanges();
+            _context.Update(errandToEdit);
+            await _context.SaveChangesAsync();
 
-            return errand;
+            var id = errandToEdit.Id.ToString();
+            return id;
+            
+
+
+            //var id = errandToEdit.Id.ToString();
+            //return id;
 
             //return RedirectToPage("/Errand/ErrandDetails", new { Id = errandId });
         }
@@ -133,10 +141,9 @@ namespace Grupp3_Elevator.Services.Errand
             var technicians = _context.Technicians.Select(t => new SelectListItem
             {
                 Text = t.Name.ToString(),
-                Value = t.Id.ToString()
+                Value = t.Id.ToString(),
 
             }).OrderBy(t => t.Value != technicianId).ToList();
-
 
             return technicians;
         }
