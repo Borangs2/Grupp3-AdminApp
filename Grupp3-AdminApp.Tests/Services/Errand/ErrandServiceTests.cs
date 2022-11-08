@@ -39,7 +39,7 @@ namespace AdminAppTests.Services.Errand
 
             //ACT
             var errandId = _sut.CreateErrandAsync("5435f3c3-56f7-49da-8ef4-24937f71fd70", "TestTitle", "TestDescription", "TestCreatedBy", "62e4a265-ceb7-4254-81f9-7d4a78cfbed8");
-            var errand = _sut.GetErrands().Last();
+            var errand = _context.Errands.Last();
 
             //ASSERT
             Assert.AreEqual(errandId, errand.Id.ToString());
@@ -52,7 +52,7 @@ namespace AdminAppTests.Services.Errand
 
             //ACT
             var errandId = _sut.CreateErrandAsync("5435f3c3-56f7-49da-8ef4-24937f71fd70", "TestTitle", "TestDescription", "TestCreatedBy", "62e4a265-ceb7-4254-81f9-7d4a78cfbed8");
-            var errand = _sut.GetErrandByIdAsync(errandId);
+            var errand = _context.Errands.Last();
 
             //ASSERT
             Assert.IsInstanceOfType(errand, typeof(ErrandModel));
@@ -87,7 +87,8 @@ namespace AdminAppTests.Services.Errand
         public void GetErrandByIdAsync_ShouldReturnCorrectErrand()
         {
             //ARRANGE
-            var errandIdToCompare = _sut.CreateErrandAsync("5435f3c3-56f7-49da-8ef4-24937f71fd70", "TestTitle", "TestDescription", "TestCreatedBy", "62e4a265-ceb7-4254-81f9-7d4a78cfbed8");
+            var errandToCompare = _context.Errands.FirstOrDefault(e => e.Id.ToString() == "9f091fd6-9657-4db3-a41c-7bb9e24a43fd");
+            var errandIdToCompare = errandToCompare.Id.ToString();
 
             //ACT
             var errand = _sut.GetErrandByIdAsync(errandIdToCompare);
@@ -101,10 +102,11 @@ namespace AdminAppTests.Services.Errand
         public void GetErrandByIdAsync_ShouldReturnErrandModel()
         {
             //ARRANGE
-            var errandId = _sut.CreateErrandAsync("5435f3c3-56f7-49da-8ef4-24937f71fd70", "TestTitle", "TestDescription", "TestCreatedBy", "62e4a265-ceb7-4254-81f9-7d4a78cfbed8");
+            var errandToCompare = _context.Errands.FirstOrDefault(e => e.Id.ToString() == "9f091fd6-9657-4db3-a41c-7bb9e24a43fd");
+            var errandIdToCompare = errandToCompare.Id.ToString();
 
             //ACT
-            var errand = _sut.GetErrandByIdAsync(errandId);
+            var errand = _sut.GetErrandByIdAsync(errandIdToCompare);
 
             //ASSERT
             Assert.IsInstanceOfType(errand, typeof(ErrandModel));
