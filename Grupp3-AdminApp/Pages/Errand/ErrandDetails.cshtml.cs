@@ -30,7 +30,7 @@ namespace Grupp3_Elevator.Pages.Errand
         public async Task OnGetAsync(string elevatorId, string errandId)
         {
             Elevator = await _elevatorService.GetElevatorDeviceByIdAsync(elevatorId);
-            Errand = await _errandService.GetErrandByIdAsync(errandId);
+            Errand = _errandService.GetErrandByIdAsync(errandId);
         }
     }
 }
