@@ -4,16 +4,19 @@ using Grupp3_Elevator.Services.Technician;
 using Grupp3_Elevator.Services;
 using Microsoft.EntityFrameworkCore;
 using Grupp3_Elevator.Services.Errand;
+using System.ComponentModel.Design;
 
 namespace Grupp3_AdminApp.Services.ErrandComment
 {
     public class ErrandCommentService : IErrandCommentService
     {
         private readonly ApplicationDbContext _context;
+        private readonly ITechnicianService _technicianService;
 
-        public ErrandCommentService(ApplicationDbContext context)
+        public ErrandCommentService(ApplicationDbContext context, ITechnicianService technicianService)
         {
             _context = context;
+            _technicianService = technicianService;
         }
 
         public ErrandCommentModel GetCommentsById(string commentId)
@@ -32,18 +35,20 @@ namespace Grupp3_AdminApp.Services.ErrandComment
             return result.Comments;
         }
 
-        public string CreateErrandCommentAsync(ErrandModel errand, string content)
+        public string CreateErrandCommentAsync(ErrandModel errand, string content, string technicianId)
         {
+            var errand1 = _context.Errands.Include(a => a.Comments).FirstOrDefault(b => b.Id == errand.Id);
 
             var errandComment = new ErrandCommentModel
             {
                 Id = Guid.NewGuid(),
                 Content = content,
-                Technician = errand.Technician,
+                Technician = _technicianService.GetTechnicianById(technicianId),
                 PostedAt = DateTime.Now,
             };
-            errand.Comments.Add(errandComment);
-            _context.ErrandComments.Add(errandComment);
+
+            errand1.Comments.Add(errandComment);
+            //_context.ErrandComments.Add(errandComment);
             _context.SaveChanges();
 
             var id = errandComment.Id.ToString();

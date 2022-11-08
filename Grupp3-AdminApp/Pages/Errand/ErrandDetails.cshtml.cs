@@ -9,6 +9,7 @@ using Grupp3_Elevator.Services.Errand;
 using Grupp3_Elevator.Services;
 using Grupp3_Elevator.Services.Technician;
 using Grupp3_AdminApp.Services.ErrandComment;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Grupp3_Elevator.Pages.Errand
 {
@@ -29,18 +30,27 @@ namespace Grupp3_Elevator.Pages.Errand
         public ElevatorDeviceItem Elevator { get; set; }
         public ErrandModel Errand { get; set; }
         public ErrandCommentModel ErrandComment { get; set; }
+        public List<ErrandCommentModel> ErrandComments { get; set; }
+        public List<SelectListItem> SelectTechnician { get; set; }
+        public Guid TechnicianId { get; set; }
+        public string Content { get; set; }
 
         public async Task OnGetAsync(string elevatorId, string errandId)
         {
             Elevator = await _elevatorService.GetElevatorDeviceByIdAsync(elevatorId);
             Errand = _errandService.GetErrandByIdAsync(errandId);
+            ErrandComments = _errandCommentService.GetErrandCommentsFromErrandId(errandId);
+
+            SelectTechnician = _errandService.SelectTechnician();
         }
 
-        public async Task OnPostAsync(string elevatorId, string errandId)
+        public async Task OnPostAsync(string errandId)
         {
             Errand = _errandService.GetErrandByIdAsync(errandId);
+            ErrandComments = _errandCommentService.GetErrandCommentsFromErrandId(errandId);
 
-            var CreateErrandCommentAsync = _errandCommentService.CreateErrandCommentAsync(Errand, ErrandComment.Content);
+            var CreateErrandCommentAsync = _errandCommentService.CreateErrandCommentAsync(Errand, Content, TechnicianId.ToString());
+            //SelectTechnician = _errandService.SelectTechnician();
         }
     }
 }

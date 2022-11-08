@@ -6,12 +6,13 @@ namespace Grupp3_Elevator.Models;
 public class ErrandCommentModel
 {
     [Key]
-    public Guid Id { get; set; } = Guid.NewGuid();
     [Required]
-    [Column(TypeName = "nvarchar(2000)")]
-    public string Content { get; set; }
+    public Guid Id { get; set; }
     [Required]
     [Column(TypeName = "nvarchar(200)")]
+    public string Content { get; set; }
+    [Required]
     public TechnicianModel Technician { get; set; }
-    public DateTime PostedAt { get; set; } = DateTime.Now;
+    [Required]
+    public DateTime PostedAt { get; set; }
 }

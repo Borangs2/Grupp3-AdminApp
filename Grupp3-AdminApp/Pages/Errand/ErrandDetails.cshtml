@@ -39,7 +39,7 @@
         <div class="col">
             <div class="container card">
                 <table class="table">
-                    @foreach (var comment in Model.Errand.Comments)
+                    @foreach (var comment in Model.ErrandComments)
                     {
                         <tr class="d-flex flex-column">
                             <th>(Date: @comment.PostedAt) - (Technician: @comment.Technician.Name) - (Comment ID:@comment.Id)</th>
@@ -52,9 +52,16 @@
                         <table class="table">
                             <tr>
                                 <td>
-                                    <label asp-for="ErrandComment.Content">Title</label>
-                                    <input asp-for="ErrandComment.Content" class="form-control" />
-                                    <span asp-validation-for="ErrandComment.Content" class="field-validation-error"></span>
+                                    <label asp-for="TechnicianId">Technician</label>
+                                    <select class="form-control" asp-for="TechnicianId" asp-items="@Model.SelectTechnician"></select>
+                                    <span asp-validation-for="TechnicianId" class="field-validation-error"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label asp-for="Content">Text</label>
+                                    <input asp-for="Content" class="form-control" />
+                                    <span asp-validation-for="Content" class="field-validation-error"></span>
                                 </td>
                             </tr>
                         </table>
