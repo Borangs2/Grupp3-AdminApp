@@ -6,6 +6,7 @@ namespace Grupp3_AdminApp.Services.ErrandComment
     {
         ErrandCommentModel GetCommentsById(string commentId);
         List<ErrandCommentModel> GetErrandCommentsFromErrandId(string errandId);
+        string CreateErrandCommentAsync(ErrandModel errand, string content);
 
         //ErrandCommentModel GetErrandCommentFromErrandId(string errandId);
 

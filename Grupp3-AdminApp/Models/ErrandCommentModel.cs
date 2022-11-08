@@ -12,7 +12,6 @@ public class ErrandCommentModel
     public string Content { get; set; }
     [Required]
     [Column(TypeName = "nvarchar(200)")]
-    public Guid Author { get; set; }
+    public TechnicianModel Technician { get; set; }
     public DateTime PostedAt { get; set; } = DateTime.Now;
-
 }

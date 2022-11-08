@@ -44,14 +44,13 @@ namespace Grupp3_Elevator.Pages.Errand
             return Page();
         }
 
-
-        public async Task<IActionResult> OnPost(string errandId)
+        public async Task<IActionResult> OnPost(string elevatorId, string errandId)
         {
             try
             {
                 await _errandService.EditErrandAsync(errandId, Errand, TechnicianId.ToString());
 
-                return RedirectToPage("/Errand/Index");
+                return RedirectToPage("/Errand/ErrandDetails", new { elevatorId = elevatorId, errandId = errandId });
             }
             catch
             {
