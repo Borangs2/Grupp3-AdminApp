@@ -38,7 +38,7 @@ namespace Grupp3_Elevator.Pages.Errand
 
         public async Task OnPostAsync(string elevatorId, string errandId)
         {
-            Errand = await _errandService.GetErrandByIdAsync(errandId);
+            Errand = _errandService.GetErrandByIdAsync(errandId);
 
             var CreateErrandCommentAsync = _errandCommentService.CreateErrandCommentAsync(Errand, ErrandComment.Content);
         }

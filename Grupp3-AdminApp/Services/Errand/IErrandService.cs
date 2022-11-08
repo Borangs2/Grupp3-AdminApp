@@ -6,7 +6,7 @@ namespace Grupp3_Elevator.Services.Errand
     public interface IErrandService
     {
 
-        Task<ErrandModel>? GetErrandByIdAsync(string errandId);
+        ErrandModel GetErrandByIdAsync(string errandId);
         ErrandModel GetErrandById(string errandId);
 
         List<ErrandModel> GetErrands();
