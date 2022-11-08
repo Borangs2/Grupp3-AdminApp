@@ -52,7 +52,7 @@ namespace AdminAppTests.Services.Elevator
         }
 
         [TestMethod]
-        public void EnsureGetElevatorByIdReturnsAnElevatorModel_ReturnselevatorModel()
+        public void EnsureGetElevatorByIdReturnsAnElevatorModel_ReturnsElevatorModel()
         {
             //Arrange
 
@@ -62,6 +62,19 @@ namespace AdminAppTests.Services.Elevator
 
             //Assert
             Assert.IsInstanceOfType(result, typeof(ElevatorModel));
+        }
+
+        [TestMethod]
+        public void EnsureGetElevatorByIdReturnsCorrectElevator()
+        {
+            //Arrange
+
+
+            //Act
+            var result = _sut.GetElevatorById("5435f3c3-56f7-49da-8ef4-24937f71fd70");
+
+            //Assert
+            Assert.AreEqual(result.Id.ToString(), "5435f3c3-56f7-49da-8ef4-24937f71fd70");
         }
     }
 }
