@@ -28,7 +28,6 @@ namespace AdminAppTests.Services.Errand
 
             //_errandService = new ErrandService(_context, new ElevatorService(_context), new TechnicianService(_context), new ErrandCommentService(_context));
 
-
             _sut = new ErrandService(_context, new ElevatorService(_context), new TechnicianService(_context), new ErrandCommentService(_context));
 
             var data = new TestDataInitializer(_context);

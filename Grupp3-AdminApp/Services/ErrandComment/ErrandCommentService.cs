@@ -10,12 +10,10 @@ namespace Grupp3_AdminApp.Services.ErrandComment
     public class ErrandCommentService : IErrandCommentService
     {
         private readonly ApplicationDbContext _context;
-        private readonly ITechnicianService _technicianService;
 
-        public ErrandCommentService(ApplicationDbContext context, ITechnicianService technicianService)
+        public ErrandCommentService(ApplicationDbContext context)
         {
             _context = context;
-            _technicianService = technicianService;
         }
 
         public ErrandCommentModel GetCommentsById(string commentId)
