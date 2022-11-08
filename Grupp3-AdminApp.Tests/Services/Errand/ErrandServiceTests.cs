@@ -112,12 +112,12 @@ namespace AdminAppTests.Services.Errand
 
         //[TestMethod]
         //public void EditErrand_Should_Return
-
+        //{
             //Act
-            var result = _sut.EditErrandAsync();
+            //var result = _sut.EditErrandAsync();
 
             //Assert
-            Assert.AreEqual(result.Id, )
-        }
+            //Assert.AreEqual(result.Id, )
+        //}
     }
 }
