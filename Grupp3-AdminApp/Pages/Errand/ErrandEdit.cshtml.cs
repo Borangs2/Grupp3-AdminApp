@@ -37,7 +37,7 @@ namespace Grupp3_Elevator.Pages.Errand
         public async Task<IActionResult> OnGetAsync(string elevatorId, string? errandId)
         {
             Elevator = await _elevatorService.GetElevatorDeviceByIdAsync(elevatorId);
-            Errand = await _errandService.GetErrandByIdAsync(errandId);
+            Errand = _errandService.GetErrandByIdAsync(errandId);
 
             SelectTechnicianEdit = _errandService.SelectTechnicianEdit(Errand.Technician.Id.ToString());
 

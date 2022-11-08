@@ -27,7 +27,7 @@ namespace Grupp3_Elevator.Services.Errand
             _technicianService = technicianService;
             _errandCommentService = errandCommentService;
         }
-        public async Task<ErrandModel>? GetErrandByIdAsync(string errandId)
+        public ErrandModel GetErrandByIdAsync(string errandId)
         {          
             var result = _context.Errands.Include(c => c.Technician).Include(t => t.Comments).FirstOrDefault(e => e.Id == Guid.Parse(errandId));
 
@@ -89,7 +89,7 @@ namespace Grupp3_Elevator.Services.Errand
 
         public async Task<string> EditErrandAsync(string errandId, ErrandModel errand, string technicianId, List<ErrandCommentModel> comments)
         {
-            ErrandModel errandToEdit = await GetErrandByIdAsync(errandId);
+            ErrandModel errandToEdit = GetErrandByIdAsync(errandId);
 
             errandToEdit.Title = errand.Title;
             errandToEdit.Description = errand.Description;
@@ -100,7 +100,7 @@ namespace Grupp3_Elevator.Services.Errand
             errandToEdit.Technician = _technicianService.GetTechnicianById(technicianId);
 
             _context.Update(errandToEdit);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             var id = errandToEdit.Id.ToString();
             return id;

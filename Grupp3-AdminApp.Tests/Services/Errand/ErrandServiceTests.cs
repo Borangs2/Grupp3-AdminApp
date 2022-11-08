@@ -1,5 +1,6 @@
 ﻿using Grupp3_AdminApp.Services.ErrandComment;
 using Grupp3_Elevator.Data;
+using Grupp3_Elevator.Models;
 using Grupp3_Elevator.Services;
 using Grupp3_Elevator.Services.Errand;
 using Grupp3_Elevator.Services.Technician;
@@ -39,8 +40,22 @@ namespace AdminAppTests.Services.Errand
             //ACT
             var errandId = _sut.CreateErrandAsync("5435f3c3-56f7-49da-8ef4-24937f71fd70", "TestTitle", "TestDescription", "TestCreatedBy", "62e4a265-ceb7-4254-81f9-7d4a78cfbed8");
             var errand = _sut.GetErrands().Last();
+
             //ASSERT
             Assert.AreEqual(errandId, errand.Id.ToString());
+        }
+
+        [TestMethod]
+        public void CreateErrandAsync_ShouldCreateErrandModel()
+        {
+            //ARRANGE
+
+            //ACT
+            var errandId = _sut.CreateErrandAsync("5435f3c3-56f7-49da-8ef4-24937f71fd70", "TestTitle", "TestDescription", "TestCreatedBy", "62e4a265-ceb7-4254-81f9-7d4a78cfbed8");
+            var errand = _sut.GetErrandByIdAsync(errandId);
+
+            //ASSERT
+            Assert.IsInstanceOfType(errand, typeof(ErrandModel));
         }
 
         [TestMethod]
@@ -48,10 +63,24 @@ namespace AdminAppTests.Services.Errand
         {
             //ARRANGE
             var allErrands = _context.Errands.Count();
+
             //ACT
             var errands = _sut.GetErrands().Count();
+
             //ASSERT
             Assert.AreEqual(allErrands,errands);
+        }
+
+        [TestMethod]
+        public void GetErrands_ShouldReturnListOfErrandModels()
+        {
+            //ARRANGE
+
+            //ACT
+            var errands = _sut.GetErrands();
+
+            //ASSERT
+            Assert.IsInstanceOfType(errands, typeof(List<ErrandModel>));
         }
 
         [TestMethod]
@@ -59,11 +88,26 @@ namespace AdminAppTests.Services.Errand
         {
             //ARRANGE
             var errandIdToCompare = _sut.CreateErrandAsync("5435f3c3-56f7-49da-8ef4-24937f71fd70", "TestTitle", "TestDescription", "TestCreatedBy", "62e4a265-ceb7-4254-81f9-7d4a78cfbed8");
+            
             //ACT
             var errand = _sut.GetErrandByIdAsync(errandIdToCompare);
-            var myErrandId = errand.Result.Id.ToString();
+            var myErrandId = errand.Id.ToString();
+            
             //ASSERT
             Assert.AreEqual(errandIdToCompare, myErrandId);
+        }
+
+        [TestMethod]
+        public void GetErrandByIdAsync_ShouldReturnErrandModel()
+        {
+            //ARRANGE
+            var errandId = _sut.CreateErrandAsync("5435f3c3-56f7-49da-8ef4-24937f71fd70", "TestTitle", "TestDescription", "TestCreatedBy", "62e4a265-ceb7-4254-81f9-7d4a78cfbed8");
+            
+            //ACT
+            var errand = _sut.GetErrandByIdAsync(errandId);
+            
+            //ASSERT
+            Assert.IsInstanceOfType(errand, typeof(ErrandModel));
         }
 
         //[TestMethod]
