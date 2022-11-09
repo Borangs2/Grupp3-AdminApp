@@ -42,7 +42,7 @@
                     @foreach (var comment in Model.ErrandComments)
                     {
                         <tr class="d-flex flex-column">
-                            <th>(Date: @comment.PostedAt) - (Technician: @comment.Technician.Name) - (Comment ID:@comment.Id)</th>
+                            <th>(Date: @comment.PostedAt) - (Technician: @comment.Author) - (Comment ID:@comment.Id)</th>
                             <td>@comment.Content</td>
                         </tr>
                     }

@@ -37,19 +37,28 @@ namespace Grupp3_AdminApp.Services.ErrandComment
 
         public string CreateErrandCommentAsync(ErrandModel errand, string content, string technicianId)
         {
-            var errand1 = _context.Errands.Include(a => a.Comments).FirstOrDefault(b => b.Id == errand.Id);
+            errand = _context.Errands.Include(a => a.Comments).FirstOrDefault(b => b.Id == errand.Id);
 
             var errandComment = new ErrandCommentModel
             {
                 Id = Guid.NewGuid(),
                 Content = content,
-                Technician = _technicianService.GetTechnicianById(technicianId),
+                Author = Guid.Parse(technicianId),
                 PostedAt = DateTime.Now,
             };
 
-            errand1.Comments.Add(errandComment);
-            //_context.ErrandComments.Add(errandComment);
-            _context.SaveChanges();
+            try
+            {
+
+                errand.Comments.Add(errandComment);
+                //_context.ErrandComments.Add(errandComment);
+                _context.SaveChanges();
+            }
+            catch
+            {
+                return errandComment.Id.ToString();
+            }
+
 
             var id = errandComment.Id.ToString();
             return id;

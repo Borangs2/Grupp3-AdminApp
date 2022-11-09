@@ -9,10 +9,10 @@ public class ErrandCommentModel
     [Required]
     public Guid Id { get; set; }
     [Required]
-    [Column(TypeName = "nvarchar(200)")]
+    [Column(TypeName = "nvarchar(2000)")]
     public string Content { get; set; }
     [Required]
-    public TechnicianModel Technician { get; set; }
+    public Guid Author { get; set; }
     [Required]
     public DateTime PostedAt { get; set; }
 }
