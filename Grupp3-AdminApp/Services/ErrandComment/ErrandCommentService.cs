@@ -23,7 +23,7 @@ namespace Grupp3_AdminApp.Services.ErrandComment
         {
             return _context.ErrandComments.FirstOrDefault(e => e.Id == Guid.Parse(commentId));
         }
-       
+
         public List<ErrandCommentModel> GetComments()
         {
             return _context.ErrandComments.ToList();
@@ -35,33 +35,34 @@ namespace Grupp3_AdminApp.Services.ErrandComment
             return result.Comments;
         }
 
-        public string CreateErrandCommentAsync(ErrandModel errand, string content, string technicianId)
+        public string CreateErrandCommentAsync(string errandId, string content, string technicianId)
         {
-            errand = _context.Errands.Include(a => a.Comments).FirstOrDefault(b => b.Id == errand.Id);
+            var errand = _context.Errands.FirstOrDefault(e => e.Id == Guid.Parse(errandId));
 
-            var errandComment = new ErrandCommentModel
+            var comment = new ErrandCommentModel
             {
                 Id = Guid.NewGuid(),
                 Content = content,
                 Author = Guid.Parse(technicianId),
-                PostedAt = DateTime.Now,
+                PostedAt = DateTime.Now
             };
+            errand?.Comments.Add(comment);
+            _context.SaveChanges();
 
-            try
-            {
+            var id = comment.Id;
+            return id.ToString();
+            //var errandComment = new ErrandCommentModel
+            //{
+            //    Id = Guid.NewGuid(),
+            //    Content = content,
+            //    Author = Guid.Parse(technicianId),
+            //    PostedAt = DateTime.Now,
+            //};
 
-                errand.Comments.Add(errandComment);
-                //_context.ErrandComments.Add(errandComment);
-                _context.SaveChanges();
-            }
-            catch
-            {
-                return errandComment.Id.ToString();
-            }
-
-
-            var id = errandComment.Id.ToString();
-            return id;
+            //errand.Comments.Add(errandComment);
+            ////_context.ErrandComments.Add(errandComment);
+            //_context.SaveChanges();
+            //return errandComment.Id.ToString();
         }
     }
 }
