@@ -54,7 +54,6 @@ namespace Grupp3_Elevator.Services.Errand
                 return null!;
             return result;
         }
-       
 
         public List<ErrandModel> GetErrandsFromElevatorId(string elevatorId)
         {

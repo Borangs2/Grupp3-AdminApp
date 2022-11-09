@@ -25,7 +25,7 @@ namespace Grupp3_AdminApp.Services.ErrandComment
         {
             return _context.ErrandComments.FirstOrDefault(e => e.Id == Guid.Parse(commentId));
         }
-       
+
         public List<ErrandCommentModel> GetComments()
         {
             return _context.ErrandComments.ToList();
