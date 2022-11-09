@@ -12,11 +12,13 @@ namespace Grupp3_AdminApp.Services.ErrandComment
     {
         private readonly ApplicationDbContext _context;
         private readonly ITechnicianService _technicianService;
+        private readonly IErrandService _errandService;
 
-        public ErrandCommentService(ApplicationDbContext context, ITechnicianService technicianService)
+        public ErrandCommentService(ApplicationDbContext context, ITechnicianService technicianService, IErrandService errandService)
         {
             _context = context;
             _technicianService = technicianService;
+            _errandService = errandService;
         }
 
         public ErrandCommentModel GetCommentsById(string commentId)
@@ -35,32 +37,26 @@ namespace Grupp3_AdminApp.Services.ErrandComment
             return result.Comments;
         }
 
-        public string CreateErrandCommentAsync(ErrandModel errand, string content, string technicianId)
+        public string? CreateErrandCommentAsync(string errandId, string content, string technicianId)
         {
-            errand = _context.Errands.Include(a => a.Comments).FirstOrDefault(b => b.Id == errand.Id);
+            var errand = _errandService.GetErrandById(errandId);
+            var technician = _technicianService.GetTechnicianById(technicianId).Id;
 
-            var errandComment = new ErrandCommentModel
+            if (technician == null)
+                return null;
+            
+
+            var comment = new ErrandCommentModel()
             {
-                Id = Guid.NewGuid(),
+                Id = new Guid(),
                 Content = content,
-                Author = Guid.Parse(technicianId),
-                PostedAt = DateTime.Now,
+                Author = technician,
+                PostedAt = DateTime.Now
             };
+            errand.Comments.Add(comment);
+            _context.SaveChanges();
 
-            try
-            {
-
-                errand.Comments.Add(errandComment);
-                //_context.ErrandComments.Add(errandComment);
-                _context.SaveChanges();
-            }
-            catch
-            {
-                return errandComment.Id.ToString();
-            }
-
-
-            var id = errandComment.Id.ToString();
+            var id = errand.Id.ToString();
             return id;
         }
     }

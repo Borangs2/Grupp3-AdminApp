@@ -49,8 +49,8 @@ namespace Grupp3_Elevator.Pages.Errand
             Errand = _errandService.GetErrandByIdAsync(errandId);
             ErrandComments = _errandCommentService.GetErrandCommentsFromErrandId(errandId);
 
-            var CreateErrandCommentAsync = _errandCommentService.CreateErrandCommentAsync(Errand, Content, TechnicianId.ToString());
-            //SelectTechnician = _errandService.SelectTechnician();
+            var CreateErrandCommentAsync = _errandCommentService.CreateErrandCommentAsync(Errand.Id.ToString(), Content, TechnicianId.ToString());
+            SelectTechnician = _errandService.SelectTechnician();
         }
     }
 }
