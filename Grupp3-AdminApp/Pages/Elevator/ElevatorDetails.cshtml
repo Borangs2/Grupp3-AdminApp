@@ -37,6 +37,11 @@
                 <button type="submit" class="btn btn-success">Open</button>
                 <button type="submit" class="btn btn-success">Close</button>
                 <button type="submit" class="btn btn-danger">Reset</button>
+
+                <form method="post" asp-page-handler="TurnOffElevator" asp-route-elevatorId="@Model.Elevator.Id">
+                    <button>OnClickTest</button>
+                </form>
+
             </div>
         </div>
     </div>
