@@ -14,11 +14,13 @@ namespace Grupp3_Elevator.Pages.Elevator
     {
         private readonly IElevatorService _elevatorService;
         private readonly IErrandService _errandService;
+        private readonly IConfiguration _configuration;
 
-        public ElevatorDetailsModel(IElevatorService elevatorService, IErrandService errandService)
+        public ElevatorDetailsModel(IElevatorService elevatorService, IErrandService errandService, IConfiguration configuration)
         {
             _elevatorService = elevatorService;
             _errandService = errandService;
+            _configuration = configuration;
         }
 
         public ElevatorDeviceItem Elevator { get; set; }
@@ -30,14 +32,29 @@ namespace Grupp3_Elevator.Pages.Elevator
 
             Errands = _errandService.GetErrandsFromElevatorId(elevatorId);
         }
+
+        public async Task<IActionResult> OnPostTurnOnElevator(string elevatorId)
+        {
+            try
+            {
+                using ServiceClient serviceClient = ServiceClient.CreateFromConnectionString(_configuration.GetValue<string>("IoTHubConnection"));
+                var directMethod = new CloudToDeviceMethod("TurnOnElevatorDM");
+                var result = await serviceClient.InvokeDeviceMethodAsync(elevatorId, directMethod);
+            }
+            catch { }
+            return RedirectToPage("ElevatorDetails", new { elevatorId = elevatorId });
+        }
+
         public async Task<IActionResult> OnPostTurnOffElevator(string elevatorId)
         {
-            try{
-                using ServiceClient serviceClient = ServiceClient.CreateFromConnectionString("HostName=kyh-shared-iothub.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=/5asl5agNK3raYZNyfkumb0vcsnT+OdUeoUOupOWLQo=");
+            try
+            {
+                using ServiceClient serviceClient = ServiceClient.CreateFromConnectionString(_configuration.GetValue<string>("IoTHubConnection"));
                 var directMethod = new CloudToDeviceMethod("TurnOffElevatorDM");
                 var result = await serviceClient.InvokeDeviceMethodAsync(elevatorId, directMethod);
             }
-            catch { } return RedirectToPage("ElevatorDetails", new { elevatorId = elevatorId });
+            catch { }
+            return RedirectToPage("ElevatorDetails", new { elevatorId = elevatorId });
         }
     }
 }
