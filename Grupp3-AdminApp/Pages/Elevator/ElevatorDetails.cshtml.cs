@@ -32,18 +32,12 @@ namespace Grupp3_Elevator.Pages.Elevator
         }
         public async Task<IActionResult> OnPostTurnOffElevator(string elevatorId)
         {
-            try
-            {
+            try{
                 using ServiceClient serviceClient = ServiceClient.CreateFromConnectionString("HostName=kyh-shared-iothub.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=/5asl5agNK3raYZNyfkumb0vcsnT+OdUeoUOupOWLQo=");
-
                 var directMethod = new CloudToDeviceMethod("TurnOffElevatorDM");
                 var result = await serviceClient.InvokeDeviceMethodAsync(elevatorId, directMethod);
             }
-            catch
-            {
-
-            }
-            return RedirectToPage("ElevatorDetails", new { elevatorId = elevatorId });
+            catch { } return RedirectToPage("ElevatorDetails", new { elevatorId = elevatorId });
         }
     }
 }
