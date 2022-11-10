@@ -4,33 +4,80 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Cryptography;
 using Grupp3_Elevator.Data;
 using Grupp3_Elevator.Services.Errand;
 using Grupp3_Elevator.Services;
 using Grupp3_Elevator.Services.Technician;
 using Grupp3_AdminApp.Services.ErrandComment;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using NToastNotify;
 
 namespace Grupp3_Elevator.Pages.Errand
 {
-    [BindProperties]
     public class ErrandDetailsModel : PageModel
     {
-        private readonly IElevatorService _elevatorService;
+        private readonly ApplicationDbContext _context;
         private readonly IErrandService _errandService;
-
-        public ErrandDetailsModel(IElevatorService elevatorService, IErrandService errandService)
+        private readonly IElevatorService _elevatorService;
+        public ErrandDetailsModel(ApplicationDbContext context, IErrandService errandService, IElevatorService elevatorService)
         {
-            _elevatorService = elevatorService;
+            _context = context;
             _errandService = errandService;
+            _elevatorService = elevatorService;
+        }
+        public Guid ErrandId { get; set; }
+        [BindProperty]
+        public string Content { get; set; }
+        [BindProperty]
+        public Guid TechnicianId { get; set; }
+        [BindProperty]
+        public List<SelectListItem> SelectTechnician { get; set; }
+        public ErrandModel Errand { get; set; }
+        [BindProperty]
+        public ElevatorModel Elevator { get; set; }
+        public List<ErrandCommentModel> Comments { get; set; }
+
+        public string CreateComment(string errandId, string content, string technicianId)
+        {
+            var errand = _errandService.GetErrandById(errandId);
+
+            var comment = new ErrandCommentModel
+            {
+                Id = Guid.NewGuid(),
+                Content = content,
+                Author = Guid.Parse(technicianId),
+                PostedAt = DateTime.Now
+            };
+            errand.Comments.Add(comment);
+            _context.Entry(comment).State = EntityState.Added;
+            _context.SaveChanges();
+
+            var id = comment.Id.ToString();
+            return id;
         }
 
-        public ErrandModel Errand { get; set; }
-        public ElevatorDeviceItem Elevator { get; set; }
-
-        public async Task OnGetAsync(string elevatorId, string errandId)
+        public void OnGet(string errandId)
         {
-            Elevator = await _elevatorService.GetElevatorDeviceByIdAsync(elevatorId);
-            Errand = _errandService.GetErrandByIdAsync(errandId);
+            Errand = _errandService.GetErrandById(errandId);
+
+            SelectTechnician = _errandService.SelectTechnician();
+        }
+
+        public IActionResult OnPost(string errandId)
+        {
+            Errand = _errandService.GetErrandById(errandId);
+
+            if (ModelState.IsValid)
+            {
+                var id = CreateComment( errandId, Content, TechnicianId.ToString());
+                return RedirectToPage("ErrandDetails", new { errandId = Errand.Id.ToString() });
+            }
+            
+            SelectTechnician = _errandService.SelectTechnician();
+            
+            return Page();
         }
     }
 }
