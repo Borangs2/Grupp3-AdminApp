@@ -68,7 +68,7 @@ namespace AdminAppTests.Services.Errand
             var errands = await _sut.GetErrandsAsync();
 
             //ASSERT
-            Assert.AreEqual(allErrands, errands);
+            Assert.AreEqual(allErrands, errands.Count());
         }
 
         [TestMethod]
@@ -124,17 +124,17 @@ namespace AdminAppTests.Services.Errand
             Assert.IsInstanceOfType(errands, typeof(List<ErrandModel>));
         }
 
-        [TestMethod]
-        public async Task EditErrand_ShouldReturnCorrectTypeAsync()
-        {
-            //Arrange
-            var errand = _context.Errands.FirstOrDefault(i => i.Id.ToString() == "9f091fd6-9657-4db3-a41c-7bb9e24a43fd");
+        //[TestMethod]
+        //public async Task EditErrand_ShouldReturnCorrectTypeAsync()
+        //{
+        //    //Arrange
+        //    var errand = _context.Errands.FirstOrDefault(i => i.Id.ToString() == "9f091fd6-9657-4db3-a41c-7bb9e24a43fd");
 
-            //Act
-            var result = await _sut.EditErrandAsync(errand);
+        //    //Act
+        //    var result = await _sut.EditErrandAsync(errand);
 
-            //Assert
-            Assert.IsInstanceOfType(result, typeof(Task<string>));
-        }
+        //    //Assert
+        //    Assert.IsInstanceOfType(result, typeof(Task<string>));
+        //}
     }
 }
