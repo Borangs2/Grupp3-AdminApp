@@ -21,19 +21,26 @@ namespace Grupp3_Elevator.Pages.Errand
         private readonly ApplicationDbContext _context;
         private readonly IErrandService _errandService;
         private readonly IElevatorService _elevatorService;
-        private readonly IErrandCommentService _errandCommentService;
-
-        public ErrandDetailsModel(ApplicationDbContext context, IErrandService errandService, IElevatorService elevatorService, IErrandCommentService errandCommentService)
+        private readonly IToastNotification _toastNotification;
+        
+        public ErrandDetailsModel(ApplicationDbContext context, IErrandService errandService, IElevatorService elevatorService, IToastNotification toastNotification)
         {
             _context = context;
             _errandService = errandService;
             _elevatorService = elevatorService;
-            _errandCommentService = errandCommentService;
+            _toastNotification = toastNotification;
         }
 
         [BindProperty]
         public ElevatorDeviceItem Elevator { get; set; }
         public ErrandModel Errand { get; set; }
+        public ElevatorModel Elevator { get; set; }
+        public List<ErrandCommentModel> Comments { get; set; }
+
+        public string CreateComment(string errandId, string content, string technicianId)
+        {
+            var errand = _errandService.GetErrandById(errandId);
+
 
         public List<SelectListItem> SelectTechnician { get; set; }
         [BindProperty]
@@ -63,14 +70,13 @@ namespace Grupp3_Elevator.Pages.Errand
 
             if (ModelState.IsValid)
             {
-                //CreateComment(Errand, technicianId, content);
-                await _errandCommentService.CreateErrandComment(Errand, ChosenSelectTechnician.ToString(), Content);
+                var id = CreateComment( errandId, Content, TechnicianId.ToString());
+                _toastNotification.AddSuccessToastMessage("Comment successfully saved!");
 
-                //return RedirectToPage("ErrandDetails", new { errandId = Errand.Id.ToString() });
-                //return RedirectToPage("ErrandDetails", new { elevatorId = Elevator.Id, errandId = Errand.Id });
-                return RedirectToPage("ErrandDetails", new { elevatorId, errandId });
+                return RedirectToPage("ErrandDetails", new { errandId = Errand.Id.ToString() });
             }
-            
+
+            _toastNotification.AddErrorToastMessage("Failed to save comment!");
             SelectTechnician = _errandService.SelectTechnician();
             
             return Page();
