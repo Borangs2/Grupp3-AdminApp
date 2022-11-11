@@ -19,14 +19,14 @@ namespace Grupp3_Elevator.Services.Errand
         private readonly ApplicationDbContext _context;
         private readonly IElevatorService _elevatorService;
         private readonly ITechnicianService _technicianService;
-        //private readonly IErrandCommentService _errandCommentService;
+        private readonly IErrandCommentService _errandCommentService;
 
-        public ErrandService(ApplicationDbContext context, IElevatorService elevatorService, ITechnicianService technicianService)
+        public ErrandService(ApplicationDbContext context, IElevatorService elevatorService, ITechnicianService technicianService, IErrandCommentService errandCommentService)
         {
             _context = context;
             _elevatorService = elevatorService;
             _technicianService = technicianService;
-            //_errandCommentService = errandCommentService;
+            _errandCommentService = errandCommentService;
         }
         public ErrandModel GetErrandByIdAsync(string errandId)
         {
@@ -57,6 +57,19 @@ namespace Grupp3_Elevator.Services.Errand
             if (result == null)
                 return null!;
             return result;
+        }
+        public List<ErrandModel> GetErrandsById(string elevatorId)
+        {
+            var result = _context.Elevators.Include(c => c.Errands).FirstOrDefault(e => e.Id == Guid.Parse(elevatorId));
+
+            foreach (var errand in result.Errands)
+            {
+                errand.Technician = _technicianService.GetTechnicianFromErrandId(errand.Id.ToString());
+                errand.Comments = _errandCommentService.GetErrandCommentsFromErrandId(errand.Id.ToString());
+            }
+            if (result == null)
+                return null!;
+            return result.Errands;
         }
 
         public List<ErrandModel> GetErrandsFromElevatorId(string elevatorId)
@@ -98,17 +111,17 @@ namespace Grupp3_Elevator.Services.Errand
         }
 
 
-        public async Task<string> EditErrandAsync(string errandId, ErrandModel errand, TechnicianModel technician, List<ErrandCommentModel> comments)
+        public async Task<string> EditErrandAsync(ErrandModel errand)
         {
-            ErrandModel errandToEdit = GetErrandById(errandId);
+            ErrandModel errandToEdit = GetErrandById(errand.Id.ToString());
 
             errandToEdit.Title = errand.Title;
             errandToEdit.Description = errand.Description;
             errandToEdit.LastEdited = DateTime.Now;
             errandToEdit.Status = errand.Status;
             errandToEdit.CreatedBy = errand.CreatedBy;
-            errandToEdit.Comments = comments;
-            errandToEdit.Technician = technician;
+            errandToEdit.Comments = errand.Comments;
+            errandToEdit.Technician = errand.Technician;
 
             _context.Update(errandToEdit);
             await _context.SaveChangesAsync();

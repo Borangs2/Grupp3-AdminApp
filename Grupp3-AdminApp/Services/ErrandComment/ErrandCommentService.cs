@@ -28,5 +28,21 @@ namespace Grupp3_AdminApp.Services.ErrandComment
             var result = _context.Errands.Include(e => e.Comments).FirstOrDefault(e => e.Id == Guid.Parse(errandId));
             return result.Comments;
         }
+        public async Task<string> CreateErrandComment(ErrandModel errand, string technicianId, string content)
+        {
+            var ErrandComment = new ErrandCommentModel
+            {
+                Id = Guid.NewGuid(),
+                Content = content,
+                Author = Guid.Parse(technicianId),
+                PostedAt = DateTime.Now
+            };
+            errand.Comments.Add(ErrandComment);
+            _context.Entry(ErrandComment).State = EntityState.Added;
+            await _context.SaveChangesAsync();
+
+            var id = ErrandComment.Id.ToString();
+            return id;
+        }
     }
 }
