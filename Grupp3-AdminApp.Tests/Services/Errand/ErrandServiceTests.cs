@@ -65,19 +65,19 @@ namespace AdminAppTests.Services.Errand
             var allErrands = _context.Errands.Count();
 
             //ACT
-            var errands = _sut.GetErrandsAsync();
+            var errands = await _sut.GetErrandsAsync();
 
             //ASSERT
             Assert.AreEqual(allErrands, errands);
         }
 
         [TestMethod]
-        public void GetErrands_ShouldReturnListOfErrandModels()
+        public async Task GetErrands_ShouldReturnListOfErrandModelsAsync()
         {
             //ARRANGE
 
             //ACT
-            var errands = _sut.GetErrandsAsync();
+            var errands = await _sut.GetErrandsAsync();
 
             //ASSERT
             Assert.IsInstanceOfType(errands, typeof(List<ErrandModel>));
@@ -113,28 +113,28 @@ namespace AdminAppTests.Services.Errand
         }
 
         [TestMethod]
-        public void GetErrandsFromElevatorId_ShouldReturnListOfErrandModel()
+        public async Task GetErrandsFromElevatorId_ShouldReturnListOfErrandModelAsync()
         {
             ////ARRANGE
 
             ////ACT
-            //var errands = _sut.GetErrandsFromElevatorId("5435f3c3-56f7-49da-8ef4-24937f71fd70");
+            var errands = await _sut.GetErrandsFromElevatorIdAsync("5435f3c3-56f7-49da-8ef4-24937f71fd70");
 
             ////ASSERT
-            //Assert.IsInstanceOfType(errands, typeof(List<ErrandModel>));
+            Assert.IsInstanceOfType(errands, typeof(List<ErrandModel>));
         }
 
-        //[TestMethod]
-        //public void EditErrand_ShouldReturnCorrectType()
-        //{
-        //    //Arrange
-        //    var errand = _context.Errands.FirstOrDefault(i => i.Id.ToString() == "9f091fd6-9657-4db3-a41c-7bb9e24a43fd");
+        [TestMethod]
+        public async Task EditErrand_ShouldReturnCorrectTypeAsync()
+        {
+            //Arrange
+            var errand = _context.Errands.FirstOrDefault(i => i.Id.ToString() == "9f091fd6-9657-4db3-a41c-7bb9e24a43fd");
 
-        //    //Act
-        //    var result = _sut.EditErrandAsync(errand.Id.ToString(), errand, "dacf220b-2c9d-4d1a-a867-92a667de2a11", new List<ErrandCommentModel> { } );
+            //Act
+            var result = await _sut.EditErrandAsync(errand);
 
-        //    //Assert
-        //    Assert.IsInstanceOfType(result, typeof(Task<string>));
-        //}
+            //Assert
+            Assert.IsInstanceOfType(result, typeof(Task<string>));
+        }
     }
 }
