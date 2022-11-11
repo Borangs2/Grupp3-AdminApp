@@ -48,9 +48,9 @@
                 <div class="mx-auto">
                     <form method="post">
                         <div class="form-group">
-                            <label asp-for="TechnicianId">Technician</label>
-                            <select class="form-control" asp-for="TechnicianId" asp-items="@Model.SelectTechnician"></select>
-                            <span asp-validation-for="TechnicianId" class="field-validation-error"></span>
+                            <label asp-for="ChosenSelectTechnician">Technician</label>
+                            <select class="form-control" asp-for="ChosenSelectTechnician" asp-items="@Model.SelectTechnician"></select>
+                            <span asp-validation-for="ChosenSelectTechnician" class="field-validation-error"></span>
                         </div>
                         <div class="form-group text-center">
                             <textarea asp-for="Content" class="form-control mt-3" placeholder="Write comment here..." cols="70" rows="4"></textarea>

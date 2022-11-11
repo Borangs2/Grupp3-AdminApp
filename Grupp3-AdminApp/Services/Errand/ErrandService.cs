@@ -28,29 +28,19 @@ namespace Grupp3_Elevator.Services.Errand
             _technicianService = technicianService;
             _errandCommentService = errandCommentService;
         }
-        public ErrandModel GetErrandByIdAsync(string errandId)
+        public async Task<ErrandModel> GetErrandByIdAsync(string errandId)
         {
-            var result = _context.Errands.Include(a => a.Technician).Include(b => b.Comments).FirstOrDefault(aa => aa.Id.ToString() == errandId);
+            var result = _context.Errands.Include(a => a.Technician).Include(b => b.Comments).FirstOrDefault(aa => aa.Id == Guid.Parse(errandId));
 
             result.Technician = _technicianService.GetTechnicianFromErrandId(errandId);
-            result.Comments = _context.ErrandComments.Select(c => c).Where(c => c.Id == result.Id).ToList();
+            result.Comments = await _errandCommentService.GetErrandCommentsFromErrandId(errandId);
 
             if (result == null)
                 return null!;
             return result;
         }
 
-        public ErrandModel GetErrandById(string errandId)
-        {
-            var result = _context.Errands
-                .Include(e => e.Comments)
-                .Include(e => e.Technician)
-                .FirstOrDefault(e => e.Id == Guid.Parse(errandId));
-
-            return result;
-        }
-
-        public List<ErrandModel> GetErrands()
+        public async Task<List<ErrandModel>> GetErrandsAsync()
         {
             var result = _context.Errands.Include(c => c.Comments).ToList();
 
@@ -58,30 +48,16 @@ namespace Grupp3_Elevator.Services.Errand
                 return null!;
             return result;
         }
-        public List<ErrandModel> GetErrandsById(string elevatorId)
+
+        public async Task<List<ErrandModel>> GetErrandsFromElevatorIdAsync(string elevatorId)
         {
             var result = _context.Elevators.Include(c => c.Errands).FirstOrDefault(e => e.Id == Guid.Parse(elevatorId));
 
             foreach (var errand in result.Errands)
             {
                 errand.Technician = _technicianService.GetTechnicianFromErrandId(errand.Id.ToString());
-                errand.Comments = _errandCommentService.GetErrandCommentsFromErrandId(errand.Id.ToString());
+                errand.Comments = await _errandCommentService.GetErrandCommentsFromErrandId(errand.Id.ToString());
             }
-            if (result == null)
-                return null!;
-            return result.Errands;
-        }
-
-        public List<ErrandModel> GetErrandsFromElevatorId(string elevatorId)
-        {
-            var result = _context.Elevators.Include(c => c.Errands).FirstOrDefault(e => e.Id == Guid.Parse(elevatorId));
-
-            foreach (var errand in result.Errands)
-            {
-                errand.Technician = _technicianService.GetTechnicianFromErrandId(errand.Id.ToString());
-                errand.Comments = _context.ErrandComments.Select(c => c).Where(c => c.Id == errand.Id).ToList();
-            }
-
             if (result == null)
                 return null!;
             return result.Errands;
@@ -111,9 +87,9 @@ namespace Grupp3_Elevator.Services.Errand
         }
 
 
-        public async Task<string> EditErrandAsync(ErrandModel errand)
+        public async Task<ErrandModel> EditErrandAsync(ErrandModel errand)
         {
-            ErrandModel errandToEdit = GetErrandById(errand.Id.ToString());
+            ErrandModel errandToEdit = await GetErrandByIdAsync(errand.Id.ToString());
 
             errandToEdit.Title = errand.Title;
             errandToEdit.Description = errand.Description;
@@ -126,8 +102,7 @@ namespace Grupp3_Elevator.Services.Errand
             _context.Update(errandToEdit);
             await _context.SaveChangesAsync();
 
-            var id = errandToEdit.Id.ToString();
-            return id;
+            return errandToEdit;
         }
 
         public List<SelectListItem> SelectTechnician()

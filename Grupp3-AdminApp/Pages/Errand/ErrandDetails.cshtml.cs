@@ -31,21 +31,21 @@ namespace Grupp3_Elevator.Pages.Errand
             _errandCommentService = errandCommentService;
         }
 
-
+        [BindProperty]
         public ElevatorDeviceItem Elevator { get; set; }
- 
         public ErrandModel Errand { get; set; }
 
-
-        public Guid TechnicianId { get; set; }
-        public string Content { get; set; }
         public List<SelectListItem> SelectTechnician { get; set; }
-        public List<ErrandCommentModel> Comments { get; set; }
+        [BindProperty]
+        public Guid ChosenSelectTechnician { get; set; }
+
+        [BindProperty]
+        public string Content { get; set; }
 
         public async Task<IActionResult> OnGetAsync(string elevatorId, string errandId)
         {
             Elevator = await _elevatorService.GetElevatorDeviceByIdAsync(elevatorId);
-            Errand = _errandService.GetErrandById(errandId);
+            Errand = await _errandService.GetErrandByIdAsync(errandId);
 
             SelectTechnician = _errandService.SelectTechnician();
 
@@ -57,19 +57,18 @@ namespace Grupp3_Elevator.Pages.Errand
             return Page();
         }
 
-        public async Task<IActionResult> OnPost(string elevatorId, string errandId, string technicianId, string content)
+        public async Task<IActionResult> OnPostAsync(string elevatorId, string errandId)
         {
-            Errand = _errandService.GetErrandById(errandId);
-            
+            Errand = await _errandService.GetErrandByIdAsync(errandId);
 
             if (ModelState.IsValid)
             {
                 //CreateComment(Errand, technicianId, content);
-                await _errandCommentService.CreateErrandComment(Errand, technicianId, content);
+                await _errandCommentService.CreateErrandComment(Errand, ChosenSelectTechnician.ToString(), Content);
 
                 //return RedirectToPage("ErrandDetails", new { errandId = Errand.Id.ToString() });
                 //return RedirectToPage("ErrandDetails", new { elevatorId = Elevator.Id, errandId = Errand.Id });
-                return RedirectToPage("ErrandDetails", new { elevatorId, errandId = Errand.Id });
+                return RedirectToPage("ErrandDetails", new { elevatorId, errandId });
             }
             
             SelectTechnician = _errandService.SelectTechnician();

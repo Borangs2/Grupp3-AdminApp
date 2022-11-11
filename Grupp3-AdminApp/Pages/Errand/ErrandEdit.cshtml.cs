@@ -32,13 +32,14 @@ namespace Grupp3_Elevator.Pages.Errand
         public ElevatorDeviceItem Elevator { get; set; }
         [BindProperty]
         public ErrandModel Errand { get; set; }
+
         public List<SelectListItem> SelectTechnicianEdit { get; set; }
 
 
-        public async Task<IActionResult> OnGetAsync(string elevatorId, string? errandId)
+        public async Task<IActionResult> OnGetAsync(string elevatorId, string errandId)
         {
             Elevator = await _elevatorService.GetElevatorDeviceByIdAsync(elevatorId);
-            Errand = _errandService.GetErrandById(errandId);
+            Errand = await _errandService.GetErrandByIdAsync(errandId);
 
             SelectTechnicianEdit = _errandService.SelectTechnicianEdit(Errand.Technician.Id.ToString());
 
@@ -54,6 +55,7 @@ namespace Grupp3_Elevator.Pages.Errand
         public async Task<IActionResult> OnPost(string elevatorId)
         {
             Errand.Technician = _technicianService.GetTechnicianById(Errand.Technician.Id.ToString());
+            Errand.Comments = await _errandCommentService.GetErrandCommentsFromErrandId(Errand.Id.ToString());
 
             if (ModelState.IsValid)
             {
