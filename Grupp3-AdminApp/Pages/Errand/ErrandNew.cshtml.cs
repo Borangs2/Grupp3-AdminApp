@@ -20,15 +20,13 @@ namespace Grupp3_Elevator.Pages.Errand
         private readonly IErrandService _errandService;
         private readonly IElevatorService _elevatorService;
         private readonly ITechnicianService _technicianService;
-        private readonly IToastNotification _toastNotification;
 
-        public ErrandNewModel(ApplicationDbContext context, IErrandService errandService, IElevatorService elevatorService, ITechnicianService technicianService, IToastNotification toastNotification)
+        public ErrandNewModel(ApplicationDbContext context, IErrandService errandService, IElevatorService elevatorService, ITechnicianService technicianService)
         {
             _context = context;
             _errandService = errandService;
             _elevatorService = elevatorService;
             _technicianService = technicianService;
-            _toastNotification = toastNotification;
         }
 
         public string Title { get; set; }
@@ -51,15 +49,9 @@ namespace Grupp3_Elevator.Pages.Errand
         {
             if (ModelState.IsValid)
             {
-                var id = _errandService.CreateErrandAsync(elevatorId, Title, Description, CreatedBy, TechnicianId.ToString());
-                _toastNotification.AddSuccessToastMessage("Errand created successfully!");
-
+                var id = _errandService.CreateErrandAsync(elevatorId, Title, Description, CreatedBy, ChosenSelectTechnician.ToString());
                 return RedirectToPage("ErrandDetails", new { elevatorId = elevatorId, errandId = id });
             }
-
-            _toastNotification.AddErrorToastMessage("Failed to create errand!");
-            SelectTechnician = _errandService.SelectTechnician();
-
             return Page();
         }
     }
