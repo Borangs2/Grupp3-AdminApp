@@ -26,17 +26,24 @@
 
         <div class="col-8 border">
             <div class="bg-transparent col-6">
-                <form>
+                <form method="post" asp-page-handler="ChangeLevel" asp-route-elevatorId="@Model.Elevator.Id" asp-route-targetLevel="0">
                     <button type="submit" class="btn btn-primary">E</button>
                 </form>
                 <form method="post" asp-page-handler="ChangeLevel" asp-route-elevatorId="@Model.Elevator.Id" asp-route-targetLevel="1">
                     <button type="submit" class="btn btn-primary">1</button>
                 </form>
-                
-                <button type="submit" class="btn btn-primary">2</button>
-                <button type="submit" class="btn btn-primary">3</button>
-                <button type="submit" class="btn btn-primary">4</button>
-                <button type="submit" class="btn btn-primary">5</button>
+                <form method="post" asp-page-handler="ChangeLevel" asp-route-elevatorId="@Model.Elevator.Id" asp-route-targetLevel="2">
+                    <button type="submit" class="btn btn-primary">2</button>
+                </form>
+                <form method="post" asp-page-handler="ChangeLevel" asp-route-elevatorId="@Model.Elevator.Id" asp-route-targetLevel="3">
+                    <button type="submit" class="btn btn-primary">3</button>
+                </form>
+                <form method="post" asp-page-handler="ChangeLevel" asp-route-elevatorId="@Model.Elevator.Id" asp-route-targetLevel="4">
+                    <button type="submit" class="btn btn-primary">4</button>
+                </form>
+                <form method="post" asp-page-handler="ChangeLevel" asp-route-elevatorId="@Model.Elevator.Id" asp-route-targetLevel="5">
+                    <button type="submit" class="btn btn-primary">5</button>
+                </form>
             </div>
             <div>
                 <form method="post" asp-page-handler="OpenDoors" asp-route-elevatorId="@Model.Elevator.Id">
