@@ -22,6 +22,7 @@ namespace Grupp3_Elevator.Pages.Errand
         private readonly IErrandService _errandService;
         private readonly IElevatorService _elevatorService;
         private readonly IToastNotification _toastNotification;
+        
         public ErrandDetailsModel(ApplicationDbContext context, IErrandService errandService, IElevatorService elevatorService, IToastNotification toastNotification)
         {
             _context = context;
@@ -29,15 +30,10 @@ namespace Grupp3_Elevator.Pages.Errand
             _elevatorService = elevatorService;
             _toastNotification = toastNotification;
         }
-        public Guid ErrandId { get; set; }
-        [BindProperty]
-        public string Content { get; set; }
-        [BindProperty]
-        public Guid TechnicianId { get; set; }
-        [BindProperty]
-        public List<SelectListItem> SelectTechnician { get; set; }
-        public ErrandModel Errand { get; set; }
 
+        [BindProperty]
+        public ElevatorDeviceItem Elevator { get; set; }
+        public ErrandModel Errand { get; set; }
         public ElevatorModel Elevator { get; set; }
         public List<ErrandCommentModel> Comments { get; set; }
 
@@ -45,31 +41,32 @@ namespace Grupp3_Elevator.Pages.Errand
         {
             var errand = _errandService.GetErrandById(errandId);
 
-            var comment = new ErrandCommentModel
-            {
-                Id = Guid.NewGuid(),
-                Content = content,
-                Author = Guid.Parse(technicianId),
-                PostedAt = DateTime.Now
-            };
-            errand.Comments.Add(comment);
-            _context.Entry(comment).State = EntityState.Added;
-            _context.SaveChanges();
 
-            var id = comment.Id.ToString();
-            return id;
-        }
+        public List<SelectListItem> SelectTechnician { get; set; }
+        [BindProperty]
+        public Guid ChosenSelectTechnician { get; set; }
 
-        public void OnGet(string errandId)
+        [BindProperty]
+        public string Content { get; set; }
+
+        public async Task<IActionResult> OnGetAsync(string elevatorId, string errandId)
         {
-            Errand = _errandService.GetErrandById(errandId);
+            Elevator = await _elevatorService.GetElevatorDeviceByIdAsync(elevatorId);
+            Errand = await _errandService.GetErrandByIdAsync(errandId);
 
             SelectTechnician = _errandService.SelectTechnician();
+
+            if (Errand == null)
+            {
+                return NotFound();
+            }
+
+            return Page();
         }
 
-        public IActionResult OnPost(string errandId)
+        public async Task<IActionResult> OnPostAsync(string elevatorId, string errandId)
         {
-            Errand = _errandService.GetErrandById(errandId);
+            Errand = await _errandService.GetErrandByIdAsync(errandId);
 
             if (ModelState.IsValid)
             {

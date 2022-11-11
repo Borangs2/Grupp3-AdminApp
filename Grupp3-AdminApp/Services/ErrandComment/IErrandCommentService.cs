@@ -4,10 +4,9 @@ namespace Grupp3_AdminApp.Services.ErrandComment
 {
     public interface IErrandCommentService
     {
-        ErrandCommentModel GetCommentsById(string commentId);
-        List<ErrandCommentModel> GetErrandCommentsFromErrandId(string errandId);
-
-        //ErrandCommentModel GetErrandCommentFromErrandId(string errandId);
-
+        Task<ErrandCommentModel> GetErrandCommentsByIdAsync(string commentId);
+        Task<List<ErrandCommentModel>> GetErrandComments();
+        Task<List<ErrandCommentModel>> GetErrandCommentsFromErrandId(string errandId);
+        Task<ErrandCommentModel> CreateErrandComment(ErrandModel errand, string chosenSelectTechnician, string content);
     }
 }
