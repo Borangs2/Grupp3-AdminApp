@@ -26,7 +26,8 @@ namespace Grupp3_Elevator.Pages.Elevator
         public async Task OnGetAsync(string elevatorId)
         {
             Elevator = await _elevatorService.GetElevatorDeviceByIdAsync(elevatorId);
-            Errands = await _errandService.GetErrandsFromElevatorIdAsync(elevatorId);
+
+            Errands = _errandService.GetErrandsFromElevatorId(elevatorId);
         }
     }
 }

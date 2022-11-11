@@ -20,10 +20,9 @@ namespace Grupp3_Elevator.Pages.Errand
 
         public List<ErrandModel> Errands { get; set; }
 
-        public async Task<IActionResult> OnGetAsync()
+        public void OnGet()
         {
-            Errands = await _errandService.GetErrandsAsync();
-            return Page();
+            Errands = _errandService.GetErrands();
         }
     }
 }

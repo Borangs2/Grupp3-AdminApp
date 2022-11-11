@@ -5,10 +5,8 @@
 
 <section>
     <div class="container">
-        <h1 class="mb-5">
-            Edit Errand
-            <a asp-page="/Errand/ErrandDetails" asp-route-elevatorId="@Model.Elevator.Id" asp-route-errandId="@Model.Errand.Id" class="btn btn-primary">Return</a>
-        </h1>
+        <h1 class="mb-5">Edit Errand Title</h1>
+        <a asp-page="/Errand/ErrandDetails" asp-route-elevatorId="@Model.Elevator.Id" asp-route-errandId="@Model.Errand.Id" class="btn btn-primary">Return</a>
         <div class="row mb-5">
             <div class="col-4">
                 <div class="container card">
@@ -33,17 +31,12 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <label asp-for="@Model.Errand.Technician.Id">Technician</label>
-                                    <select class="form-control" asp-for="@Model.Errand.Technician.Id" asp-items="@Model.SelectTechnicianEdit"></select>
-                                    @*<select hidden class="form-control" asp-for="@Model.Errand.Technician.Name" asp-items="@Model.SelectTechnicianEdit"></select>*@
-                                    <span asp-validation-for="@Model.Errand.Technician.Id" class="field-validation-error"></span>
+                                    <label asp-for="@Model.TechnicianId">Technician</label>
+                                    <select class="form-control" asp-for="@Model.TechnicianId" asp-items="@Model.SelectTechnicianEdit">
+                                    </select>
+                                    <span asp-validation-for="@Model.TechnicianId" class="field-validation-error"></span>
                                 </td>
                             </tr>
-@*                            <tr>
-                                <td>
-                                    <select asp-for="@Model.Errand.Technician.Name" asp-items="@Model.SelectTechnicianEdit"></select>
-                                </td>
-                            </tr>*@
                             <tr>
                                 <td>
                                     <label asp-for="@Model.Errand.CreatedBy">Created by</label>
@@ -60,7 +53,7 @@
                             <h4 class="mt-3">Description</h4>
                             <textarea asp-for="@Model.Errand.Description" class="form-control mt-3" placeholder="Write description here..." cols="80" rows="10"></textarea>
                             <div>
-                                <button asp-route-elevatorId="@Model.Elevator.Id" asp-route-errandId="@Model.Errand.Id" class="mt-3 mb-3 btn btn-primary" type="submit">Save</button>
+                                <button class="mt-3 mb-3 btn btn-primary" type="submit">Save</button>
                             </div>
                         </div>
                     </form>
