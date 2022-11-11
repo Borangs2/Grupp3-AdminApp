@@ -9,45 +9,45 @@
             New Errand
             <a asp-page="/Elevator/ElevatorDetails" asp-route-elevatorId="@Model.Elevator.Id" class="btn btn-primary">Return</a>
         </h1>
-        <div class="row mb-5">
-            <div class="col">
-                <div class="container card">
-                    <h4 class="mt-3">Info</h4>
-                    <form method="post">
-                        <table class="table">
-                            <tr>
-                                <td>
-                                    <label asp-for="Title">Title</label>
-                                    <input asp-for="Title" class="form-control"/>
-                                    <span asp-validation-for="Title" class="field-validation-error"></span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label asp-for="Description">Description</label>
-                                    <input asp-for="Description" class="form-control"/>
-                                    <span asp-validation-for="Description" class="field-validation-error"></span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label asp-for="CreatedBy">Created by</label>
-                                    <input asp-for="CreatedBy" class="form-control"/>
-                                    <span asp-validation-for="CreatedBy" class="field-validation-error"></span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label asp-for="ChosenSelectTechnician">Technician</label>
-                                    <select class="form-control" asp-for="ChosenSelectTechnician" asp-items="@Model.SelectTechnician"></select>
-                                    <span asp-validation-for="ChosenSelectTechnician" class="field-validation-error"></span>
-                                </td>
-                            </tr>
-                        </table>
-                        <button @*asp-route-elevatorId=""*@ class="mt-3 mb-3 btn btn-primary" type="submit">Save</button>
-                    </form>
-                </div>
+    <div class="row mb-5">
+        <div class="col">
+            <div class="container card">
+                <h4 class="mt-3">Info</h4>
+                <form method="post">
+                    <table class="table">
+                        <tr>
+                            <td>
+                                <label asp-for="Title">Title</label>
+                                <input asp-for="Title" class="form-control" />
+                                <span asp-validation-for="Title" class="field-validation-error"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label asp-for="Description">Description</label>
+                                <input asp-for="Description" class="form-control" />
+                                <span asp-validation-for="Description" class="field-validation-error"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label asp-for="CreatedBy">Created by</label>
+                                <input asp-for="CreatedBy" class="form-control" />
+                                <span asp-validation-for="Title" class="field-validation-error"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label asp-for="TechnicianId">Technician</label>
+                                <select class="form-control" asp-for="TechnicianId" asp-items="@Model.SelectTechnician"></select>
+                                <span asp-validation-for="TechnicianId" class="field-validation-error"></span>
+                            </td>
+                        </tr>
+                    </table>
+                    <button @*asp-route-elevatorId=""*@ class="mt-3 mb-3 btn btn-primary" type="submit">Save</button>
+                </form>
             </div>
         </div>
+    </div>
     </div>
 </section>

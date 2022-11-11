@@ -67,6 +67,7 @@ namespace Grupp3_Elevator.Migrations
             modelBuilder.Entity("Grupp3_Elevator.Models.ErrandModel", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
@@ -113,6 +114,7 @@ namespace Grupp3_Elevator.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(200)");
 
                     b.HasKey("Id");

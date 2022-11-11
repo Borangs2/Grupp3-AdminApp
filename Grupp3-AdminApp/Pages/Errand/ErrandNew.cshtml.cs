@@ -29,15 +29,13 @@ namespace Grupp3_Elevator.Pages.Errand
             _technicianService = technicianService;
         }
 
-        [BindProperty]
-        public ElevatorDeviceItem Elevator { get; set; }
-
-        public List<SelectListItem> SelectTechnician { get; set; }
-        public Guid ChosenSelectTechnician { get; set; }
-
         public string Title { get; set; }
         public string Description { get; set; }
         public string CreatedBy { get; set; }
+        public Guid TechnicianId { get; set; }
+        public List<SelectListItem> SelectTechnician { get; set; }
+        public ElevatorDeviceItem Elevator { get; set; }
+
 
         public async Task<IActionResult> OnGetAsync(string elevatorId)
         {
@@ -47,11 +45,11 @@ namespace Grupp3_Elevator.Pages.Errand
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(string elevatorId)
+        public IActionResult OnPost(string elevatorId)
         {
             if (ModelState.IsValid)
             {
-                var id = _errandService.CreateErrandAsync(elevatorId, Title, Description, CreatedBy, ChosenSelectTechnician.ToString());
+                var id = _errandService.CreateErrandAsync(elevatorId, Title, Description, CreatedBy, TechnicianId.ToString());
                 return RedirectToPage("ErrandDetails", new { elevatorId = elevatorId, errandId = id });
             }
             return Page();
