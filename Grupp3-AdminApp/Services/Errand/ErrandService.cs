@@ -98,7 +98,7 @@ namespace Grupp3_Elevator.Services.Errand
         }
 
 
-        public async Task<string> EditErrandAsync(string errandId, ErrandModel errand, string technicianId, List<ErrandCommentModel> comments)
+        public async Task<string> EditErrandAsync(string errandId, ErrandModel errand, TechnicianModel technician, List<ErrandCommentModel> comments)
         {
             ErrandModel errandToEdit = GetErrandById(errandId);
 
@@ -108,7 +108,7 @@ namespace Grupp3_Elevator.Services.Errand
             errandToEdit.Status = errand.Status;
             errandToEdit.CreatedBy = errand.CreatedBy;
             errandToEdit.Comments = comments;
-            errandToEdit.Technician = _technicianService.GetTechnicianById(technicianId);
+            errandToEdit.Technician = technician;
 
             _context.Update(errandToEdit);
             await _context.SaveChangesAsync();
@@ -138,8 +138,8 @@ namespace Grupp3_Elevator.Services.Errand
         {
             var technicians = _context.Technicians.Select(t => new SelectListItem
             {
-                Text = t.Name.ToString(),
                 Value = t.Id.ToString(),
+                Text = t.Name.ToString(),
 
             }).OrderBy(t => t.Value != technicianId).ToList();
 

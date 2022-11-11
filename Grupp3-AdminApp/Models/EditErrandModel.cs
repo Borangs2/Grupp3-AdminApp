@@ -17,8 +17,8 @@ namespace Grupp3_Elevator.Models
         public ErrandStatus Status { get; set; } = ErrandStatus.InProgress;
         public DateTime LastEdited { get; set; } = DateTime.Now;
         [Required]
-        public TechnicianModel Technician { get; set; } = null!;
+        public TechnicianModel Technician { get; set; }
         [Required]
-        public List<ErrandCommentModel> Comments { get; set; } = null!;
+        public List<ErrandCommentModel> Comments { get; set; }
     }
 }
