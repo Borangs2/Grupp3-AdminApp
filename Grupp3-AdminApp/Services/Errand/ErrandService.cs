@@ -97,9 +97,10 @@ namespace Grupp3_Elevator.Services.Errand
             return id;
         }
 
+
         public async Task<string> EditErrandAsync(string errandId, ErrandModel errand, string technicianId, List<ErrandCommentModel> comments)
         {
-            ErrandModel errandToEdit = GetErrandByIdAsync(errandId);
+            ErrandModel errandToEdit = GetErrandById(errandId);
 
             errandToEdit.Title = errand.Title;
             errandToEdit.Description = errand.Description;
@@ -114,13 +115,6 @@ namespace Grupp3_Elevator.Services.Errand
 
             var id = errandToEdit.Id.ToString();
             return id;
-
-
-
-            //var id = errandToEdit.Id.ToString();
-            //return id;
-
-            //return RedirectToPage("/Errand/ErrandDetails", new { Id = errandId });
         }
 
         public List<SelectListItem> SelectTechnician()

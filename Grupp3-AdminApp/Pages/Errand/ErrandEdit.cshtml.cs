@@ -3,6 +3,7 @@ using Grupp3_Elevator.Data;
 using Grupp3_Elevator.Models;
 using Grupp3_Elevator.Services;
 using Grupp3_Elevator.Services.Errand;
+using Grupp3_Elevator.Services.Technician;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -10,7 +11,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Grupp3_Elevator.Pages.Errand
 {
-    [BindProperties]
     public class ErrandEditModel : PageModel
     {
         private readonly ApplicationDbContext _context;
@@ -26,18 +26,22 @@ namespace Grupp3_Elevator.Pages.Errand
             _errandCommentService = errandCommentService;
         }
 
-        
+        [BindProperty]
         public ErrandModel Errand { get; set; }
+        [BindProperty]
         public List<SelectListItem> SelectTechnicianEdit { get; set; }
-        public Guid TechnicianId { get; set; }
+        [BindProperty]
+        public TechnicianModel Technician { get; set; }
+        //public Guid TechnicianId { get; set; }
         public ElevatorDeviceItem Elevator { get; set; }
-        public List<ErrandCommentModel> Comments { get; set; }
+        //[BindProperty]
+        //public List<ErrandCommentModel> Comments { get; set; }
 
 
         public async Task<IActionResult> OnGetAsync(string elevatorId, string? errandId)
         {
             Elevator = await _elevatorService.GetElevatorDeviceByIdAsync(elevatorId);
-            Errand = _errandService.GetErrandByIdAsync(errandId);
+            Errand = _errandService.GetErrandById(errandId);
 
             SelectTechnicianEdit = _errandService.SelectTechnicianEdit(Errand.Technician.Id.ToString());
 
@@ -49,33 +53,31 @@ namespace Grupp3_Elevator.Pages.Errand
             return Page();
         }
 
-        // TO DO: ModelState, RedirectToPage("ElevatorDetails")
+        // TO DO: ModelState
         public async Task<IActionResult> OnPost(string errandId)
         {
-            Comments = _errandCommentService.GetErrandCommentsFromErrandId(errandId).ToList();
+            Errand = _errandService.GetErrandById(errandId);
 
-            try
-            {
-                var editedErrandId = await _errandService.EditErrandAsync(errandId, Errand, TechnicianId.ToString(), Comments);
+            //Comments = _errandCommentService.GetErrandCommentsFromErrandId(errandId).ToList();
 
-                return RedirectToPage("/Elevator/Index");
-                
-                //return RedirectToPage("ErrandDetails", new { elevatorId = Elevator.Id, editedErrandId });
-            }
-            catch
-            {
-
-                return Page();
-            }
-            
-            //if(ModelState.IsValid)
+            //try
             //{
-            //    var id = await _errandService.EditErrandAsync(errandId, Errand, TechnicianId.ToString(), Comments);
-
-            //    return RedirectToPage("ErrandDetails", new { errandId = id });
+            //    var editedErrandId = await _errandService.EditErrandAsync(errandId, Errand, TechnicianId.ToString(), Comments);
+            //    return RedirectToPage("ErrandDetails", new { errandId });
+            //}
+            //catch
+            //{
+            //    return Page();
             //}
 
-            //return Page();
+            if (ModelState.IsValid)
+            {
+                var editedErrandId = await _errandService.EditErrandAsync(errandId, Errand, Errand.Technician.Id.ToString(), Errand.Comments);
+
+                return RedirectToPage("ErrandDetails", new { errandId });
+            }
+
+            return Page();
 
         }
     }
