@@ -84,14 +84,14 @@ namespace AdminAppTests.Services.Errand
         }
 
         [TestMethod]
-        public void GetErrandByIdAsync_ShouldReturnCorrectErrand()
+        public async Task GetErrandByIdAsync_ShouldReturnCorrectErrandAsync()
         {
             //ARRANGE
             var errandToCompare = _context.Errands.FirstOrDefault(e => e.Id.ToString() == "9f091fd6-9657-4db3-a41c-7bb9e24a43fd");
             var errandIdToCompare = errandToCompare.Id.ToString();
 
             //ACT
-            var errand = _sut.GetErrandByIdAsync(errandIdToCompare);
+            var errand = await _sut.GetErrandByIdAsync(errandIdToCompare);
             var myErrandId = errand.Id.ToString();
 
             //ASSERT
@@ -99,14 +99,14 @@ namespace AdminAppTests.Services.Errand
         }
 
         [TestMethod]
-        public void GetErrandByIdAsync_ShouldReturnErrandModel()
+        public async Task GetErrandByIdAsync_ShouldReturnErrandModelAsync()
         {
             //ARRANGE
             var errandToCompare = _context.Errands.FirstOrDefault(e => e.Id.ToString() == "9f091fd6-9657-4db3-a41c-7bb9e24a43fd");
             var errandIdToCompare = errandToCompare.Id.ToString();
 
             //ACT
-            var errand = _sut.GetErrandByIdAsync(errandIdToCompare);
+            var errand = await _sut.GetErrandByIdAsync(errandIdToCompare);
 
             //ASSERT
             Assert.IsInstanceOfType(errand, typeof(ErrandModel));
