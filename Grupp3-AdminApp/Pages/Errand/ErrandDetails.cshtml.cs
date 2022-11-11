@@ -21,11 +21,13 @@ namespace Grupp3_Elevator.Pages.Errand
         private readonly ApplicationDbContext _context;
         private readonly IErrandService _errandService;
         private readonly IElevatorService _elevatorService;
-        public ErrandDetailsModel(ApplicationDbContext context, IErrandService errandService, IElevatorService elevatorService)
+        private readonly IToastNotification _toastNotification;
+        public ErrandDetailsModel(ApplicationDbContext context, IErrandService errandService, IElevatorService elevatorService, IToastNotification toastNotification)
         {
             _context = context;
             _errandService = errandService;
             _elevatorService = elevatorService;
+            _toastNotification = toastNotification;
         }
         public Guid ErrandId { get; set; }
         [BindProperty]
@@ -35,7 +37,7 @@ namespace Grupp3_Elevator.Pages.Errand
         [BindProperty]
         public List<SelectListItem> SelectTechnician { get; set; }
         public ErrandModel Errand { get; set; }
-        [BindProperty]
+
         public ElevatorModel Elevator { get; set; }
         public List<ErrandCommentModel> Comments { get; set; }
 
@@ -72,9 +74,12 @@ namespace Grupp3_Elevator.Pages.Errand
             if (ModelState.IsValid)
             {
                 var id = CreateComment( errandId, Content, TechnicianId.ToString());
+                _toastNotification.AddSuccessToastMessage("Comment successfully saved!");
+
                 return RedirectToPage("ErrandDetails", new { errandId = Errand.Id.ToString() });
             }
-            
+
+            _toastNotification.AddErrorToastMessage("Failed to save comment!");
             SelectTechnician = _errandService.SelectTechnician();
             
             return Page();
