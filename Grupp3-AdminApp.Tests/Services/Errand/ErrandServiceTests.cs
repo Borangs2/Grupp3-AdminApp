@@ -124,17 +124,17 @@ namespace AdminAppTests.Services.Errand
             Assert.IsInstanceOfType(errands, typeof(List<ErrandModel>));
         }
 
-        [TestMethod]
-        public void EditErrand_ShouldReturnCorrectType()
-        {
-            //Arrange
-            var errand = _context.Errands.FirstOrDefault(i => i.Id.ToString() == "9f091fd6-9657-4db3-a41c-7bb9e24a43fd");
+        //[TestMethod]
+        //public void EditErrand_ShouldReturnCorrectType()
+        //{
+        //    //Arrange
+        //    var errand = _context.Errands.FirstOrDefault(i => i.Id.ToString() == "9f091fd6-9657-4db3-a41c-7bb9e24a43fd");
 
-            //Act
-            var result = _sut.EditErrandAsync(errand.Id.ToString(), errand, "dacf220b-2c9d-4d1a-a867-92a667de2a11", new List<ErrandCommentModel> { } );
+        //    //Act
+        //    var result = _sut.EditErrandAsync(errand.Id.ToString(), errand, "dacf220b-2c9d-4d1a-a867-92a667de2a11", new List<ErrandCommentModel> { } );
 
-            //Assert
-            Assert.IsInstanceOfType(result, typeof(Task<string>));
-        }
+        //    //Assert
+        //    Assert.IsInstanceOfType(result, typeof(Task<string>));
+        //}
     }
 }
