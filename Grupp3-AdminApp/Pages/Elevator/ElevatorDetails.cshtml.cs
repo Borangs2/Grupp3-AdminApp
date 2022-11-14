@@ -30,8 +30,7 @@ namespace Grupp3_Elevator.Pages.Elevator
         public async Task OnGetAsync(string elevatorId)
         {
             Elevator = await _elevatorService.GetElevatorDeviceByIdAsync(elevatorId);
-
-            Errands = _errandService.GetErrandsFromElevatorId(elevatorId);
+            Errands = await _errandService.GetErrandsFromElevatorIdAsync(elevatorId);
         }
 
         public async Task<IActionResult> OnPostChangeLevel(string elevatorId, int targetLevel)
