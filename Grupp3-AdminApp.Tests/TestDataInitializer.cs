@@ -39,7 +39,23 @@ namespace AdminAppTests
                             CreatedAt = DateTime.Now,
                             CreatedBy = "Philip",
                             Technician = new TechnicianModel(Guid.Parse("62e4a265-ceb7-4254-81f9-7d4a78cfbed8"), "Namn"),
-                            Comments = new List<ErrandCommentModel>()
+                            Comments = new List<ErrandCommentModel>
+                            {
+                                new ErrandCommentModel
+                                {
+                                    Id = Guid.Parse("b156ed09-0d9b-47c9-a87c-61834ca14e88"),
+                                    Author = Guid.Parse("62e4a265-ceb7-4254-81f9-7d4a78cfbed8"),
+                                    Content = "This is content of Comment 1",
+                                    PostedAt = DateTime.Now.AddMinutes(-4)
+                                },
+                                new ErrandCommentModel
+                                {
+                                    Id = Guid.Parse("e2d4cefd-4056-4ec1-9111-0e02ef0ed0e1"),
+                                    Author = Guid.Parse("dacf220b-2c9d-4d1a-a867-92a667de2a11"),
+                                    Content = "This is content of Comment 2",
+                                    PostedAt = DateTime.Now.AddMinutes(-10)
+                                }
+                            }
                         }
                 }
             });
@@ -60,7 +76,23 @@ namespace AdminAppTests
                             CreatedAt = DateTime.Now,
                             CreatedBy = "Philip",
                             Technician = new TechnicianModel(Guid.Parse("dacf220b-2c9d-4d1a-a867-92a667de2a11"), "Namn"),
-                            Comments = new List<ErrandCommentModel>()
+                            Comments = new List<ErrandCommentModel>
+                            {
+                                new ErrandCommentModel
+                                {
+                                    Id = Guid.Parse("136b0112-246f-4891-a36f-0ff09738be34"),
+                                    Author = Guid.Parse("62e4a265-ceb7-4254-81f9-7d4a78cfbed8"),
+                                    Content = "This is content of Comment 1",
+                                    PostedAt = DateTime.Now.AddMinutes(-6)
+                                },
+                                new ErrandCommentModel
+                                {
+                                    Id = Guid.Parse("c185362e-1caf-482a-96a9-e981ada42944"),
+                                    Author = Guid.Parse("dacf220b-2c9d-4d1a-a867-92a667de2a11"),
+                                    Content = "This is content of Comment 2",
+                                    PostedAt = DateTime.Now.AddMinutes(-15)
+                                }
+                            }
                         }
                     }
                 });
