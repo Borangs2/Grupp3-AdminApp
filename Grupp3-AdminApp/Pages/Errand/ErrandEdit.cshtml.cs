@@ -13,15 +13,13 @@ namespace Grupp3_Elevator.Pages.Errand
 {
     public class ErrandEditModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
         private readonly IElevatorService _elevatorService;
         private readonly IErrandService _errandService;
         private readonly IErrandCommentService _errandCommentService;
         private readonly ITechnicianService _technicianService;
 
-        public ErrandEditModel(ApplicationDbContext context, IElevatorService elevatorService, IErrandService errandService, IErrandCommentService errandCommentService, ITechnicianService technicianService)
+        public ErrandEditModel(IElevatorService elevatorService, IErrandService errandService, IErrandCommentService errandCommentService, ITechnicianService technicianService)
         {
-            _context = context;
             _elevatorService = elevatorService;
             _errandService = errandService;
             _errandCommentService = errandCommentService;
@@ -43,11 +41,10 @@ namespace Grupp3_Elevator.Pages.Errand
 
             SelectTechnicianEdit = _errandService.SelectTechnicianEdit(Errand.Technician.Id.ToString());
 
-            if (Errand == null)
+            if (Errand.Id == Guid.Empty)
             {
                 return NotFound();
             }
-
 
             return Page();
         }
@@ -56,7 +53,7 @@ namespace Grupp3_Elevator.Pages.Errand
         public async Task<IActionResult> OnPost(string elevatorId)
         {
             Errand.Technician = _technicianService.GetTechnicianById(Errand.Technician.Id.ToString());
-            Errand.Comments = await _errandCommentService.GetErrandCommentsFromErrandId(Errand.Id.ToString());
+            Errand.Comments = await _errandCommentService.GetErrandCommentsFromErrandIdAsync(Errand.Id.ToString());
 
             if (ModelState.IsValid)
             {

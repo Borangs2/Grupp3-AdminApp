@@ -17,18 +17,18 @@ namespace Grupp3_AdminApp.Services.ErrandComment
         {
             return _context.ErrandComments.FirstOrDefault(e => e.Id == Guid.Parse(commentId));
         }
-       
-        public async Task<List<ErrandCommentModel>> GetErrandComments()
+
+        public async Task<List<ErrandCommentModel>> GetErrandCommentsAsync()
         {
             return _context.ErrandComments.ToList();
         }
 
-        public async Task<List<ErrandCommentModel>> GetErrandCommentsFromErrandId(string errandId)
+        public async Task<List<ErrandCommentModel>> GetErrandCommentsFromErrandIdAsync(string errandId)
         {
             var result = _context.Errands.Include(e => e.Comments).FirstOrDefault(e => e.Id == Guid.Parse(errandId));
             return result.Comments;
         }
-        public async Task<ErrandCommentModel> CreateErrandComment(ErrandModel errand, string chosenSelectTechnician, string content)
+        public async Task<ErrandCommentModel> CreateErrandCommentAsync(ErrandModel errand, string chosenSelectTechnician, string content)
         {
             var ErrandComment = new ErrandCommentModel
             {

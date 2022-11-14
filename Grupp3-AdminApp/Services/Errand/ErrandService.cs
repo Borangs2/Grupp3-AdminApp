@@ -33,7 +33,7 @@ namespace Grupp3_Elevator.Services.Errand
             var result = _context.Errands.Include(a => a.Technician).Include(b => b.Comments).FirstOrDefault(aa => aa.Id == Guid.Parse(errandId));
 
             result.Technician = _technicianService.GetTechnicianFromErrandId(errandId);
-            result.Comments = await _errandCommentService.GetErrandCommentsFromErrandId(errandId);
+            result.Comments = await _errandCommentService.GetErrandCommentsFromErrandIdAsync(errandId);
 
             if (result == null)
                 return null!;
@@ -56,7 +56,7 @@ namespace Grupp3_Elevator.Services.Errand
             foreach (var errand in result.Errands)
             {
                 errand.Technician = _technicianService.GetTechnicianFromErrandId(errand.Id.ToString());
-                errand.Comments = await _errandCommentService.GetErrandCommentsFromErrandId(errand.Id.ToString());
+                errand.Comments = await _errandCommentService.GetErrandCommentsFromErrandIdAsync(errand.Id.ToString());
             }
             if (result == null)
                 return null!;
