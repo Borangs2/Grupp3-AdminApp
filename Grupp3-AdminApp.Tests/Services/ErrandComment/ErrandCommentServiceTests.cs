@@ -32,65 +32,65 @@ namespace Grupp3_AdminApp.Tests.Services.ErrandComment
         }
 
         [TestMethod]
-        public void GetErrandComments_ShouldReturnAllErradnComments()
+        public async Task GetErrandComments_ShouldReturnAllErradnComments()
         {
             //ARRANGE
             var allErrandComments = _context.ErrandComments.Count();
 
             //ACT
-            var errandComments = _sut.GetComments().Count();
+            var errandComments = await _sut.GetErrandCommentsAsync();
 
             //ASSERT
-            Assert.AreEqual(allErrandComments, errandComments);
+            Assert.AreEqual(allErrandComments, errandComments.Count);
         }
 
         [TestMethod]
-        public void GetErrandComments_ShouldReturnListOfErrandCommentModel()
+        public async Task GetErrandComments_ShouldReturnListOfErrandCommentModel()
         {
             //ARRANGE
 
             //ACT
-            var errandComments = _sut.GetComments();
+            var errandComments = await _sut.GetErrandCommentsAsync();
 
             //ASSERT
             Assert.IsInstanceOfType(errandComments, typeof(List<ErrandCommentModel>));
         }
 
         [TestMethod]
-        public void GetErrandCommentsFromErrandId_ShouldReturnListOfErrandCommentModel()
+        public async Task GetErrandCommentsFromErrandId_ShouldReturnListOfErrandCommentModel()
         {
             //ARRANGE
 
             //ACT
-            var errandComments = _sut.GetErrandCommentsFromErrandId("9f091fd6-9657-4db3-a41c-7bb9e24a43fd");
+            var errandComments = await _sut.GetErrandCommentsFromErrandIdAsync("9f091fd6-9657-4db3-a41c-7bb9e24a43fd");
 
             //ASSERT
             Assert.IsInstanceOfType(errandComments, typeof(List<ErrandCommentModel>));
         }
 
         [TestMethod]
-        public void GetCommentsById_ShouldReturnErrandCommentModel()
+        public async Task GetCommentsById_ShouldReturnErrandCommentModel()
         {
             //ARRANGE
             var errandCommentToCompare = _context.ErrandComments.FirstOrDefault(e => e.Id.ToString() == "136b0112-246f-4891-a36f-0ff09738be34");
             var errandCommentIdToCompare = errandCommentToCompare.Id.ToString();
 
             //ACT
-            var errandComment = _sut.GetCommentsById(errandCommentIdToCompare);
+            var errandComment = await _sut.GetErrandCommentsByIdAsync(errandCommentIdToCompare);
 
             //ASSERT
             Assert.IsInstanceOfType(errandComment, typeof(ErrandCommentModel));
         }
 
         [TestMethod]
-        public void GetCommentsById_ShouldReturnCorrectErrandComment()
+        public async Task GetCommentsById_ShouldReturnCorrectErrandComment()
         {
             //ARRANGE
             var errandCommentToCompare = _context.ErrandComments.FirstOrDefault(e => e.Id.ToString() == "136b0112-246f-4891-a36f-0ff09738be34");
             var errandCommentIdToCompare = errandCommentToCompare.Id.ToString();
 
             //ACT
-            var errandComment = _sut.GetCommentsById(errandCommentIdToCompare);
+            var errandComment = await _sut.GetErrandCommentsByIdAsync(errandCommentIdToCompare);
             var myErrandCommentId = errandComment.Id.ToString();
 
             //ASSERT
