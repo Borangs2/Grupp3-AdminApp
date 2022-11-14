@@ -27,6 +27,7 @@ namespace Grupp3_Elevator.Pages.Errand
             _context = context;
             _errandService = errandService;
             _elevatorService = elevatorService;
+
             _toastNotification = toastNotification;
         }
         public Guid ErrandId { get; set; }
