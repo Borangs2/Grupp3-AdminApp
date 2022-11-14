@@ -43,7 +43,7 @@ namespace AdminAppTests
                             {
                                 new ErrandCommentModel
                                 {
-                                    Id = Guid.Parse("b156ed09-0d9b-47c9-a87c-61834cA14e88"),
+                                    Id = Guid.Parse("b156ed09-0d9b-47c9-a87c-61834ca14e88"),
                                     Author = Guid.Parse("62e4a265-ceb7-4254-81f9-7d4a78cfbed8"),
                                     Content = "This is content of Comment 1",
                                     PostedAt = DateTime.Now.AddMinutes(-4)
