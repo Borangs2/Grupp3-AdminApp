@@ -43,14 +43,14 @@ namespace AdminAppTests
                             {
                                 new ErrandCommentModel
                                 {
-                                    Id = Guid.Parse("B156ED09-0D9B-47C9-A87C-61834CA14E88"),
+                                    Id = Guid.Parse("b156ed09-0d9b-47c9-a87c-61834ca14e88"),
                                     Author = Guid.Parse("62e4a265-ceb7-4254-81f9-7d4a78cfbed8"),
                                     Content = "This is content of Comment 1",
                                     PostedAt = DateTime.Now.AddMinutes(-4)
                                 },
                                 new ErrandCommentModel
                                 {
-                                    Id = Guid.Parse("E2D4CEFD-4056-4EC1-9111-0E02EF0ED0E1"),
+                                    Id = Guid.Parse("e2d4cefd-4056-4ec1-9111-0e02ef0ed0e1"),
                                     Author = Guid.Parse("dacf220b-2c9d-4d1a-a867-92a667de2a11"),
                                     Content = "This is content of Comment 2",
                                     PostedAt = DateTime.Now.AddMinutes(-10)
@@ -80,14 +80,14 @@ namespace AdminAppTests
                             {
                                 new ErrandCommentModel
                                 {
-                                    Id = Guid.Parse("136B0112-246F-4891-A36F-0FF09738BE34"),
+                                    Id = Guid.Parse("136b0112-246f-4891-a36f-0ff09738be34"),
                                     Author = Guid.Parse("62e4a265-ceb7-4254-81f9-7d4a78cfbed8"),
                                     Content = "This is content of Comment 1",
                                     PostedAt = DateTime.Now.AddMinutes(-6)
                                 },
                                 new ErrandCommentModel
                                 {
-                                    Id = Guid.Parse("C185362E-1CAF-482A-96A9-E981ADA42944"),
+                                    Id = Guid.Parse("c185362e-1caf-482a-96a9-e981ada42944"),
                                     Author = Guid.Parse("dacf220b-2c9d-4d1a-a867-92a667de2a11"),
                                     Content = "This is content of Comment 2",
                                     PostedAt = DateTime.Now.AddMinutes(-15)
