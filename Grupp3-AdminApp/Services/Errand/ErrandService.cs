@@ -59,19 +59,31 @@ namespace Grupp3_Elevator.Services.Errand
             return result;
         }
 
+        //public List<ErrandModel> GetErrandsFromElevatorId(string elevatorId)
+        //{
+        //    var result = _context.Elevators.Include(c => c.Errands).FirstOrDefault(e => e.Id == Guid.Parse(elevatorId));
+
+        //    foreach (var errand in result.Errands)
+        //    {
+        //        errand.Technician = _technicianService.GetTechnicianFromErrandId(errand.Id.ToString());
+        //        errand.Comments = _context.ErrandComments.Select(c => c).Where(c => c.Id == errand.Id).ToList();
+        //    }
+
+        //    if (result == null)
+        //        return null!;
+        //    return result.Errands;
+        //}
+
         public List<ErrandModel> GetErrandsFromElevatorId(string elevatorId)
         {
-            var result = _context.Elevators.Include(c => c.Errands).FirstOrDefault(e => e.Id == Guid.Parse(elevatorId));
+            var result = _context.Elevators
+                .Include(elevator => elevator.Errands)
+                .ThenInclude(errand => errand.Comments)
+                .Include(elevator => elevator.Errands)
+                .ThenInclude(errand => errand.Technician)
+                .FirstOrDefault(e => e.Id == Guid.Parse(elevatorId));
 
-            foreach (var errand in result.Errands)
-            {
-                errand.Technician = _technicianService.GetTechnicianFromErrandId(errand.Id.ToString());
-                errand.Comments = _context.ErrandComments.Select(c => c).Where(c => c.Id == errand.Id).ToList();
-            }
-
-            if (result == null)
-                return null!;
-            return result.Errands;
+            return result.Errands.ToList();
         }
 
         public string CreateErrandAsync(string elevatorId, string Title, string Description, string CreatedBy, string TechnicianId)
