@@ -72,7 +72,7 @@ namespace Grupp3_AdminApp.Tests.Services.ErrandComment
         public void GetCommentsById_ShouldReturnErrandCommentModel()
         {
             //ARRANGE
-            var errandCommentToCompare = _context.ErrandComments.FirstOrDefault(e => e.Id.ToString() == "E2D4CEFD-4056-4EC1-9111-0E02EF0ED0E1");
+            var errandCommentToCompare = _context.ErrandComments.FirstOrDefault(e => e.Id.ToString() == "136b0112-246f-4891-a36f-0ff09738be34");
             var errandCommentIdToCompare = errandCommentToCompare.Id.ToString();
 
             //ACT
@@ -86,7 +86,7 @@ namespace Grupp3_AdminApp.Tests.Services.ErrandComment
         public void GetCommentsById_ShouldReturnCorrectErrandComment()
         {
             //ARRANGE
-            var errandCommentToCompare = _context.ErrandComments.FirstOrDefault(e => e.Id.ToString() == "136B0112-246F-4891-A36F-0FF09738BE34");
+            var errandCommentToCompare = _context.ErrandComments.FirstOrDefault(e => e.Id.ToString() == "136b0112-246f-4891-a36f-0ff09738be34");
             var errandCommentIdToCompare = errandCommentToCompare.Id.ToString();
 
             //ACT
