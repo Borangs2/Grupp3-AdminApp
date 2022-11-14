@@ -16,7 +16,6 @@ namespace Grupp3_Elevator.Pages.Errand
     [BindProperties]
     public class ErrandNewModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
         private readonly IErrandService _errandService;
         private readonly IElevatorService _elevatorService;
         private readonly ITechnicianService _technicianService;
@@ -24,7 +23,6 @@ namespace Grupp3_Elevator.Pages.Errand
 
         public ErrandNewModel(ApplicationDbContext context, IErrandService errandService, IElevatorService elevatorService, ITechnicianService technicianService, IToastNotification toastNotification)
         {
-            _context = context;
             _errandService = errandService;
             _elevatorService = elevatorService;
             _technicianService = technicianService;

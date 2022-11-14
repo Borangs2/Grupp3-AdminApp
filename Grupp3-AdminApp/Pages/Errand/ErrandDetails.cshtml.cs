@@ -20,14 +20,11 @@ namespace Grupp3_Elevator.Pages.Errand
     {
         private readonly ApplicationDbContext _context;
         private readonly IErrandService _errandService;
-        private readonly IElevatorService _elevatorService;
         private readonly IToastNotification _toastNotification;
-        public ErrandDetailsModel(ApplicationDbContext context, IErrandService errandService, IElevatorService elevatorService, IToastNotification toastNotification)
+        public ErrandDetailsModel(ApplicationDbContext context, IErrandService errandService, IToastNotification toastNotification)
         {
             _context = context;
             _errandService = errandService;
-            _elevatorService = elevatorService;
-
             _toastNotification = toastNotification;
         }
         public Guid ErrandId { get; set; }
