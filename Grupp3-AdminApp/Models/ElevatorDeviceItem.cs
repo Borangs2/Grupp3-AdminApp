@@ -8,10 +8,8 @@ public class ElevatorDeviceItem
     {
         Disabled /*Elevator off, doors closed*/,
         Idle /*Elevator on, doors closed, not running*/,
-        DoorsOpen /*Elevator on, doors open, not running*/,
         Running /*Elevator on, doors closed, running*/,
-        Error /*Elevator error*/,
-        Unknown /*Status Unknown*/
+        Error /*Elevator error*/
     }
 
     public Guid Id { get; set; } = Guid.NewGuid();

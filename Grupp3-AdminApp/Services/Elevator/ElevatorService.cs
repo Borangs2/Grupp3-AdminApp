@@ -51,7 +51,7 @@ public class ElevatorService : IElevatorService
         catch { elevator.Name = "Name unknown"; }
 
         try { elevator.Status = twin.Properties.Reported["status"]; }
-        catch { elevator.Status = ElevatorDeviceItem.ElevatorStatus.Unknown; }
+        catch { elevator.Status = ElevatorDeviceItem.ElevatorStatus.Disabled; }
 
         try { elevator.DoorStatus = twin.Properties.Reported["doorStatus"]; }
         catch { elevator.DoorStatus = false; }
@@ -96,7 +96,7 @@ public class ElevatorService : IElevatorService
                 catch { elevator.Name = "Name unknown"; }
 
                 try { elevator.Status = twin.Properties.Reported["status"]; }
-                catch { elevator.Status = ElevatorDeviceItem.ElevatorStatus.Unknown; }
+                catch { elevator.Status = ElevatorDeviceItem.ElevatorStatus.Disabled; }
 
                 try { elevator.DoorStatus = twin.Properties.Reported["doorStatus"]; }
                 catch { elevator.DoorStatus = false; }

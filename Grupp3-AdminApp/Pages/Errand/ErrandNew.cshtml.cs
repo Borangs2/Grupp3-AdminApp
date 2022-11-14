@@ -16,14 +16,12 @@ namespace Grupp3_Elevator.Pages.Errand
     [BindProperties]
     public class ErrandNewModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
         private readonly IErrandService _errandService;
         private readonly IElevatorService _elevatorService;
         private readonly ITechnicianService _technicianService;
 
         public ErrandNewModel(ApplicationDbContext context, IErrandService errandService, IElevatorService elevatorService, ITechnicianService technicianService)
         {
-            _context = context;
             _errandService = errandService;
             _elevatorService = elevatorService;
             _technicianService = technicianService;
@@ -52,7 +50,6 @@ namespace Grupp3_Elevator.Pages.Errand
                 var id = _errandService.CreateErrandAsync(elevatorId, Title, Description, CreatedBy, TechnicianId.ToString());
                 return RedirectToPage("ErrandDetails", new { elevatorId = elevatorId, errandId = id });
             }
-            SelectTechnician = _errandService.SelectTechnician();
             return Page();
         }
     }
