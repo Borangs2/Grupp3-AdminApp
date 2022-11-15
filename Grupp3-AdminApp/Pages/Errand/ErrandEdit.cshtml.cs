@@ -3,6 +3,7 @@ using Grupp3_Elevator.Data;
 using Grupp3_Elevator.Models;
 using Grupp3_Elevator.Services;
 using Grupp3_Elevator.Services.Errand;
+using Grupp3_Elevator.Services.Technician;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -10,34 +11,33 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Grupp3_Elevator.Pages.Errand
 {
-    [BindProperties]
     public class ErrandEditModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
         private readonly IElevatorService _elevatorService;
         private readonly IErrandService _errandService;
         private readonly IErrandCommentService _errandCommentService;
+        private readonly ITechnicianService _technicianService;
 
-        public ErrandEditModel(ApplicationDbContext context, IElevatorService elevatorService, IErrandService errandService, IErrandCommentService errandCommentService)
+        public ErrandEditModel(IElevatorService elevatorService, IErrandService errandService, IErrandCommentService errandCommentService, ITechnicianService technicianService)
         {
-            _context = context;
             _elevatorService = elevatorService;
             _errandService = errandService;
             _errandCommentService = errandCommentService;
+            _technicianService = technicianService;
         }
 
-        
-        public ErrandModel Errand { get; set; }
-        public List<SelectListItem> SelectTechnicianEdit { get; set; }
-        public Guid TechnicianId { get; set; }
+        [BindProperty]
         public ElevatorDeviceItem Elevator { get; set; }
-        public List<ErrandCommentModel> Comments { get; set; }
+        [BindProperty]
+        public ErrandModel Errand { get; set; }
+
+        public List<SelectListItem> SelectTechnicianEdit { get; set; }
 
 
-        public async Task<IActionResult> OnGetAsync(string elevatorId, string? errandId)
+        public async Task<IActionResult> OnGetAsync(string elevatorId, string errandId)
         {
             Elevator = await _elevatorService.GetElevatorDeviceByIdAsync(elevatorId);
-            Errand = _errandService.GetErrandByIdAsync(errandId);
+            Errand = await _errandService.GetErrandByIdAsync(errandId);
 
             SelectTechnicianEdit = _errandService.SelectTechnicianEdit(Errand.Technician.Id.ToString());
 
@@ -49,33 +49,20 @@ namespace Grupp3_Elevator.Pages.Errand
             return Page();
         }
 
-        // TO DO: ModelState, RedirectToPage("ElevatorDetails")
-        public async Task<IActionResult> OnPost(string errandId)
+        // TO DO: ModelState
+        public async Task<IActionResult> OnPost(string elevatorId)
         {
-            Comments = _errandCommentService.GetErrandCommentsFromErrandId(errandId).ToList();
+            Errand.Technician = _technicianService.GetTechnicianById(Errand.Technician.Id.ToString());
+            Errand.Comments = await _errandCommentService.GetErrandCommentsFromErrandIdAsync(Errand.Id.ToString());
 
-            try
+            if (ModelState.IsValid)
             {
-                var editedErrandId = await _errandService.EditErrandAsync(errandId, Errand, TechnicianId.ToString(), Comments);
+                await _errandService.EditErrandAsync(Errand.Id.ToString(), Errand, Errand.Technician.Id.ToString(), Errand.Comments);
 
-                return RedirectToPage("/Elevator/Index");
-                
-                //return RedirectToPage("ErrandDetails", new { elevatorId = Elevator.Id, editedErrandId });
+                return RedirectToPage("ErrandDetails", new { errandId = Errand.Id });
             }
-            catch
-            {
 
-                return Page();
-            }
-            
-            //if(ModelState.IsValid)
-            //{
-            //    var id = await _errandService.EditErrandAsync(errandId, Errand, TechnicianId.ToString(), Comments);
-
-            //    return RedirectToPage("ErrandDetails", new { errandId = id });
-            //}
-
-            //return Page();
+            return Page();
 
         }
     }

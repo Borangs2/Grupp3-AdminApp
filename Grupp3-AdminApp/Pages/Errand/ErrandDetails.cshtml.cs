@@ -18,68 +18,59 @@ namespace Grupp3_Elevator.Pages.Errand
 {
     public class ErrandDetailsModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
         private readonly IErrandService _errandService;
-        private readonly IToastNotification _toastNotification;
-        public ErrandDetailsModel(ApplicationDbContext context, IErrandService errandService, IToastNotification toastNotification)
+        private readonly IElevatorService _elevatorService;
+        private readonly IErrandCommentService _errandCommentService;
+
+        public ErrandDetailsModel(IErrandService errandService, IElevatorService elevatorService, IErrandCommentService errandCommentService)
         {
-            _context = context;
             _errandService = errandService;
-            _toastNotification = toastNotification;
+            _elevatorService = elevatorService;
+            _errandCommentService = errandCommentService;
         }
-        public Guid ErrandId { get; set; }
+
         [BindProperty]
-        public string Content { get; set; }
-        [BindProperty]
-        public Guid TechnicianId { get; set; }
-        [BindProperty]
-        public List<SelectListItem> SelectTechnician { get; set; }
+        public ElevatorDeviceItem Elevator { get; set; }
         public ErrandModel Errand { get; set; }
 
-        public ElevatorModel Elevator { get; set; }
-        public List<ErrandCommentModel> Comments { get; set; }
+        public List<SelectListItem> SelectTechnician { get; set; }
+        [BindProperty]
+        public Guid ChosenSelectTechnician { get; set; }
 
-        public string CreateComment(string errandId, string content, string technicianId)
+        [BindProperty]
+        public string Content { get; set; }
+
+        public async Task<IActionResult> OnGetAsync(string elevatorId, string errandId)
         {
-            var errand = _errandService.GetErrandById(errandId);
-
-            var comment = new ErrandCommentModel
-            {
-                Id = Guid.NewGuid(),
-                Content = content,
-                Author = Guid.Parse(technicianId),
-                PostedAt = DateTime.Now
-            };
-            errand.Comments.Add(comment);
-            _context.Entry(comment).State = EntityState.Added;
-            _context.SaveChanges();
-
-            var id = comment.Id.ToString();
-            return id;
-        }
-
-        public void OnGet(string errandId)
-        {
-            Errand = _errandService.GetErrandById(errandId);
+            Elevator = await _elevatorService.GetElevatorDeviceByIdAsync(elevatorId);
+            Errand = await _errandService.GetErrandByIdAsync(errandId);
 
             SelectTechnician = _errandService.SelectTechnician();
+
+            if (Errand == null)
+            {
+                return NotFound();
+            }
+
+            return Page();
         }
 
-        public IActionResult OnPost(string errandId)
+        public async Task<IActionResult> OnPostAsync(string elevatorId, string errandId)
         {
-            Errand = _errandService.GetErrandById(errandId);
+            Errand = await _errandService.GetErrandByIdAsync(errandId);
 
             if (ModelState.IsValid)
             {
-                var id = CreateComment( errandId, Content, TechnicianId.ToString());
-                _toastNotification.AddSuccessToastMessage("Comment successfully saved!");
+                //CreateComment(Errand, technicianId, content);
+                await _errandCommentService.CreateErrandCommentAsync(Errand, ChosenSelectTechnician.ToString(), Content);
 
-                return RedirectToPage("ErrandDetails", new { errandId = Errand.Id.ToString() });
+                //return RedirectToPage("ErrandDetails", new { errandId = Errand.Id.ToString() });
+                //return RedirectToPage("ErrandDetails", new { elevatorId = Elevator.Id, errandId = Errand.Id });
+                return RedirectToPage("ErrandDetails", new { elevatorId, errandId });
             }
 
-            _toastNotification.AddErrorToastMessage("Failed to save comment!");
             SelectTechnician = _errandService.SelectTechnician();
-            
+
             return Page();
         }
     }

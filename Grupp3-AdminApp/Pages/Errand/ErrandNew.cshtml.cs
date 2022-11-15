@@ -18,22 +18,21 @@ namespace Grupp3_Elevator.Pages.Errand
     {
         private readonly IErrandService _errandService;
         private readonly IElevatorService _elevatorService;
-        private readonly ITechnicianService _technicianService;
 
-        public ErrandNewModel(ApplicationDbContext context, IErrandService errandService, IElevatorService elevatorService, ITechnicianService technicianService)
+        public ErrandNewModel(ApplicationDbContext context, IErrandService errandService, IElevatorService elevatorService)
         {
             _errandService = errandService;
             _elevatorService = elevatorService;
-            _technicianService = technicianService;
         }
 
+        [BindProperty]
+        public ElevatorDeviceItem Elevator { get; set; }
+
+        public List<SelectListItem> SelectTechnician { get; set; }
+        public Guid ChosenSelectTechnician { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public string CreatedBy { get; set; }
-        public Guid TechnicianId { get; set; }
-        public List<SelectListItem> SelectTechnician { get; set; }
-        public ElevatorDeviceItem Elevator { get; set; }
-
 
         public async Task<IActionResult> OnGetAsync(string elevatorId)
         {
@@ -43,11 +42,11 @@ namespace Grupp3_Elevator.Pages.Errand
             return Page();
         }
 
-        public IActionResult OnPost(string elevatorId)
+        public async Task<IActionResult> OnPostAsync(string elevatorId)
         {
             if (ModelState.IsValid)
             {
-                var id = _errandService.CreateErrandAsync(elevatorId, Title, Description, CreatedBy, TechnicianId.ToString());
+                var id = await _errandService.CreateErrandAsync(elevatorId, Title, Description, CreatedBy, ChosenSelectTechnician.ToString());
                 return RedirectToPage("ErrandDetails", new { elevatorId = elevatorId, errandId = id });
             }
             return Page();

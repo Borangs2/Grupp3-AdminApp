@@ -9,20 +9,19 @@ namespace Grupp3_Elevator.Pages.Errand
 {
     public class IndexModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
         private readonly IErrandService _errandService;
 
-        public IndexModel(ApplicationDbContext context, IErrandService errandService)
+        public IndexModel(IErrandService errandService)
         {
-            _context = context;
             _errandService = errandService;
         }
 
         public List<ErrandModel> Errands { get; set; }
 
-        public void OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
-            Errands = _errandService.GetErrands();
+            Errands = await _errandService.GetErrandsAsync();
+            return Page();
         }
     }
 }

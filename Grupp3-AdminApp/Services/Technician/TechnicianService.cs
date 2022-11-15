@@ -40,7 +40,8 @@ public class TechnicianService : ITechnicianService
     public TechnicianModel? GetTechnicianFromErrandId(string errandId)
     {
         var result = _context.Errands.Include(e => e.Technician).FirstOrDefault(e => e.Id == Guid.Parse(errandId));
-        if(result == null || result.Technician.Id == Guid.Empty)
+
+        if (result == null || result.Technician.Id == Guid.Empty)
             return null;
         return result.Technician;
     }
