@@ -30,7 +30,8 @@ namespace Grupp3_Elevator.Services.Errand
         }
         public async Task<ErrandModel>? GetErrandByIdAsync(string errandId)
         {
-            var result = _context.Errands.Include(a => a.Technician)
+            var result = _context.Errands
+                .Include(a => a.Technician)
                 .Include(b => b.Comments)
                 .FirstOrDefault(aa => aa.Id == Guid.Parse(errandId));
 
