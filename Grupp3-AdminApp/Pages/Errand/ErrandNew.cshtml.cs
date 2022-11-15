@@ -46,7 +46,7 @@ namespace Grupp3_Elevator.Pages.Errand
         {
             if (ModelState.IsValid)
             {
-                var id = _errandService.CreateErrandAsync(elevatorId, Title, Description, CreatedBy, ChosenSelectTechnician.ToString());
+                var id = await _errandService.CreateErrandAsync(elevatorId, Title, Description, CreatedBy, ChosenSelectTechnician.ToString());
                 return RedirectToPage("ErrandDetails", new { elevatorId = elevatorId, errandId = id });
             }
             return Page();
