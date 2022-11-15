@@ -26,7 +26,7 @@ namespace AdminAppTests.Services.Errand
             var options = new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase("AdminApp").Options;
             _context = new ApplicationDbContext(options);
 
-            _sut = new ErrandService(_context, new ElevatorService(_context), new TechnicianService(_context), new ErrandCommentService(_context));
+            _sut = new ErrandService(_context, new ElevatorService(_context), new TechnicianService(_context));
 
             var data = new TestDataInitializer(_context);
             data.SeedData();
