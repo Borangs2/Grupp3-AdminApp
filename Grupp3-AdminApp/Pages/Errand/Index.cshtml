@@ -22,34 +22,3 @@
         }
     </div>
 </div>
-
-@*<h1>Errands</h1>
-<table class="table mb-5 text-center">
-    <tr>
-        <th>Guid</th>
-        <th>Title</th>
-        <th>Description</th>
-        <th>Status</th>
-        <th>Last Edited</th>
-        <th>Created By</th>
-        <th>Technician</th>
-        <th>Comments</th>
-    </tr>
-
-    @foreach (var errand in Model.Errands)
-    {
-        <tr>
-            <td>@errand.Id</td>
-            <td>@errand.Title</td>
-            <td>@errand.Description</td>
-            <td>@errand.Status</td>
-            <td>@errand.LastEdited</td>
-            <td>@errand.CreatedBy</td>
-            <td>@errand.Technician</td>
-            <td>@errand.Comments.Count()</td>
-            <td>
-                <a asp-page="/Errand/ErrandDetails" asp-route-errandId="" class="btn btn-primary">Select</a>
-            </td>
-        </tr>
-    }
-</table>*@

@@ -61,11 +61,8 @@ namespace Grupp3_Elevator.Pages.Errand
 
             if (ModelState.IsValid)
             {
-                //CreateComment(Errand, technicianId, content);
                 await _errandCommentService.CreateErrandCommentAsync(Errand, ChosenSelectTechnician.ToString(), Content);
 
-                //return RedirectToPage("ErrandDetails", new { errandId = Errand.Id.ToString() });
-                //return RedirectToPage("ErrandDetails", new { elevatorId = Elevator.Id, errandId = Errand.Id });
                 return RedirectToPage("ErrandDetails", new { elevatorId, errandId });
             }
 
