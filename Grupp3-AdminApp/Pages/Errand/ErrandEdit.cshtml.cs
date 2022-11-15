@@ -33,7 +33,6 @@ namespace Grupp3_Elevator.Pages.Errand
 
         public List<SelectListItem> SelectTechnicianEdit { get; set; }
 
-
         public async Task<IActionResult> OnGetAsync(string elevatorId, string errandId)
         {
             Elevator = await _elevatorService.GetElevatorDeviceByIdAsync(elevatorId);
@@ -49,7 +48,6 @@ namespace Grupp3_Elevator.Pages.Errand
             return Page();
         }
 
-        // TO DO: ModelState
         public async Task<IActionResult> OnPost(string elevatorId)
         {
             Errand.Technician = _technicianService.GetTechnicianById(Errand.Technician.Id.ToString());
