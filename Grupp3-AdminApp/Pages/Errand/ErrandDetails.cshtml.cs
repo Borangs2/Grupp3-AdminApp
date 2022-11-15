@@ -21,12 +21,14 @@ namespace Grupp3_Elevator.Pages.Errand
         private readonly IErrandService _errandService;
         private readonly IElevatorService _elevatorService;
         private readonly IErrandCommentService _errandCommentService;
+        private readonly ITechnicianService _technicianService;
 
-        public ErrandDetailsModel(IErrandService errandService, IElevatorService elevatorService, IErrandCommentService errandCommentService)
+        public ErrandDetailsModel(IErrandService errandService, IElevatorService elevatorService, IErrandCommentService errandCommentService, ITechnicianService technicianService)
         {
             _errandService = errandService;
             _elevatorService = elevatorService;
             _errandCommentService = errandCommentService;
+            _technicianService = technicianService;
         }
 
         [BindProperty]
@@ -45,7 +47,7 @@ namespace Grupp3_Elevator.Pages.Errand
             Elevator = await _elevatorService.GetElevatorDeviceByIdAsync(elevatorId);
             Errand = await _errandService.GetErrandByIdAsync(errandId);
 
-            SelectTechnician = _errandService.SelectTechnician();
+            SelectTechnician = _technicianService.SelectTechnician();
 
             if (Errand == null)
             {
@@ -65,9 +67,7 @@ namespace Grupp3_Elevator.Pages.Errand
 
                 return RedirectToPage("ErrandDetails", new { elevatorId, errandId });
             }
-
-            SelectTechnician = _errandService.SelectTechnician();
-
+            SelectTechnician = _technicianService.SelectTechnician();
             return Page();
         }
     }

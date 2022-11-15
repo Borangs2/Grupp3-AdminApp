@@ -99,33 +99,5 @@ namespace Grupp3_Elevator.Services.Errand
 
             return errandToEdit;
         }
-
-        public List<SelectListItem> SelectTechnician()
-        {
-            var technicians = _context.Technicians.Select(t => new SelectListItem
-            {
-                Text = t.Name.ToString(),
-                Value = t.Id.ToString()
-
-            }).ToList();
-
-            technicians.Insert(0, new SelectListItem
-            {
-                Value = "",
-                Text = "Please select technician"
-            });
-            return technicians;
-        }
-        public List<SelectListItem> SelectTechnicianEdit(string technicianId)
-        {
-            var technicians = _context.Technicians.Select(t => new SelectListItem
-            {
-                Text = t.Name.ToString(),
-                Value = t.Id.ToString(),
-
-            }).OrderBy(t => t.Value != technicianId).ToList();
-
-            return technicians;
-        }
     }
 }
