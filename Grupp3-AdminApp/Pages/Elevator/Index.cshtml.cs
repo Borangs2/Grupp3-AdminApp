@@ -15,12 +15,10 @@ namespace Grupp3_Elevator.Pages.Elevator
 {
     public class IndexModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
         private readonly IElevatorService _elevatorService;
 
-        public IndexModel(ApplicationDbContext context, IElevatorService elevatorService)
+        public IndexModel(IElevatorService elevatorService)
         {
-            _context = context;
             _elevatorService = elevatorService;
         }
         public List<ElevatorDeviceItem> ElevatorsTwin { get; set; }
