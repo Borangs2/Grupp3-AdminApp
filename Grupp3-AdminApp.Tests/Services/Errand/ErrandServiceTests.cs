@@ -33,12 +33,12 @@ namespace AdminAppTests.Services.Errand
         }
 
         [TestMethod]
-        public void CreateErrandAsync_ShouldReturnErrandId()
+        public async Task CreateErrandAsync_ShouldReturnErrandId()
         {
             //ARRANGE
 
             //ACT
-            var errandId = _sut.CreateErrandAsync("5435f3c3-56f7-49da-8ef4-24937f71fd70", "TestTitle", "TestDescription", "TestCreatedBy", "62e4a265-ceb7-4254-81f9-7d4a78cfbed8");
+            var errandId = await _sut.CreateErrandAsync("5435f3c3-56f7-49da-8ef4-24937f71fd70", "TestTitle", "TestDescription", "TestCreatedBy", "62e4a265-ceb7-4254-81f9-7d4a78cfbed8");
             var errand = _context.Errands.Last();
 
             //ASSERT

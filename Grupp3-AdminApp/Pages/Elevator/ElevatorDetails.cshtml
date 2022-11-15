@@ -2,97 +2,116 @@
 @model Grupp3_Elevator.Pages.Elevator.ElevatorDetailsModel
 @{
 }
-
-<h1>
-    Elevator
-    <a asp-page="/Elevator/Index" class="btn btn-primary">Return</a>
-    <a asp-page="/Elevator/ElevatorEdit" asp-route-elevatorId="@Model.Elevator.Id" class="btn btn-danger">Edit XXX</a>
-</h1>
-
-<div class="container">
-    <div class="row">
-        <div class="col-4">
-            <table class="table">
-                <tr><td>Id: @Model.Elevator.Id</td></tr>
-                <tr><td>Name: @Model.Elevator.Name</td></tr>
-                <tr><td>Status: @Model.Elevator.Status</td></tr>
-                <tr><td>Door Status: @Model.Elevator.DoorStatus</td></tr>
-                <tr><td>Current Level: @Model.Elevator.CurrentLevel</td></tr>
-                <tr><td>Target Level: @Model.Elevator.TargetLevel</td></tr>
-            </table>
-        </div>
-
-         <div class="col-8 border">
-            <div class="bg-transparent col-6">
-                <form method="post" asp-page-handler="ChangeLevel" asp-route-elevatorId="@Model.Elevator.Id" asp-route-targetLevel="0">
-                    <button type="submit" class="btn btn-primary">E</button>
-                </form>
-                <form method="post" asp-page-handler="ChangeLevel" asp-route-elevatorId="@Model.Elevator.Id" asp-route-targetLevel="1">
-                    <button type="submit" class="btn btn-primary">1</button>
-                </form>
-                <form method="post" asp-page-handler="ChangeLevel" asp-route-elevatorId="@Model.Elevator.Id" asp-route-targetLevel="2">
-                    <button type="submit" class="btn btn-primary">2</button>
-                </form>
-                <form method="post" asp-page-handler="ChangeLevel" asp-route-elevatorId="@Model.Elevator.Id" asp-route-targetLevel="3">
-                    <button type="submit" class="btn btn-primary">3</button>
-                </form>
-                <form method="post" asp-page-handler="ChangeLevel" asp-route-elevatorId="@Model.Elevator.Id" asp-route-targetLevel="4">
-                    <button type="submit" class="btn btn-primary">4</button>
-                </form>
-                <form method="post" asp-page-handler="ChangeLevel" asp-route-elevatorId="@Model.Elevator.Id" asp-route-targetLevel="5">
-                    <button type="submit" class="btn btn-primary">5</button>
-                </form>
+<section>
+    <div class="container">
+        <h1>
+            @Model.Elevator.Name
+            <a asp-page="/Elevator/Index" class="btn btn-primary">Return</a>
+        </h1>
+        <div class="row card-body d-flex justify-content-between">
+            <div class="col-5 card">
+                <table class="table my-auto">
+                    <tr>
+                        <th>Id:</th>
+                        <td>@Model.Elevator.Id</td>
+                    </tr>
+                    <tr>
+                        <th>Name:</th>
+                        <td>@Model.Elevator.Name</td>
+                    </tr>
+                    <tr>
+                        <th>Status:</th>
+                        <td>@Model.Elevator.Status</td>
+                    </tr>
+                    <tr>
+                        <th>Door Status:</th>
+                        <td>@Model.Elevator.DoorStatus</td>
+                    </tr>
+                    <tr>
+                        <th>Current Level:</th>
+                        <td>@Model.Elevator.CurrentLevel</td>
+                    </tr>
+                    <tr>
+                        <th>Target Level:</th>
+                        <td>@Model.Elevator.TargetLevel</td>
+                    </tr>
+                </table>
             </div>
-            <div>
-                <form method="post" asp-page-handler="OpenDoors" asp-route-elevatorId="@Model.Elevator.Id">
-                    <button type="submit" class="btn btn-success">Open doors</button>
-                </form>
-                <form method="post" asp-page-handler="CloseDoors" asp-route-elevatorId="@Model.Elevator.Id">
-                    <button type="submit" class="btn btn-danger">Close doors</button>
-                </form>
-                <form method="post" asp-page-handler="ResetElevator" asp-route-elevatorId="@Model.Elevator.Id">
-                    <button type="submit" class="btn btn-primary">Reset elevator</button>
-                </form>
-                <form method="post" asp-page-handler="TurnOnElevator" asp-route-elevatorId="@Model.Elevator.Id">
-                    <button type="submit" class="btn btn-success">Turn On</button>
-                </form>
-                <form method="post" asp-page-handler="TurnOffElevator" asp-route-elevatorId="@Model.Elevator.Id">
-                    <button type="submit" class="btn btn-danger">Turn Off</button>
-                </form>
+
+            <div class="col-5 d-flex flex-row">
+                <div class="card-group gap-1 p-2 flex-column-reverse me-5">
+                    <form method="post" asp-page-handler="ChangeLevel" asp-route-elevatorId="@Model.Elevator.Id" asp-route-targetLevel="0">
+                        <button type="submit" class="btn btn-primary">E</button>
+                    </form>
+                    <form method="post" asp-page-handler="ChangeLevel" asp-route-elevatorId="@Model.Elevator.Id" asp-route-targetLevel="1">
+                        <button type="submit" class="btn btn-primary">1</button>
+                    </form>
+                    <form method="post" asp-page-handler="ChangeLevel" asp-route-elevatorId="@Model.Elevator.Id" asp-route-targetLevel="2">
+                        <button type="submit" class="btn btn-primary">2</button>
+                    </form>
+                    <form method="post" asp-page-handler="ChangeLevel" asp-route-elevatorId="@Model.Elevator.Id" asp-route-targetLevel="3">
+                        <button type="submit" class="btn btn-primary">3</button>
+                    </form>
+                    <form method="post" asp-page-handler="ChangeLevel" asp-route-elevatorId="@Model.Elevator.Id" asp-route-targetLevel="4">
+                        <button type="submit" class="btn btn-primary">4</button>
+                    </form>
+                    <form method="post" asp-page-handler="ChangeLevel" asp-route-elevatorId="@Model.Elevator.Id" asp-route-targetLevel="5">
+                        <button type="submit" class="btn btn-primary">5</button>
+                    </form>
+                </div>
+                <div class="card-group gap-2 p-1 flex-column justify-content-center">
+                    <form method="post" asp-page-handler="OpenDoors" asp-route-elevatorId="@Model.Elevator.Id">
+                        <button type="submit" class="btn btn-success">Open doors</button>
+                    </form>
+                    <form method="post" asp-page-handler="CloseDoors" asp-route-elevatorId="@Model.Elevator.Id">
+                        <button type="submit" class="btn btn-danger">Close doors</button>
+                    </form>
+                    <form method="post" asp-page-handler="ResetElevator" asp-route-elevatorId="@Model.Elevator.Id">
+                        <button type="submit" class="btn btn-primary">Reset elevator</button>
+                    </form>
+                    <form method="post" asp-page-handler="TurnOnElevator" asp-route-elevatorId="@Model.Elevator.Id">
+                        <button type="submit" class="btn btn-success">Turn On</button>
+                    </form>
+                    <form method="post" asp-page-handler="TurnOffElevator" asp-route-elevatorId="@Model.Elevator.Id">
+                        <button type="submit" class="btn btn-danger">Turn Off</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-<h1>
-    Errands
-    <a asp-page="/Errand/ErrandNew" asp-route-elevatorId="@Model.Elevator.Id" class="btn btn-success">New</a>
-</h1>
-<table class="table mb-5 text-center">
-    <tr>
-        <th>Guid</th>
-        <th>Title</th>
-        <th>Description</th>
-        <th>Status</th>
-        <th>Last Edited</th>
-        <th>Technician</th>
-        <th>Comments</th>
-        <th></th>
-        <th></th>
-    </tr>
-
-    @foreach (var errand in Model.Errands)
-    {
-        <tr>
-            <td>@errand.Id</td>
-            <td>@errand.Title</td>
-            <td>@errand.Description</td>
-            <td>@errand.Status</td>
-            <td>@errand.LastEdited</td>
-            <td>@errand.Technician.Name</td>
-            <td>@errand.Comments.Count()</td>
-            <td><a asp-page="/Errand/ErrandDetails" asp-route-elevatorId="@Model.Elevator.Id" asp-route-errandId="@errand.Id" class="btn btn-primary">Select</a></td>
-            <td><a asp-page="/Errand/ErrandEdit" asp-route-elevatorId="@Model.Elevator.Id" asp-route-errandId="@errand.Id" class="btn btn-success">Edit</a></td>
-        </tr>
-    }
-</table>
+    <div class="container">
+        <h1 class="mb-4">
+            Errands
+            <a asp-page="/Errand/ErrandNew" asp-route-elevatorId="@Model.Elevator.Id" class="btn btn-success">New</a>
+        </h1>
+        <div class="card">
+            <table class="table">
+                <tr class="text-center">
+                    <th class="col-1">Title</th>
+                    <th class="col-3">Description</th>
+                    <th class="col-2">Status</th>
+                    <th class="col-1">Last Edited</th>
+                    <th class="col-2">Technician</th>
+                    <th class="col-1">Comments</th>
+                    <th class="col-1"></th>
+                    <th class="col-1"></th>
+                </tr>
+                @foreach (var errand in Model.Errands)
+                {
+                    <tr class="text-center">
+                        <td class="col-1">@errand.Title</td>
+                        <td class="col-3">@errand.Description</td>
+                        <td class="col-2">@errand.Status</td>
+                        <td class="col-1">@errand.LastEdited.Date.ToString("d")</td>
+                        <td class="col-2">@errand.Technician.Name</td>
+                        <td class="col-1">@errand.Comments.Count()</td>
+                        <td class="col-1"><a asp-page="/Errand/ErrandDetails" asp-route-elevatorId="@Model.Elevator.Id" asp-route-errandId="@errand.Id" class="btn btn-primary">Select</a></td>
+                        <td class="col-1"><a asp-page="/Errand/ErrandEdit" asp-route-elevatorId="@Model.Elevator.Id" asp-route-errandId="@errand.Id" class="btn btn-success">Edit</a></td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</section>    
