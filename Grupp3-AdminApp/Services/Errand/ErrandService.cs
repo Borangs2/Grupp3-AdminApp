@@ -19,21 +19,19 @@ namespace Grupp3_Elevator.Services.Errand
         private readonly ApplicationDbContext _context;
         private readonly IElevatorService _elevatorService;
         private readonly ITechnicianService _technicianService;
-        private readonly IErrandCommentService _errandCommentService;
 
-        public ErrandService(ApplicationDbContext context, IElevatorService elevatorService, ITechnicianService technicianService, IErrandCommentService errandCommentService)
+        public ErrandService(ApplicationDbContext context, IElevatorService elevatorService, ITechnicianService technicianService)
         {
             _context = context;
             _elevatorService = elevatorService;
             _technicianService = technicianService;
-            _errandCommentService = errandCommentService;
         }
         public async Task<ErrandModel>? GetErrandByIdAsync(string errandId)
         {
             var result = _context.Errands
-                .Include(a => a.Technician)
-                .Include(b => b.Comments)
-                .FirstOrDefault(aa => aa.Id == Guid.Parse(errandId));
+                .Include(errand => errand.Technician)
+                .Include(errand => errand.Comments)
+                .FirstOrDefault(e => e.Id == Guid.Parse(errandId));
 
             if (result == null)
                 return null!;
@@ -43,8 +41,8 @@ namespace Grupp3_Elevator.Services.Errand
         public async Task<List<ErrandModel>> GetErrandsAsync()
         {
             var result = _context.Errands
-                .Include(e => e.Comments)
-                .Include(e => e.Technician).ToList();
+                .Include(errand => errand.Comments)
+                .Include(errand => errand.Technician).ToList();
             return result;
         }
 
@@ -118,7 +116,6 @@ namespace Grupp3_Elevator.Services.Errand
             });
             return technicians;
         }
-
         public List<SelectListItem> SelectTechnicianEdit(string technicianId)
         {
             var technicians = _context.Technicians.Select(t => new SelectListItem
