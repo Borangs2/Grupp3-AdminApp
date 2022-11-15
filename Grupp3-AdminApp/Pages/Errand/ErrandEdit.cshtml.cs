@@ -57,7 +57,7 @@ namespace Grupp3_Elevator.Pages.Errand
             {
                 await _errandService.EditErrandAsync(Errand.Id.ToString(), Errand, Errand.Technician.Id.ToString(), Errand.Comments);
 
-                return RedirectToPage("ErrandDetails", new { errandId = Errand.Id });
+                return RedirectToPage("ErrandDetails", new { elevatorId, errandId = Errand.Id.ToString() });
             }
 
             return Page();
