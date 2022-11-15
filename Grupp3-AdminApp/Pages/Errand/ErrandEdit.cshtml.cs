@@ -30,7 +30,6 @@ namespace Grupp3_Elevator.Pages.Errand
         public ElevatorDeviceItem Elevator { get; set; }
         [BindProperty]
         public ErrandModel Errand { get; set; }
-
         public List<SelectListItem> SelectTechnicianEdit { get; set; }
 
         public async Task<IActionResult> OnGetAsync(string elevatorId, string errandId)
@@ -38,7 +37,7 @@ namespace Grupp3_Elevator.Pages.Errand
             Elevator = await _elevatorService.GetElevatorDeviceByIdAsync(elevatorId);
             Errand = await _errandService.GetErrandByIdAsync(errandId);
 
-            SelectTechnicianEdit = _errandService.SelectTechnicianEdit(Errand.Technician.Id.ToString());
+            SelectTechnicianEdit = _technicianService.SelectTechnicianEdit(Errand.Technician.Id.ToString());
 
             if (Errand == null)
             {
@@ -59,9 +58,8 @@ namespace Grupp3_Elevator.Pages.Errand
 
                 return RedirectToPage("ErrandDetails", new { elevatorId, errandId = Errand.Id.ToString() });
             }
-
+            SelectTechnicianEdit = _technicianService.SelectTechnicianEdit(Errand.Technician.Id.ToString());
             return Page();
-
         }
     }
 }
