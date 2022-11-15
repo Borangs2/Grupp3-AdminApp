@@ -28,12 +28,11 @@ namespace Grupp3_Elevator.Services.Errand
             _technicianService = technicianService;
             _errandCommentService = errandCommentService;
         }
-        public async Task<ErrandModel> GetErrandByIdAsync(string errandId)
+        public async Task<ErrandModel>? GetErrandByIdAsync(string errandId)
         {
-            var result = _context.Errands.Include(a => a.Technician).Include(b => b.Comments).FirstOrDefault(aa => aa.Id == Guid.Parse(errandId));
-
-            result.Technician = _technicianService.GetTechnicianFromErrandId(errandId);
-            result.Comments = await _errandCommentService.GetErrandCommentsFromErrandIdAsync(errandId);
+            var result = _context.Errands.Include(a => a.Technician)
+                .Include(b => b.Comments)
+                .FirstOrDefault(aa => aa.Id == Guid.Parse(errandId));
 
             if (result == null)
                 return null!;
