@@ -8,6 +8,7 @@ using Grupp3_Elevator.Data;
 using Grupp3_Elevator.Models;
 using Grupp3_Elevator.Services;
 using Grupp3_Elevator.Services.Technician;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -143,6 +144,29 @@ namespace Grupp3_AdminApp.Tests.Services.Technician
 
             //Assert
             Assert.AreEqual(result.Name, technicianName);
+        }
+        [TestMethod]
+        public void SelectTechnician_ShouldReturnListOfSelectListItem()
+        {
+            //Arrange
+
+            //Act
+            var technicians = _sut.SelectTechnician();
+
+            //Assert
+            Assert.IsInstanceOfType(technicians, typeof(List<SelectListItem>));
+        }
+
+        [TestMethod]
+        public void SelectTechnicianEdit_ShouldReturnListOfSelectListItem()
+        {
+            //Arrange
+
+            //Act
+            var technicians = _sut.SelectTechnicianEdit("62e4a265-ceb7-4254-81f9-7d4a78cfbed8");
+
+            //Assert
+            Assert.IsInstanceOfType(technicians, typeof(List<SelectListItem>));
         }
     }
 }
