@@ -19,30 +19,3 @@
         }
     </div>
 </div>
-
-@*<h1>Elevators</h1>
-<table class="table mb-5 text-center">
-    <tr>
-        <th>Guid</th>
-        <th>Name</th>
-        <th>Status</th>
-        <th>Door Status</th>
-        <th>Current Level</th>
-        <th>Target Level</th>
-    </tr>
-
-    @foreach (var elevator in Model.ElevatorsTwin)
-    {
-        <tr>
-            <td>@elevator.Id</td>
-            <td>@elevator.Name</td>
-            <td>@elevator.Status</td>
-            <td>@elevator.DoorStatus</td>
-            <td>@elevator.CurrentLevel</td>
-            <td>@elevator.TargetLevel</td>
-            <td>
-                <a asp-page="/Elevator/ElevatorDetails" asp-route-elevatorTwinId="@elevator.Id" class="btn btn-primary">Select</a>
-            </td>
-        </tr>
-    }
-</table>*@

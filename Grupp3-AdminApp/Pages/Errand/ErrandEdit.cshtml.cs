@@ -13,15 +13,13 @@ namespace Grupp3_Elevator.Pages.Errand
 {
     public class ErrandEditModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
         private readonly IElevatorService _elevatorService;
         private readonly IErrandService _errandService;
         private readonly IErrandCommentService _errandCommentService;
         private readonly ITechnicianService _technicianService;
 
-        public ErrandEditModel(ApplicationDbContext context, IElevatorService elevatorService, IErrandService errandService, IErrandCommentService errandCommentService, ITechnicianService technicianService)
+        public ErrandEditModel(IElevatorService elevatorService, IErrandService errandService, IErrandCommentService errandCommentService, ITechnicianService technicianService)
         {
-            _context = context;
             _elevatorService = elevatorService;
             _errandService = errandService;
             _errandCommentService = errandCommentService;
@@ -32,16 +30,14 @@ namespace Grupp3_Elevator.Pages.Errand
         public ElevatorDeviceItem Elevator { get; set; }
         [BindProperty]
         public ErrandModel Errand { get; set; }
-
         public List<SelectListItem> SelectTechnicianEdit { get; set; }
-
 
         public async Task<IActionResult> OnGetAsync(string elevatorId, string errandId)
         {
             Elevator = await _elevatorService.GetElevatorDeviceByIdAsync(elevatorId);
             Errand = await _errandService.GetErrandByIdAsync(errandId);
 
-            SelectTechnicianEdit = _errandService.SelectTechnicianEdit(Errand.Technician.Id.ToString());
+            SelectTechnicianEdit = _technicianService.SelectTechnicianEdit(Errand.Technician.Id.ToString());
 
             if (Errand == null)
             {
@@ -51,7 +47,6 @@ namespace Grupp3_Elevator.Pages.Errand
             return Page();
         }
 
-        // TO DO: ModelState
         public async Task<IActionResult> OnPost(string elevatorId)
         {
             Errand.Technician = _technicianService.GetTechnicianById(Errand.Technician.Id.ToString());
@@ -59,13 +54,12 @@ namespace Grupp3_Elevator.Pages.Errand
 
             if (ModelState.IsValid)
             {
-                await _errandService.EditErrandAsync(Errand);
+                await _errandService.EditErrandAsync(Errand.Id.ToString(), Errand, Errand.Technician.Id.ToString(), Errand.Comments);
 
-                return RedirectToPage("ErrandDetails", new { elevatorId, errandId = Errand.Id });
+                return RedirectToPage("ErrandDetails", new { elevatorId, errandId = Errand.Id.ToString() });
             }
-
+            SelectTechnicianEdit = _technicianService.SelectTechnicianEdit(Errand.Technician.Id.ToString());
             return Page();
-
         }
     }
 }

@@ -16,14 +16,12 @@ namespace Grupp3_Elevator.Pages.Errand
     [BindProperties]
     public class ErrandNewModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
         private readonly IErrandService _errandService;
         private readonly IElevatorService _elevatorService;
         private readonly ITechnicianService _technicianService;
 
-        public ErrandNewModel(ApplicationDbContext context, IErrandService errandService, IElevatorService elevatorService, ITechnicianService technicianService)
+        public ErrandNewModel(IErrandService errandService, IElevatorService elevatorService, ITechnicianService technicianService)
         {
-            _context = context;
             _errandService = errandService;
             _elevatorService = elevatorService;
             _technicianService = technicianService;
@@ -31,10 +29,8 @@ namespace Grupp3_Elevator.Pages.Errand
 
         [BindProperty]
         public ElevatorDeviceItem Elevator { get; set; }
-
         public List<SelectListItem> SelectTechnician { get; set; }
-        public Guid ChosenSelectTechnician { get; set; }
-
+        public Guid TechnicianId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public string CreatedBy { get; set; }
@@ -43,7 +39,7 @@ namespace Grupp3_Elevator.Pages.Errand
         {
             Elevator = await _elevatorService.GetElevatorDeviceByIdAsync(elevatorId);
 
-            SelectTechnician = _errandService.SelectTechnician();
+            SelectTechnician = _technicianService.SelectTechnician();
             return Page();
         }
 
@@ -51,9 +47,10 @@ namespace Grupp3_Elevator.Pages.Errand
         {
             if (ModelState.IsValid)
             {
-                var id = _errandService.CreateErrandAsync(elevatorId, Title, Description, CreatedBy, ChosenSelectTechnician.ToString());
+                var id = await _errandService.CreateErrandAsync(elevatorId, Title, Description, CreatedBy, TechnicianId.ToString());
                 return RedirectToPage("ErrandDetails", new { elevatorId = elevatorId, errandId = id });
             }
+            SelectTechnician = _technicianService.SelectTechnician();
             return Page();
         }
     }

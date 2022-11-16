@@ -35,15 +35,10 @@
                                 <td>
                                     <label asp-for="@Model.Errand.Technician.Id">Technician</label>
                                     <select class="form-control" asp-for="@Model.Errand.Technician.Id" asp-items="@Model.SelectTechnicianEdit"></select>
-                                    @*<select hidden class="form-control" asp-for="@Model.Errand.Technician.Name" asp-items="@Model.SelectTechnicianEdit"></select>*@
+                                    <select hidden class="form-control" asp-for="@Model.Errand.Technician.Name" asp-items="@Model.SelectTechnicianEdit"></select>
                                     <span asp-validation-for="@Model.Errand.Technician.Id" class="field-validation-error"></span>
                                 </td>
                             </tr>
-@*                            <tr>
-                                <td>
-                                    <select asp-for="@Model.Errand.Technician.Name" asp-items="@Model.SelectTechnicianEdit"></select>
-                                </td>
-                            </tr>*@
                             <tr>
                                 <td>
                                     <label asp-for="@Model.Errand.CreatedBy">Created by</label>

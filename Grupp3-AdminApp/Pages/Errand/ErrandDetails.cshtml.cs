@@ -18,17 +18,17 @@ namespace Grupp3_Elevator.Pages.Errand
 {
     public class ErrandDetailsModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
         private readonly IErrandService _errandService;
         private readonly IElevatorService _elevatorService;
         private readonly IErrandCommentService _errandCommentService;
+        private readonly ITechnicianService _technicianService;
 
-        public ErrandDetailsModel(ApplicationDbContext context, IErrandService errandService, IElevatorService elevatorService, IErrandCommentService errandCommentService)
+        public ErrandDetailsModel(IErrandService errandService, IElevatorService elevatorService, IErrandCommentService errandCommentService, ITechnicianService technicianService)
         {
-            _context = context;
             _errandService = errandService;
             _elevatorService = elevatorService;
             _errandCommentService = errandCommentService;
+            _technicianService = technicianService;
         }
 
         [BindProperty]
@@ -47,7 +47,7 @@ namespace Grupp3_Elevator.Pages.Errand
             Elevator = await _elevatorService.GetElevatorDeviceByIdAsync(elevatorId);
             Errand = await _errandService.GetErrandByIdAsync(errandId);
 
-            SelectTechnician = _errandService.SelectTechnician();
+            SelectTechnician = _technicianService.SelectTechnician();
 
             if (Errand == null)
             {
@@ -63,16 +63,11 @@ namespace Grupp3_Elevator.Pages.Errand
 
             if (ModelState.IsValid)
             {
-                //CreateComment(Errand, technicianId, content);
                 await _errandCommentService.CreateErrandCommentAsync(Errand, ChosenSelectTechnician.ToString(), Content);
 
-                //return RedirectToPage("ErrandDetails", new { errandId = Errand.Id.ToString() });
-                //return RedirectToPage("ErrandDetails", new { elevatorId = Elevator.Id, errandId = Errand.Id });
                 return RedirectToPage("ErrandDetails", new { elevatorId, errandId });
             }
-
-            SelectTechnician = _errandService.SelectTechnician();
-
+            SelectTechnician = _technicianService.SelectTechnician();
             return Page();
         }
     }
