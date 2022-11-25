@@ -8,28 +8,47 @@
             Errand Details
             <a asp-page="/Elevator/ElevatorDetails" asp-route-elevatorId="@Model.Elevator.Id" class="btn btn-primary">Return</a>
             <a asp-page="/Errand/ErrandEdit" asp-route-elevatorId="@Model.Elevator.Id" asp-route-errandId="@Model.Errand.Id" class="btn btn-success">Edit</a>
-            </h1>
+        </h1>
         <div class="row mb-5">
-            <div class="col-4">
+            <div class="col-6">
                 <div class="container card">
                     <h4>Info</h4>
-                    <table class="table">
-                        <tr><td>Id: @Model.Errand.Id</td></tr>
-                        <tr><td>Title: @Model.Errand.Title</td></tr>
-                        <tr><td>Status: @Model.Errand.Status</td></tr>
-                        <tr><td>Last Edited: @Model.Errand.LastEdited</td></tr>
-                        <tr><td>Created at: @Model.Errand.CreatedAt</td></tr>
-                        <tr><td>Created by: @Model.Errand.CreatedBy</td></tr>
-                        <tr><td>Technician: @Model.Errand.Technician.Name</td></tr>
+                    <table class="table my-auto">
+@*                        <tr>
+                            <th>Id:</th>
+                            <td>@Model.Errand.Id</td>
+                        </tr>*@
+                        <tr>
+                            <th>Title:</th>
+                            <td>@Model.Errand.Title</td>
+                        </tr>
+                        <tr>
+                            <th>Status:</th>
+                            <td>@Model.Errand.Status</td>
+                        </tr>
+                        <tr>
+                            <th>Last Edited</th>
+                            <td>@Model.Errand.LastEdited</td>
+                        </tr>
+                        <tr>
+                            <th>Created At:</th>
+                            <td>@Model.Errand.CreatedAt</td>
+                        </tr>
+                        <tr>
+                            <th>Created By:</th>
+                            <td>@Model.Errand.CreatedBy</td>
+                        </tr>
+                        <tr>
+                            <th>Technician:</th>
+                            <td>@Model.Errand.Technician.Name</td>
+                        </tr>
                     </table>
                 </div>
             </div>
-            <div class="col-8">
+            <div class="col-6">
                 <div class="container card">
                     <h4>Description</h4>
-                    <p>
-                        @Model.Errand.Description
-                    </p>
+                    <p>@Model.Errand.Description</p>
                 </div>
             </div>
 
@@ -37,10 +56,10 @@
         <div class="col">
             <div class="container card">
                 <table class="table">
-                    @foreach (var comment in Model.Errand.Comments)
+                    @foreach (var comment in Model.Errand.Comments.OrderByDescending(a => a.PostedAt))
                     {
                         <tr class="d-flex flex-column">
-                            <th>(PostedAt:@comment.PostedAt) - (Author ID:@comment.Author) - (Comment ID:@comment.Id)</th>
+                            <th>Posted At: @comment.PostedAt - Author: @comment.Author</th>
                             <td>@comment.Content</td>
                         </tr>
                     }
