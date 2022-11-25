@@ -72,7 +72,7 @@ namespace Grupp3_Elevator.Services.Errand
                 CreatedAt = DateTime.Now,
                 LastEdited = DateTime.Now,
                 CreatedBy = CreatedBy,
-                Technician = _technicianService.GetTechnicianById(TechnicianId),
+                Technician = await _technicianService.GetTechnicianById(TechnicianId),
                 Comments = new List<ErrandCommentModel>()
             };
             elevator.Errands.Add(errand);
@@ -92,7 +92,7 @@ namespace Grupp3_Elevator.Services.Errand
             errandToEdit.Status = inputErrand.Status;
             errandToEdit.CreatedBy = inputErrand.CreatedBy;
             errandToEdit.Comments = comments;
-            errandToEdit.Technician = _technicianService.GetTechnicianById(technicianId);
+            errandToEdit.Technician = await _technicianService.GetTechnicianById(technicianId);
 
             _context.Update(errandToEdit);
             await _context.SaveChangesAsync();
