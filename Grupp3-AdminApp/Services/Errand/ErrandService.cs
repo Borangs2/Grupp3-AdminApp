@@ -1,4 +1,5 @@
-﻿using Dapper;
+﻿using System.Collections.Immutable;
+using Dapper;
 using Grupp3_Elevator.Data;
 using Grupp3_Elevator.Models;
 using Microsoft.Data.SqlClient;
@@ -6,6 +7,10 @@ using Microsoft.EntityFrameworkCore;
 using NToastNotify;
 using System.Data;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Xml.Linq;
+using Grupp3_Elevator.Pages.Errand;
+using Grupp3_Elevator.Services.Technician;
+using Grupp3_AdminApp.Services.ErrandComment;
 
 namespace Grupp3_Elevator.Services.Errand
 {
@@ -13,79 +18,86 @@ namespace Grupp3_Elevator.Services.Errand
     {
         private readonly ApplicationDbContext _context;
         private readonly IElevatorService _elevatorService;
+        private readonly ITechnicianService _technicianService;
 
-        public ErrandService(ApplicationDbContext context, IElevatorService elevatorService)
+        public ErrandService(ApplicationDbContext context, IElevatorService elevatorService, ITechnicianService technicianService)
         {
             _context = context;
             _elevatorService = elevatorService;
+            _technicianService = technicianService;
         }
-        public async Task<ErrandModel>? GetErrandByIdAsync(Guid errandId)
+        public async Task<ErrandModel>? GetErrandByIdAsync(string errandId)
         {
-            var result = _context.Errands.Include(c => c.Comments).FirstOrDefault(e => e.Id == errandId);
+            var result = _context.Errands
+                .Include(errand => errand.Technician)
+                .Include(errand => errand.Comments)
+                .FirstOrDefault(e => e.Id == Guid.Parse(errandId));
 
             if (result == null)
                 return null!;
             return result;
         }
-        public List<ErrandModel> GetErrands()
-        {
-            var result = _context.Errands.Include(c => c.Comments).ToList();
 
-            if (result == null)
-                return null!;
+        public async Task<List<ErrandModel>> GetErrandsAsync()
+        {
+            var result = _context.Errands
+                .Include(errand => errand.Comments)
+                .Include(errand => errand.Technician).ToList();
             return result;
         }
-        //public string CreateErrandAsync(string elevatorId, string Title, string Description, string CreatedBy, Guid TechnicianId)
-        //{
-        //    var elevator = _elevatorService.GetElevatorById(elevatorId);
 
-        //    var errand = new ErrandModel
-        //    {
-        //        Id = Guid.NewGuid(),
-        //        Title = Title,
-        //        Description = Description,
-        //        Status = ErrandStatus.NotStarted,
-        //        CreatedAt = DateTime.Now,
-        //        LastEdited = DateTime.Now,
-        //        CreatedBy = CreatedBy,
-        //        TechnicianId = TechnicianId,
-        //        Comments = new List<ErrandCommentModel>()
-        //    };
-        //    elevator.Errands.Add(errand);
-        //    _context.SaveChanges();
 
-        //    return errand.Id.ToString();
-        //}
-
-        public List<ErrandModel> GetErrandsFromElevatorId(string elevatorId)
+        public async Task<List<ErrandModel>> GetErrandsFromElevatorIdAsync(string elevatorId)
         {
-            var result = _context.Elevators.Include(c => c.Errands).FirstOrDefault(e => e.Id.ToString() == elevatorId);
+            var result = _context.Elevators
+                .Include(elevator => elevator.Errands)
+                .ThenInclude(errand => errand.Comments)
+                .Include(elevator => elevator.Errands)
+                .ThenInclude(errand => errand.Technician)
+                .FirstOrDefault(e => e.Id == Guid.Parse(elevatorId));
 
-            if (result == null)
-                return null!;
-            return result.Errands;
+            return result.Errands.ToList();
         }
 
-        public List<SelectListItem> SelectTechnician()
+        public async Task<string> CreateErrandAsync(string elevatorId, string Title, string Description, string CreatedBy, string TechnicianId)
         {
-            var technicians = _context.Technicians.Select(t => new SelectListItem
-            {
-                Text = t.Name.ToString(),
-                Value = t.Id.ToString()
+            var elevator = _elevatorService.GetElevatorById(elevatorId);
 
-            }).ToList();
-
-            technicians.Insert(0, new SelectListItem
+            var errand = new ErrandModel
             {
-                Value = "",
-                Text = "Please select technician"
-            });
-            return technicians;
+                Id = Guid.NewGuid(),
+                Title = Title,
+                Description = Description,
+                Status = ErrandStatus.NotStarted,
+                CreatedAt = DateTime.Now,
+                LastEdited = DateTime.Now,
+                CreatedBy = CreatedBy,
+                Technician = _technicianService.GetTechnicianById(TechnicianId),
+                Comments = new List<ErrandCommentModel>()
+            };
+            elevator.Errands.Add(errand);
+            await _context.SaveChangesAsync();
+
+            var id = errand.Id.ToString();
+            return id;
         }
 
-        public Task<EditErrandModel> EditErrandAsync(Guid errandId)
+        public async Task<ErrandModel> EditErrandAsync(string errandId, ErrandModel inputErrand, string technicianId, List<ErrandCommentModel> comments)
         {
-            throw new NotImplementedException();
+            ErrandModel errandToEdit = await GetErrandByIdAsync(errandId);
+
+            errandToEdit.Title = inputErrand.Title;
+            errandToEdit.Description = inputErrand.Description;
+            errandToEdit.LastEdited = DateTime.Now;
+            errandToEdit.Status = inputErrand.Status;
+            errandToEdit.CreatedBy = inputErrand.CreatedBy;
+            errandToEdit.Comments = comments;
+            errandToEdit.Technician = _technicianService.GetTechnicianById(technicianId);
+
+            _context.Update(errandToEdit);
+            await _context.SaveChangesAsync();
+
+            return errandToEdit;
         }
     }
 }

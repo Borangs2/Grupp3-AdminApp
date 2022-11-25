@@ -6,62 +6,62 @@
 <section>
     <div class="container">
         <h1 class="mb-5">
-                Edit Errand Title
-                <a asp-page="/Errand/ErrandDetails" asp-route-elevatorId="" asp-route-errandId="" class="btn btn-primary">Return</a>
-            </h1>
+            Edit Errand
+            <a asp-page="/Errand/ErrandDetails" asp-route-elevatorId="@Model.Elevator.Id" asp-route-errandId="@Model.Errand.Id" class="btn btn-primary">Return</a>
+        </h1>
         <div class="row mb-5">
             <div class="col-4">
                 <div class="container card">
                     <h4 class="mt-3">Info</h4>
                     <form method="post">
+                        <input hidden asp-for="Errand.Id" />
                         <table class="table">
                             <tr>
                                 <td>
-                                    <label>Title</label>
-                                    <input class="form-control" />
+                                    <label >Title</label>
+                                    <input asp-for="@Model.Errand.Title" class="form-control" />
+                                    <span asp-validation-for="@Model.Errand.Title" class="text-danger"></span>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <label for="exampleFormControlSelect1">Status</label>
-                                    <select class="form-control" id="exampleFormControlSelect1">
-                                        <option>Open</option>
-                                        <option>Ongoing</option>
-                                        <option>Closed</option>
-                                        <option>NeedMoreInfo</option>
+                                    <label asp-for="@Model.Errand.Status" for="exampleFormControlSelect1"></label>
+                                    <select asp-for="Errand.Status" class="form-control" asp-items="Html.GetEnumSelectList<ErrandStatus>()">
+                                        <option value="@Model.Errand.Status"></option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <label for="exampleFormControlSelect1">Technican</label>
-                                    <select class="form-control" id="exampleFormControlSelect1">
-                                        <option>Philip</option>
-                                        <option>Pierre</option>
-                                        <option>David</option>
-                                        <option>Andreas</option>
-                                        <option>Love</option>
-                                    </select>
+                                    <label asp-for="@Model.Errand.Technician.Id">Technician</label>
+                                    <select class="form-control" asp-for="@Model.Errand.Technician.Id" asp-items="@Model.SelectTechnicianEdit"></select>
+                                    <select hidden class="form-control" asp-for="@Model.Errand.Technician.Name" asp-items="@Model.SelectTechnicianEdit"></select>
+                                    <span asp-validation-for="@Model.Errand.Technician.Id" class="field-validation-error"></span>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <label>Created by</label>
-                                    <input class="form-control" />
+                                    <label asp-for="@Model.Errand.CreatedBy">Created by</label>
+                                    <input asp-for="@Model.Errand.CreatedBy" class="form-control" />
+                                </td>
+                                <td>
+                                    <label asp-for="@Model.Errand.Comments">Comments</label>
+                                    <input hidden asp-for="@Model.Errand.Comments" class="form-control" />
                                 </td>
                             </tr>
                         </table>
+                        <div class="col-8">
+                            <div class="container card"></div>
+                            <h4 class="mt-3">Description</h4>
+                            <textarea asp-for="@Model.Errand.Description" class="form-control mt-3" placeholder="Write description here..." cols="80" rows="10"></textarea>
+                            <div>
+                                <button asp-route-elevatorId="@Model.Elevator.Id" asp-route-errandId="@Model.Errand.Id" class="mt-3 mb-3 btn btn-primary" type="submit">Save</button>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
-            <div class="col-8">
-                <div class="container card"></div>
-                <h4 class="mt-3">Description</h4>
-                <textarea class="form-control mt-3" placeholder="Write description here..." cols="80" rows="10"></textarea>
-                <div>
-                    <button class="mt-3 mb-3 btn btn-primary" type="submit">Save</button>
-                </div>
-            </div>
+
         </div>
     </div>
 </section>
