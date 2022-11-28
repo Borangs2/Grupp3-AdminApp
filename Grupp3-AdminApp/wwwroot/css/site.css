@@ -16,3 +16,9 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.chart-container {
+    width: 50%;
+    height: 50%;
+    margin: auto;
+}

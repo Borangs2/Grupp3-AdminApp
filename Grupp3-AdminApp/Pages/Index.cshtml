@@ -1,26 +1,26 @@
 ﻿@page
 @model IndexModel
+@using System.Windows.Forms.DataVisualization.Charting
+@using static MudBlazor.CategoryTypes;
+@using System.Web.Helpers
 
 @{
     ViewData["Title"] = "Home page";
+
+    //var db = Database.Open("SmallBakery");
+    //var data = db.Query("SELECT Name, Price FROM Product");
+
+    //var myChart1 = new Chart(width: 600, height: 400);
+
+    var myChart = Chart(width: 600, height: 400)
+        .AddTitle("Errands for every elevator")
+        .AddSeries("Default",
+        xValue: Model.Elevators.Select(n => n.Name), xField: "Name",
+        yValues: Model.Errands, yFields: "Errands")
+        .Write();
 }
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3>Multiple Line Series</h3>
-                </div>
-                @*<div id="chart2" class="panel-body">
-                </div>*@
-                <a href="/jsindotnet">
-                    How to call JavaScript code from .NET
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <div class="row" style="padding-top: 5rem;">
     <div class="col-sm-6">
@@ -56,6 +56,37 @@
         </div>
     </div>
 </div>
+
+<div class="card chart-container">
+    <canvas id="chart"></canvas>
+</div>
+
+
+<script type="text/javascript">
+    const ctx = document.getElementById("chart").getContext('2d');
+    const myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ["sunday", "monday", "tuesday",
+                "wednesday", "thursday", "friday", "saturday"],
+            datasets: [{
+                label: 'Last week',
+                backgroundColor: 'rgba(161, 198, 247, 1)',
+                borderColor: 'rgb(47, 128, 237)',
+                data: [3000, 4000, 2000, 5000, 8000, 9000, 2000],
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                    }
+                }]
+            }
+        },
+    });
+</script>
 
 
 
