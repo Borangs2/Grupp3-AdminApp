@@ -13,15 +13,15 @@ namespace Grupp3_Elevator.Pages.Elevator
 {
     public class ElevatorDetailsModel : PageModel
     {
+        private readonly IConfiguration _configuration;
         private readonly IElevatorService _elevatorService;
         private readonly IErrandService _errandService;
-        private readonly IConfiguration _configuration;
 
-        public ElevatorDetailsModel(IElevatorService elevatorService, IErrandService errandService, IConfiguration configuration)
+        public ElevatorDetailsModel(IConfiguration configuration, IElevatorService elevatorService, IErrandService errandService)
         {
+            _configuration = configuration;
             _elevatorService = elevatorService;
             _errandService = errandService;
-            _configuration = configuration;
         }
 
         public ElevatorDeviceItem Elevator { get; set; }
