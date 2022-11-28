@@ -21,6 +21,8 @@ public class ElevatorDeviceItem
     public bool DoorStatus { get; set; } = false;
     public int CurrentLevel { get; set; } = 0;
     public int TargetLevel { get; set; } = 0;
+    public int MinLevel { get; set; } = 0;
+    public int MaxLevel { get; set; } = 0;
 
 
     public void OpenDoors()
