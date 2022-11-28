@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Grupp3_Elevator.styles.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
+    
 </head>
 <body>
     <header>
@@ -25,13 +28,6 @@
                             </li>
                         </ul>
                     </div>
-                </div>
-                <div class="w-25 px-5 d-flex justify-content-between align-items-center">
-                    <button class="layout_userBtn">User 1</button>
-                    <button class="layout_userBtn">User 2</button>
-                    <button class="layout_userBtn">User 3</button>
-                    <button class="layout_userBtn">User 4</button>
-
                 </div>
             </div>
 
@@ -52,20 +48,14 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="~/js/DiagramJS.js" asp-append-version="true"></script>
+    <script src="_content/MudBlazor/MudBlazor.min.js"></script>
+
+    <MudThemeProvider />
+    <MudDialogProvider />
+    <MudSnackbarProvider />
 
     @await RenderSectionAsync("Scripts", required: false)
     @await Component.InvokeAsync("NToastNotify")
-    
-    <style>
-        .layout_userBtn {
-            width: 100px;
-            height: 50px;
-            color: black;
-            border: none;
-            margin-right: 5px;
-            margin-left: 5px;
-        }
-    </style>
+
 </body>
 </html>

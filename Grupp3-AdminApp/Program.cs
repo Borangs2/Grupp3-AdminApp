@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 using Microsoft.EntityFrameworkCore;
 using NToastNotify;
 using Azure.Identity;
+using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,7 @@ builder.Services.AddTransient<IElevatorService, ElevatorService>();
 builder.Services.AddTransient<IErrandService, ErrandService>();
 builder.Services.AddTransient<ITechnicianService, TechnicianService>();
 builder.Services.AddTransient<IErrandCommentService, ErrandCommentService>();
+builder.Services.AddMudServices();
 
 builder.Services.AddMvc().AddNToastNotifyToastr(new ToastrOptions()
 {
