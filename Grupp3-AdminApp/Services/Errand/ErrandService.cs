@@ -107,6 +107,7 @@ namespace Grupp3_Elevator.Services.Errand
             if (errand != null)
             {
                 _context.Errands.Remove(errand);
+                await _context.SaveChangesAsync();
                 return HttpStatusCode.OK;
             }
 
