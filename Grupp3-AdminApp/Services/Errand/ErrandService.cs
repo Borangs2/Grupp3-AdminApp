@@ -6,6 +6,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using NToastNotify;
 using System.Data;
+using System.Net;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Xml.Linq;
 using Grupp3_Elevator.Pages.Errand;
@@ -72,7 +73,7 @@ namespace Grupp3_Elevator.Services.Errand
                 CreatedAt = DateTime.Now,
                 LastEdited = DateTime.Now,
                 CreatedBy = CreatedBy,
-                Technician = await _technicianService.GetTechnicianById(TechnicianId),
+                Technician = await _technicianService.GetTechnicianByIdAsync(TechnicianId),
                 Comments = new List<ErrandCommentModel>()
             };
             elevator.Errands.Add(errand);
@@ -92,12 +93,24 @@ namespace Grupp3_Elevator.Services.Errand
             errandToEdit.Status = inputErrand.Status;
             errandToEdit.CreatedBy = inputErrand.CreatedBy;
             errandToEdit.Comments = comments;
-            errandToEdit.Technician = await _technicianService.GetTechnicianById(technicianId);
+            errandToEdit.Technician = await _technicianService.GetTechnicianByIdAsync(technicianId);
 
             _context.Update(errandToEdit);
             await _context.SaveChangesAsync();
 
             return errandToEdit;
+        }
+
+        public async Task<HttpStatusCode> DeleteErrandAsync(string errandId)
+        {
+            var errand = await GetErrandByIdAsync(errandId);
+            if (errand != null)
+            {
+                _context.Errands.Remove(errand);
+                return HttpStatusCode.OK;
+            }
+
+            return HttpStatusCode.BadRequest;
         }
     }
 }
