@@ -39,7 +39,7 @@ namespace Grupp3_Elevator.Pages.Errand
         {
             Elevator = await _elevatorService.GetElevatorDeviceByIdAsync(elevatorId);
 
-            SelectTechnician = await _technicianService.SelectTechnician();
+            SelectTechnician = await _technicianService.SelectTechniciansAsync();
             return Page();
         }
 
@@ -50,7 +50,7 @@ namespace Grupp3_Elevator.Pages.Errand
                 var id = await _errandService.CreateErrandAsync(elevatorId, Title, Description, CreatedBy, TechnicianId.ToString());
                 return RedirectToPage("ErrandDetails", new { elevatorId = elevatorId, errandId = id });
             }
-            SelectTechnician = await _technicianService.SelectTechnician();
+            SelectTechnician = await _technicianService.SelectTechniciansAsync();
             return Page();
         }
     }

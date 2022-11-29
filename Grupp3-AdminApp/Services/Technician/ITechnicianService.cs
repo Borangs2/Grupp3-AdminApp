@@ -5,10 +5,10 @@ namespace Grupp3_Elevator.Services.Technician
 {
     public interface ITechnicianService
     {
-        Task<TechnicianModel> GetTechnicianById(string technicianId);
-        Task<List<TechnicianModel>> GetTechnicians();
-        Task<TechnicianModel> GetTechnicianFromErrandId(string errandId);
-        Task<List<SelectListItem>> SelectTechnician();
-        Task<List<SelectListItem>> SelectTechnicianEdit(string technicianId);
+        Task<TechnicianModel> GetTechnicianByIdAsync(string technicianId);
+        Task<List<TechnicianModel>> GetTechniciansAsync();
+        Task<TechnicianModel> GetTechnicianFromErrandIdAsync(string errandId);
+        Task<List<SelectListItem>> SelectTechniciansAsync();
+        Task<List<SelectListItem>> SelectListTechniciansEditAsync(string technicianId);
     }
 }
