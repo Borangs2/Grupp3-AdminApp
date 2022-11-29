@@ -62,6 +62,12 @@ public class ElevatorService : IElevatorService
         try { elevator.TargetLevel = twin.Properties.Reported["targetLevel"]; }
         catch { elevator.TargetLevel = 0; }
 
+        try { elevator.MinLevel = twin.Properties.Reported["minLevel"]; }
+        catch { elevator.MinLevel = 0; }
+
+        try { elevator.MaxLevel = twin.Properties.Reported["maxLevel"]; }
+        catch { elevator.MaxLevel = 0; }
+
         return elevator;
     }
 
@@ -107,7 +113,13 @@ public class ElevatorService : IElevatorService
                 try { elevator.TargetLevel = twin.Properties.Reported["targetLevel"]; }
                 catch { elevator.TargetLevel = 0; }
 
-                 elevatorList.Add(elevator);
+                try { elevator.MinLevel = twin.Properties.Reported["minLevel"]; }
+                catch { elevator.MinLevel = 0; }
+
+                try { elevator.MaxLevel = twin.Properties.Reported["maxLevel"]; }
+                catch { elevator.MaxLevel = 0; }
+
+                elevatorList.Add(elevator);
             }
         }
 
