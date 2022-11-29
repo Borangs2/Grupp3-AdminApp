@@ -41,7 +41,7 @@ namespace Grupp3_AdminApp.Tests.Services.Technician
 
 
             //Act
-            var result = await _sut.GetTechnicianById("62e4a265-ceb7-4254-81f9-7d4a78cfbed8");
+            var result = await _sut.GetTechnicianByIdAsync("62e4a265-ceb7-4254-81f9-7d4a78cfbed8");
 
             //Assert
             Assert.IsInstanceOfType(result, typeof(TechnicianModel));
@@ -54,7 +54,7 @@ namespace Grupp3_AdminApp.Tests.Services.Technician
             var guid = "62e4a265-ceb7-4254-81f9-7d4a78cfbed8";
 
             //Act
-            var result = await _sut.GetTechnicianById(guid);
+            var result = await _sut.GetTechnicianByIdAsync(guid);
 
             //Assert
             Assert.IsNotNull(result);
@@ -67,7 +67,7 @@ namespace Grupp3_AdminApp.Tests.Services.Technician
             var guid = "62e4a265-ceb7-4254-81f9-7d4a78cfbed8";
 
             //Act
-            var result = await _sut.GetTechnicianById(guid)!;
+            var result = await _sut.GetTechnicianByIdAsync(guid)!;
 
             //Assert
             Assert.AreEqual(result.Id.ToString(), guid);
@@ -80,7 +80,7 @@ namespace Grupp3_AdminApp.Tests.Services.Technician
 
 
             //Act
-            var result = await _sut.GetTechnicians();
+            var result = await _sut.GetTechniciansAsync();
 
             //Assert
             Assert.IsNotNull(result);
@@ -94,7 +94,7 @@ namespace Grupp3_AdminApp.Tests.Services.Technician
             var technicianCount = _context.Technicians.Count();
 
             //Act
-            var result = await _sut.GetTechnicians();
+            var result = await _sut.GetTechniciansAsync();
 
             //Assert
             Assert.AreEqual(result.Count(), technicianCount);
@@ -108,7 +108,7 @@ namespace Grupp3_AdminApp.Tests.Services.Technician
 
 
             //Act
-            var result = await _sut.GetTechnicianFromErrandId("9f091fd6-9657-4db3-a41c-7bb9e24a43fd");
+            var result = await _sut.GetTechnicianFromErrandIdAsync("9f091fd6-9657-4db3-a41c-7bb9e24a43fd");
 
             //Assert
             Assert.IsNotNull(result);
@@ -122,7 +122,7 @@ namespace Grupp3_AdminApp.Tests.Services.Technician
 
 
             //Act
-            var result = await _sut.GetTechnicianFromErrandId("9f091fd6-9657-4db3-a41c-7bb9e24a43fd");
+            var result = await _sut.GetTechnicianFromErrandIdAsync("9f091fd6-9657-4db3-a41c-7bb9e24a43fd");
 
             //Assert
             Assert.IsInstanceOfType(result, typeof(TechnicianModel));
@@ -140,7 +140,7 @@ namespace Grupp3_AdminApp.Tests.Services.Technician
             _context.SaveChanges();
 
             //Act
-            var result = await _sut.GetTechnicianFromErrandId(errandGuid.ToString())!;
+            var result = await _sut.GetTechnicianFromErrandIdAsync(errandGuid.ToString())!;
 
             //Assert
             Assert.AreEqual(result.Name, technicianName);
@@ -151,7 +151,7 @@ namespace Grupp3_AdminApp.Tests.Services.Technician
             //Arrange
 
             //Act
-            var technicians = await _sut.SelectTechnician();
+            var technicians = await _sut.SelectTechniciansAsync();
 
             //Assert
             Assert.IsInstanceOfType(technicians, typeof(List<SelectListItem>));
@@ -163,7 +163,7 @@ namespace Grupp3_AdminApp.Tests.Services.Technician
             //Arrange
 
             //Act
-            var technicians = await _sut.SelectTechnicianEdit("62e4a265-ceb7-4254-81f9-7d4a78cfbed8");
+            var technicians = await _sut.SelectListTechniciansEditAsync("62e4a265-ceb7-4254-81f9-7d4a78cfbed8");
 
             //Assert
             Assert.IsInstanceOfType(technicians, typeof(List<SelectListItem>));
