@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.Net;
 using System.Security.Cryptography;
 using Grupp3_Elevator.Data;
 using Grupp3_Elevator.Services.Errand;
@@ -68,6 +69,14 @@ namespace Grupp3_Elevator.Pages.Errand
                 return RedirectToPage("ErrandDetails", new { elevatorId, errandId });
             }
             SelectTechnician = await _technicianService.SelectTechniciansAsync();
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostDeleteErrand(string elevatorId, string errandId)
+        {
+            var result = await _errandService.DeleteErrandAsync(errandId);
+            if (result == HttpStatusCode.OK)
+                return RedirectToPage("/Elevator/ElevatorDetails", new { elevatorId = elevatorId });
             return Page();
         }
     }

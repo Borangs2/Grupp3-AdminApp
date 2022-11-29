@@ -106,6 +106,11 @@ namespace Grupp3_Elevator.Services.Errand
             var errand = await GetErrandByIdAsync(errandId);
             if (errand != null)
             {
+                foreach (var comment in errand.Comments)
+                {
+                    _context.RemoveRange(comment);
+                }
+
                 _context.Errands.Remove(errand);
                 await _context.SaveChangesAsync();
                 return HttpStatusCode.OK;

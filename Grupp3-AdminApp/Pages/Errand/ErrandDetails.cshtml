@@ -4,17 +4,23 @@
 }
 <section>
     <div class="container">
-        <h1 class="mb-5">
-            Errand Details
-            <a asp-page="/Elevator/ElevatorDetails" asp-route-elevatorId="@Model.Elevator.Id" class="btn btn-primary">Return</a>
-            <a asp-page="/Errand/ErrandEdit" asp-route-elevatorId="@Model.Elevator.Id" asp-route-errandId="@Model.Errand.Id" class="btn btn-success">Edit</a>
-        </h1>
+        <div class="d-flex justify-content-between">
+            <div class="mb-5">
+                <h1>Errand Details</h1>
+                <a asp-page="/Elevator/ElevatorDetails" asp-route-elevatorId="@Model.Elevator.Id" class="btn btn-primary">Return</a>
+                <a asp-page="/Errand/ErrandEdit" asp-route-elevatorId="@Model.Elevator.Id" asp-route-errandId="@Model.Errand.Id" class="btn btn-success">Edit</a>
+            </div>
+            <form asp-page-handler="DeleteErrand" method="post" asp-route-elevatorId="@Model.Elevator.Id" asp-route-errandId="@Model.Errand.Id">
+                <button type="submit" >DeleteErrand</button>
+
+            </form>
+        </div>
         <div class="row mb-5">
             <div class="col-6">
                 <div class="container card">
                     <h4>Info</h4>
                     <table class="table my-auto">
-@*                        <tr>
+                        @*                        <tr>
                             <th>Id:</th>
                             <td>@Model.Errand.Id</td>
                         </tr>*@
