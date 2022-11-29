@@ -111,7 +111,7 @@ namespace Grupp3_Elevator.Services.Errand
                 return HttpStatusCode.OK;
             }
 
-            return HttpStatusCode.BadRequest;
+            return HttpStatusCode.NotFound;
         }
     }
 }
