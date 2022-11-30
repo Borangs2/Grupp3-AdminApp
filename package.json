@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "chart.js": "^4.0.1",
+    "chartjs-example": "file:Grupp3-AdminApp/wwwroot/json"
+  }
+}

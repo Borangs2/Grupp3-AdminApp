@@ -4,7 +4,6 @@ using Grupp3_Elevator.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using System.Windows.Forms.DataVisualization.Charting;
 using static MudBlazor.CategoryTypes;
 
 namespace Grupp3_Elevator.Pages
@@ -35,19 +34,6 @@ namespace Grupp3_Elevator.Pages
 
             TechnichansAmount = _context.Technicians.Select(a => a.Id).Count().ToString();
             CommentsAmount = _context.ErrandComments.Select(a => a).Count().ToString();
-
-            Elevators = await _elevatorService.GetElevatorsAsync();
-
-
-
-            Errands = _context.Elevators.Include(e => e.Errands).Select(e => e.Errands.Count()).ToList();
-
-            var myChart = new Chart(width: 600, height: 400)
-                .AddTitle("Errands for every elevator")
-                .AddSeries("Default",
-                xValue: Model.Elevators.Select(n => n.Name), xField: "Name",
-                yValues: Model.Errands, yFields: "Errands")
-                .Write();
 
         }
     }

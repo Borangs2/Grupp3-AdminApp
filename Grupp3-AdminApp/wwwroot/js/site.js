@@ -1,29 +1,27 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿function generateChart() {
+    const data = [
+        { year: 2010, count: 10 },
+        { year: 2011, count: 20 },
+        { year: 2012, count: 15 },
+        { year: 2013, count: 25 },
+        { year: 2014, count: 22 },
+        { year: 2015, count: 30 },
+        { year: 2016, count: 28 },
+    ];
 
-// Write your JavaScript code.
-
-
-const ctx = document.getElementById("chart").getContext('2d');
-const myChart = new Chart(ctx, {
-    type: 'line',
-data: {
-    labels: ["sunday", "monday", "tuesday",
-"wednesday", "thursday", "friday", "saturday"],
-datasets: [{
-    label: 'Last week',
-backgroundColor: 'rgba(161, 198, 247, 1)',
-borderColor: 'rgb(47, 128, 237)',
-data: [3000, 4000, 2000, 5000, 8000, 9000, 2000],
-        }]
-    },
-options: {
-    scales: {
-    yAxes: [{
-    ticks: {
-    beginAtZero: true,
+    new Chart(
+        document.getElementById('chart'),
+        {
+            type: 'bar',
+            data: {
+                labels: data.map(row => row.year),
+                datasets: [
+                    {
+                        label: 'Acquisitions by year',
+                        data: data.map(row => row.count)
+                    }
+                ]
             }
-        }]
         }
-    },
-    });
+    );
+};
