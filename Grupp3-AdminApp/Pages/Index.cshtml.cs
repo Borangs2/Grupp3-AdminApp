@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using static MudBlazor.CategoryTypes;
+using static MudBlazor.CategoryTypes;
 
 namespace Grupp3_Elevator.Pages
 {
@@ -20,21 +21,18 @@ namespace Grupp3_Elevator.Pages
         }
         public string ErrandsAmount { get; set; }
         public string ElevatorsAmount { get; set; }
-        public string TechnichansAmount { get; set; }
+        public string TechniciansAmount { get; set; }
         public string CommentsAmount { get; set; }
-        public List<int> ErrandsPerElevatorOne { get; set; }
 
-        public List<ElevatorDeviceItem> Elevators { get; set; }
-        public List<int> Errands { get; set; }
 
         public async Task OnGet()
         {
             ErrandsAmount = _context.Errands.Select(a => a.Id).Count().ToString();
             ElevatorsAmount = _context.Elevators.Select(a => a.Id).Count().ToString();
 
-            TechnichansAmount = _context.Technicians.Select(a => a.Id).Count().ToString();
+            TechniciansAmount = _context.Technicians.Select(a => a.Id).Count().ToString();
             CommentsAmount = _context.ErrandComments.Select(a => a).Count().ToString();
 
         }
-    }
+    }   
 }

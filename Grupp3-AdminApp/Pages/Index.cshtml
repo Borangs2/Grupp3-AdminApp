@@ -1,12 +1,5 @@
 ﻿@page
 @model IndexModel
-@using static MudBlazor.CategoryTypes;
-
-@{
-    ViewData["Title"] = "Home page";
-}
-
-
 
 <div class="row" style="padding-top: 5rem;">
     <div class="col-sm-6">
@@ -28,8 +21,8 @@
     <div class="col-sm-6">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title" style="text-align: center;">Technichans</h5>
-                <p class="card-text" style="text-align: center;">@Model.TechnichansAmount</p>
+                <h5 class="card-title" style="text-align: center;">Technicians</h5>
+                <p class="card-text" style="text-align: center;">@Model.TechniciansAmount</p>
             </div>
         </div>
     </div>
@@ -42,7 +35,6 @@
         </div>
     </div>
 </div>
-
 <div class="card chart-container">
     <div style="width: 800px;"><canvas id="chart"></canvas></div>
     <script>generateChart()</script>
