@@ -1,25 +1,14 @@
 ﻿@page
 @model IndexModel
-@using System.Windows.Forms.DataVisualization.Charting
-@using static MudBlazor.CategoryTypes;
-@using System.Web.Helpers
 
 @{
     ViewData["Title"] = "Home page";
-
-    //var db = Database.Open("SmallBakery");
-    //var data = db.Query("SELECT Name, Price FROM Product");
-
-    //var myChart1 = new Chart(width: 600, height: 400);
-
-    var myChart = Chart(width: 600, height: 400)
-        .AddTitle("Errands for every elevator")
-        .AddSeries("Default",
-        xValue: Model.Elevators.Select(n => n.Name), xField: "Name",
-        yValues: Model.Errands, yFields: "Errands")
-        .Write();
 }
 
+
+<div class="chart-container" width="600" height="400">
+    <canvas id="myChart"></canvas>
+</div>
 
 
 <div class="row" style="padding-top: 5rem;">
@@ -57,36 +46,49 @@
     </div>
 </div>
 
-<div class="card chart-container">
-    <canvas id="chart"></canvas>
-</div>
+@section Scripts
+    {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js" integrity="sha256-qSIshlknROr4J8GMHRlW3fGKrPki733tLq+qeMCR05Q=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js" integrity="sha256-xKeoJ50pzbUGkpQxDYHD7o7hxe0LaOGeguUidbq6vis=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.css" integrity="sha256-IvM9nJf/b5l2RoebiFno92E5ONttVyaEEsdemDC6iQA=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js" integrity="sha256-arMsf+3JJK2LoTGqxfnuJPFTU4hAK57MtIPdFpiHXOU=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" integrity="sha256-aa0xaJgmK/X74WM224KMQeNQC2xYKwlAt08oZqjeF0E=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" integrity="sha256-Uv9BNBucvCPipKQ2NS9wYpJmi8DTOEfTA/nH2aoJALw=" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
 
+            var ctx = document.getElementById('myChart');
+            var myChart = new Chart(ctx, @Html.Raw(Model.ChartJson) );
 
-<script type="text/javascript">
-    const ctx = document.getElementById("chart").getContext('2d');
-    const myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ["sunday", "monday", "tuesday",
-                "wednesday", "thursday", "friday", "saturday"],
-            datasets: [{
-                label: 'Last week',
-                backgroundColor: 'rgba(161, 198, 247, 1)',
-                borderColor: 'rgb(47, 128, 237)',
-                data: [3000, 4000, 2000, 5000, 8000, 9000, 2000],
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true,
-                    }
+        });
+    </script>
+    }
+
+@*@section scripts{
+    <script src="~/Chart.js/Chart.js"></script>
+    <script>
+        var chartdata = @Html.Raw(Json.Serialize(Model.datalist));
+        var labels = [];
+        var data = [];
+        $.each(chartdata, function (index, value) {
+            labels.push(value.MyLabel);
+            data.push(value.MyData);
+        });
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'demo',
+                    backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: data
                 }]
             }
-        },
-    });
-</script>
+        });
+    </script>
+}*@
 
 
 
