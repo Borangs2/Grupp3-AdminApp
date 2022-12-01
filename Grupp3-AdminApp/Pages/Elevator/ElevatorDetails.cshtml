@@ -1,6 +1,7 @@
 ﻿@page
 @model Grupp3_Elevator.Pages.Elevator.ElevatorDetailsModel
 @{
+
 }
 
 <div class="container">
@@ -40,24 +41,12 @@
 
         <div class="col-6 d-flex flex-row">
             <div class="card-group gap-1 p-2 flex-column-reverse me-5">
-                <form method="post" asp-page-handler="ChangeLevel" asp-route-elevatorId="@Model.Elevator.Id" asp-route-targetLevel="0">
-                    <button type="submit" class="btn btn-primary">E</button>
-                </form>
-                <form method="post" asp-page-handler="ChangeLevel" asp-route-elevatorId="@Model.Elevator.Id" asp-route-targetLevel="1">
-                    <button type="submit" class="btn btn-primary">1</button>
-                </form>
-                <form method="post" asp-page-handler="ChangeLevel" asp-route-elevatorId="@Model.Elevator.Id" asp-route-targetLevel="2">
-                    <button type="submit" class="btn btn-primary">2</button>
-                </form>
-                <form method="post" asp-page-handler="ChangeLevel" asp-route-elevatorId="@Model.Elevator.Id" asp-route-targetLevel="3">
-                    <button type="submit" class="btn btn-primary">3</button>
-                </form>
-                <form method="post" asp-page-handler="ChangeLevel" asp-route-elevatorId="@Model.Elevator.Id" asp-route-targetLevel="4">
-                    <button type="submit" class="btn btn-primary">4</button>
-                </form>
-                <form method="post" asp-page-handler="ChangeLevel" asp-route-elevatorId="@Model.Elevator.Id" asp-route-targetLevel="5">
-                    <button type="submit" class="btn btn-primary">5</button>
-                </form>
+                @for (int i = 0; i < Model.Elevator.MaxLevel+1; i++)
+                {
+                    <form method="post" asp-page-handler="ChangeLevel" asp-route-elevatorId="@Model.Elevator.Id" asp-route-targetLevel="@i">
+                        <button type="submit" class="btn btn-primary">@i</button>
+                    </form>
+                }
             </div>
             <div class="card-group gap-2 p-1 flex-column justify-content-center">
                 <form method="post" asp-page-handler="OpenDoors" asp-route-elevatorId="@Model.Elevator.Id">
