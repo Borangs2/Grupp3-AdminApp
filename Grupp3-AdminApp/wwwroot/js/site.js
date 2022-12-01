@@ -1,10 +1,12 @@
-﻿function generateChart() {
+﻿var db = 
+
+function generateChart() {
     const data = [
-        { hiss: "Hiss 1", count: 10 },
-        { hiss: "Hiss 1", count: 20 },
-        { hiss: "Hiss 1", count: 15 },
-        { hiss: "Hiss 1", count: 25 },
-        { hiss: "Hiss 1", count: 22 },
+        { elevator: "Hiss 1", count: 10 },
+        { elevator: "Hiss 1", count: 20 },
+        { elevator: "Hiss 1", count: 15 },
+        { elevator: "Hiss 1", count: 25 },
+        { elevator: "Hiss 1", count: 22 },
         
     ];
 
@@ -13,10 +15,10 @@
         {
             type: 'bar',
             data: {
-                labels: data.map(row => row.hiss),
+                labels: data.map(row => row.elevator),
                 datasets: [
                     {
-                        label: 'Acquisitions by year',
+                        label: 'Errands by elevator',
                         data: data.map(row => row.count)
                     }
                 ]
