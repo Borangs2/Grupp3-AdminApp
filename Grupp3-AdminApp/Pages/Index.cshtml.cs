@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using static MudBlazor.CategoryTypes;
-using static MudBlazor.CategoryTypes;
 
 namespace Grupp3_Elevator.Pages
 {
