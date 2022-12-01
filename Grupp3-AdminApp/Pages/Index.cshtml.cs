@@ -5,6 +5,7 @@ using Grupp3_Elevator.Services.Errand;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using static MudBlazor.CategoryTypes;
 
 namespace Grupp3_Elevator.Pages
@@ -16,19 +17,26 @@ namespace Grupp3_Elevator.Pages
         private readonly IElevatorService _elevatorService;
         private readonly IErrandService _errandService;
 
-        public IndexModel(ApplicationDbContext context, ILogger<IndexModel> logger)
+        public IndexModel(ApplicationDbContext context, ILogger<IndexModel> logger, IElevatorService elevatorService)
         {
             _context = context;
             _logger = logger;
+            _elevatorService = elevatorService;
+            
         }
         public string ErrandsAmount { get; set; }
         public string ElevatorsAmount { get; set; }
         public string TechniciansAmount { get; set; }
         public string CommentsAmount { get; set; }
 
-        public ElevatorDeviceItem GlobeWorks { get; set; }
+        public string ElevatorsList { get; set; }
         public List<ErrandModel> GlobeWorksErrands { get; set; }
 
+        public class ElevatorChartModel
+        {
+            public string Name { get; set; }
+            public int ErrandCount { get; set; }
+        }
 
 
         //En lista med alla hissars errands
@@ -43,8 +51,32 @@ namespace Grupp3_Elevator.Pages
             TechniciansAmount = _context.Technicians.Select(a => a.Id).Count().ToString();
             CommentsAmount = _context.ErrandComments.Select(a => a).Count().ToString();
 
-            GlobeWorks = await _elevatorService.GetElevatorDeviceByIdAsync("64248f21-f9cf-4e99-a2f8-5b3c30ff307f");
-            GlobeWorksErrands = await _errandService.GetErrandsFromElevatorIdAsync("64248f21-f9cf-4e99-a2f8-5b3c30ff307f");
+            var elevatorNameList = await _elevatorService.GetElevatorsAsync();
+            var elevators = new List<ElevatorChartModel>();
+            foreach (var elevator in _context.Elevators.Include(e => e.Errands))
+            {
+                elevators.Add(new ElevatorChartModel
+                {
+                    Name = elevatorNameList.FirstOrDefault(e => e.Id == elevator.Id)!.Name,
+                    ErrandCount = elevator.Errands.Count(),
+                });
+            }
+
+            ElevatorsList = JsonConvert.SerializeObject(elevators);
+
+            //var elevatorList = await _elevatorService.GetElevatorsAsync();
+
+            //List<ElevatorChartModel> fetchedElevators = _context.Elevators.Include(e => e.Errands).Select(e =>
+
+            //new ElevatorChartModel
+            //{
+            //    Name = elevatorList.FirstOrDefault(i => i.Id == e.Id)!.Name,
+            //    ErrandCount = e.Errands.Count(),
+            //}).ToList();
+
+
+            //ElevatorsList = JsonConvert.SerializeObject(fetchedElevators);
+
 
         }
     }   

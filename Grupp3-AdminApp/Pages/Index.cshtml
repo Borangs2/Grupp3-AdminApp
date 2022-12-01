@@ -35,7 +35,13 @@
         </div>
     </div>
 </div>
-<div class="card chart-container">
-    <div style="width: 800px;"><canvas id="chart"></canvas></div>
-    <script>generateChart()</script>
+
+<textarea hidden id="elevatorslist">@Model.ElevatorsList</textarea>
+
+<div class="card d-flex flex-row justify-content-around">
+        <div style="width: 800px;">
+            <canvas id="chart"></canvas>
+        <script>generateChart()</script>
+        </div>
+    
 </div>
