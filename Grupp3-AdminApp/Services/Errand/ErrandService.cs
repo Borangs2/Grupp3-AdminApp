@@ -70,7 +70,6 @@ namespace Grupp3_Elevator.Services.Errand
         public async Task<string> CreateErrandAsync(string elevatorId, string Title, string Description, string CreatedBy, string TechnicianId)
         {
             var elevator = _elevatorService.GetElevatorById(elevatorId);
-
             var errand = new ErrandModel
             {
                 Id = Guid.NewGuid(),
