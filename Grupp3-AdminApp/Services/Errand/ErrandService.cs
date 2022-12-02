@@ -12,66 +12,70 @@ public class ErrandService : IErrandService
     private readonly IElevatorService _elevatorService;
     private readonly ITechnicianService _technicianService;
 
-    public ErrandService(ApplicationDbContext context, IElevatorService elevatorService,
-        ITechnicianService technicianService)
-    {
-        _context = context;
-        _elevatorService = elevatorService;
-        _technicianService = technicianService;
-    }
-
-    public async Task<ErrandModel>? GetErrandByIdAsync(string errandId)
-    {
-        var result = _context.Errands
-            .Include(errand => errand.Technician)
-            .Include(errand => errand.Comments)
-            .FirstOrDefault(e => e.Id == Guid.Parse(errandId));
+        public ErrandService(ApplicationDbContext context, IElevatorService elevatorService, ITechnicianService technicianService)
+        {
+            _context = context;
+            _elevatorService = elevatorService;
+            _technicianService = technicianService;
+        }
+        public async Task<ErrandModel>? GetErrandByIdAsync(string errandId)
+        {
+            var result = _context.Errands
+                .Include(errand => errand.Technician)
+                .Include(errand => errand.Comments
+                    .OrderByDescending(comment => comment.PostedAt))
+                .FirstOrDefault(e => e.Id == Guid.Parse(errandId));
 
         if (result == null)
             return null!;
         return result;
     }
 
-    public async Task<List<ErrandModel>> GetErrandsAsync()
-    {
-        var result = _context.Errands
-            .Include(errand => errand.Comments)
-            .Include(errand => errand.Technician).ToList();
-        return result;
-    }
+        public async Task<List<ErrandModel>> GetErrandsAsync()
+        {
+            var result = _context.Errands
+                .OrderByDescending(errand => errand.Status == ErrandStatus.InProgress)
+                .ThenByDescending(errand => errand.Status == ErrandStatus.NotStarted)
+                .Include(errand => errand.Comments
+                    .OrderByDescending(comment => comment.PostedAt))
+                .Include(errand => errand.Technician).ToList();
+            return result;
+        }
 
 
-    public async Task<List<ErrandModel>> GetErrandsFromElevatorIdAsync(string elevatorId)
-    {
-        var result = _context.Elevators
-            .Include(elevator => elevator.Errands)
-            .ThenInclude(errand => errand.Comments)
-            .Include(elevator => elevator.Errands)
-            .ThenInclude(errand => errand.Technician)
-            .FirstOrDefault(e => e.Id == Guid.Parse(elevatorId));
+        public async Task<List<ErrandModel>> GetErrandsFromElevatorIdAsync(string elevatorId)
+        {
+            var result = _context.Elevators
+                .Include(elevator => elevator.Errands
+                    .OrderByDescending(errand => errand.Status == ErrandStatus.InProgress)
+                    .ThenByDescending(errand => errand.Status == ErrandStatus.NotStarted))
+                .ThenInclude(errand => errand.Comments
+                    .OrderByDescending(comment => comment.PostedAt))
+                .Include(elevator => elevator.Errands)
+                .ThenInclude(errand => errand.Technician)
+                .FirstOrDefault(e => e.Id == Guid.Parse(elevatorId));
 
         return result.Errands.ToList();
     }
 
-    public async Task<string> CreateErrandAsync(string elevatorId, string Title, string Description, string CreatedBy,
-        string TechnicianId)
-    {
-        var elevator = _elevatorService.GetElevatorById(elevatorId);
-
-        var errand = new ErrandModel
+        public async Task<string> CreateErrandAsync(string elevatorId, string Title, string Description, string CreatedBy, string TechnicianId)
         {
-            Id = Guid.NewGuid(),
-            Title = Title,
-            Description = Description,
-            Status = ErrandStatus.NotStarted,
-            CreatedAt = DateTime.Now,
-            LastEdited = DateTime.Now,
-            CreatedBy = CreatedBy,
-            Technician = await _technicianService.GetTechnicianByIdAsync(TechnicianId),
-            Comments = new List<ErrandCommentModel>()
-        };
-        elevator.Errands.Add(errand);
-        await _context.SaveChangesAsync();
+            var elevator = _elevatorService.GetElevatorById(elevatorId);
+
+            var errand = new ErrandModel
+            {
+                Id = Guid.NewGuid(),
+                Title = Title,
+                Description = Description,
+                Status = ErrandStatus.NotStarted,
+                CreatedAt = DateTime.Now,
+                LastEdited = DateTime.Now,
+                CreatedBy = CreatedBy,
+                Technician = await _technicianService.GetTechnicianByIdAsync(TechnicianId),
+                Comments = new List<ErrandCommentModel>()
+            };
+            elevator.Errands.Add(errand);
+            await _context.SaveChangesAsync();
 
         var id = errand.Id.ToString();
         return id;
