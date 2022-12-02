@@ -24,25 +24,4 @@ public class ElevatorDeviceItem
     public int TargetLevel { get; set; } = 0;
     public int MinLevel { get; set; } = 0;
     public int MaxLevel { get; set; } = 0;
-
-
-    public void OpenDoors()
-    {
-        DoorStatus = true;
-    }
-
-    public void CloseDoors()
-    {
-        DoorStatus = false;
-    }
-
-    public void GoToFloor()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void ResetElevator()
-    {
-        throw new NotImplementedException();
-    }
 }
