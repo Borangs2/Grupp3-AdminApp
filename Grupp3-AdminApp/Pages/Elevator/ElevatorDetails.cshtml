@@ -98,8 +98,12 @@
                     <td class="col-1">@errand.LastEdited.Date.ToString("d")</td>
                     <td class="col-2">@errand.Technician.Name</td>
                     <td class="col-1">@errand.Comments.Count()</td>
-                    <td class="col-1"><a asp-page="/Errand/ErrandDetails" asp-route-elevatorId="@Model.Elevator.Id" asp-route-errandId="@errand.Id" class="btn btn-primary">Select</a></td>
-                    <td class="col-1"><a asp-page="/Errand/ErrandEdit" asp-route-elevatorId="@Model.Elevator.Id" asp-route-errandId="@errand.Id" class="btn btn-success">Edit</a></td>
+                    <td class="col-1">
+                        <a asp-page="/Errand/ErrandDetails" asp-route-elevatorId="@Model.Elevator.Id" asp-route-errandId="@errand.Id" class="btn btn-primary">Select</a>
+                    </td>
+                    <td class="col-1">
+                        <a asp-page="/Errand/ErrandEdit" asp-route-elevatorId="@Model.Elevator.Id" asp-route-errandId="@errand.Id" class="btn btn-success">Edit</a>
+                    </td>
                 </tr>
             }
         </table>

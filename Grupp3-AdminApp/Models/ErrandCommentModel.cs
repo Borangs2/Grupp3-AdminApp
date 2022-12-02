@@ -5,14 +5,15 @@ namespace Grupp3_Elevator.Models;
 
 public class ErrandCommentModel
 {
-    [Key]
-    public Guid Id { get; set; }
+    [Key] public Guid Id { get; set; }
+
     [Required]
     [Column(TypeName = "nvarchar(2000)")]
     public string Content { get; set; }
+
     [Required]
     [Column(TypeName = "nvarchar(200)")]
     public Guid Author { get; set; }
-    public DateTime PostedAt { get; set; }
 
+    public DateTime PostedAt { get; set; }
 }

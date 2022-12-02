@@ -1,12 +1,10 @@
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Grupp3_AdminApp.Pages
+namespace Grupp3_AdminApp.Pages;
+
+public class CallJavaScriptInDotNetModel : PageModel
 {
-    public partial class CallJavaScriptInDotNetModel : PageModel
+    public void OnGet()
     {
-        public void OnGet()
-        {
-        }
     }
 }

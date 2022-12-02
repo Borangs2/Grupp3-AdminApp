@@ -13,7 +13,6 @@
     <PackageReference Include="BlazorStrap" Version="5.0.106" />
     <PackageReference Include="chartjs" Version="22.1.6" />
     <PackageReference Include="Dapper" Version="2.0.123" />
-    <PackageReference Include="DocumentFormat.OpenXml" Version="2.18.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.10" />
     <PackageReference Include="Microsoft.Azure.Devices" Version="1.38.1" />
     <PackageReference Include="Microsoft.Azure.Devices.Shared" Version="1.30.2" />
@@ -25,10 +24,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="MudBlazor" Version="6.1.2" />
     <PackageReference Include="newtonsoft.json" Version="13.0.2" />
     <PackageReference Include="NToastNotify" Version="8.0.0" />
-    <PackageReference Include="Radzen.Blazor" Version="4.3.9" />
   </ItemGroup>
 
 </Project>
