@@ -62,7 +62,7 @@
         <div class="col">
             <div class="container card">
                 <table class="table">
-                    @foreach (var comment in Model.Errand.Comments.OrderByDescending(a => a.PostedAt))
+                    @foreach (var comment in Model.Errand.Comments)
                     {
                         <tr class="d-flex flex-column">
                             <th>Posted At: @comment.PostedAt - Author: @comment.Author</th>
