@@ -57,20 +57,20 @@ public class ErrandService : IErrandService
         return result.Errands.ToList();
     }
 
-    public async Task<string> CreateErrandAsync(string elevatorId, string Title, string Description, string CreatedBy, string TechnicianId)
+    public async Task<string> CreateErrandAsync(string elevatorId, string title, string description, string createdBy, string technicianId)
     {
         var elevator = _elevatorService.GetElevatorById(elevatorId);
 
         var errand = new ErrandModel
         {
             Id = Guid.NewGuid(),
-            Title = Title,
-            Description = Description,
+            Title = title,
+            Description = description,
             Status = ErrandStatus.NotStarted,
             CreatedAt = DateTime.Now,
             LastEdited = DateTime.Now,
-            CreatedBy = CreatedBy,
-            Technician = await _technicianService.GetTechnicianByIdAsync(TechnicianId),
+            CreatedBy = createdBy,
+            Technician = await _technicianService.GetTechnicianByIdAsync(technicianId),
             Comments = new List<ErrandCommentModel>()
         };
         elevator.Errands.Add(errand);
