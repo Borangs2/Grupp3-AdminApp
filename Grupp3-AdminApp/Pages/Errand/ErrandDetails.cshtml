@@ -11,7 +11,7 @@
                 <a asp-page="/Errand/ErrandEdit" asp-route-elevatorId="@Model.Elevator.Id" asp-route-errandId="@Model.Errand.Id" class="btn btn-success">Edit</a>
             </div>
             <form asp-page-handler="DeleteErrand" method="post" asp-route-elevatorId="@Model.Elevator.Id" asp-route-errandId="@Model.Errand.Id">
-                <button type="submit" >DeleteErrand</button>
+                <button type="submit">DeleteErrand</button>
 
             </form>
         </div>
@@ -20,10 +20,6 @@
                 <div class="container card">
                     <h4>Info</h4>
                     <table class="table my-auto">
-                        @*                        <tr>
-                            <th>Id:</th>
-                            <td>@Model.Errand.Id</td>
-                        </tr>*@
                         <tr>
                             <th>Title:</th>
                             <td>@Model.Errand.Title</td>
@@ -62,10 +58,10 @@
         <div class="col">
             <div class="container card">
                 <table class="table">
-                    @foreach (var comment in Model.Errand.Comments)
+                    @foreach (var comment in Model.ErrandComments)
                     {
                         <tr class="d-flex flex-column">
-                            <th>Posted At: @comment.PostedAt - Author: @comment.Author</th>
+                            <th>Posted At: @comment.PostedAt - Author: @comment.Author.Name</th>
                             <td>@comment.Content</td>
                         </tr>
                     }

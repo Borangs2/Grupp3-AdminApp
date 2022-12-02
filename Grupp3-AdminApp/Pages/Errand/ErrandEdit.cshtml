@@ -14,12 +14,12 @@
                 <div class="container card">
                     <h4 class="mt-3">Info</h4>
                     <form method="post">
-                        <input hidden asp-for="Errand.Id" />
+                        <input hidden asp-for="Errand.Id"/>
                         <table class="table">
                             <tr>
                                 <td>
                                     <label >Title</label>
-                                    <input asp-for="@Model.Errand.Title" class="form-control" />
+                                    <input asp-for="@Model.Errand.Title" class="form-control"/>
                                     <span asp-validation-for="@Model.Errand.Title" class="text-danger"></span>
                                 </td>
                             </tr>
@@ -42,10 +42,10 @@
                             <tr>
                                 <td>
                                     <label asp-for="@Model.Errand.CreatedBy">Created by</label>
-                                    <input asp-for="@Model.Errand.CreatedBy" class="form-control" />
+                                    <input asp-for="@Model.Errand.CreatedBy" class="form-control"/>
                                 </td>
                                 <td>
-                                    <input hidden asp-for="@Model.Errand.Comments" class="form-control" />
+                                    <input hidden asp-for="@Model.Errand.Comments" class="form-control"/>
                                 </td>
                             </tr>
                         </table>
