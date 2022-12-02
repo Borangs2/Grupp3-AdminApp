@@ -37,11 +37,13 @@ function generateChart() {
             },
             options: {
                 scales: {
-                    yAxes: [{
+                    y: {
                         ticks: {
                             precision: 0
-                        }
-                    }]
+                        },
+                        suggestedMax: 5
+                    }
+                
                 }
             },
             
