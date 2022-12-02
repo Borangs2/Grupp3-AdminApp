@@ -11,7 +11,7 @@
     </h1>
     <div class="row card-body d-flex justify-content-between">
         <div class="col-6 card">
-            <table class="table my-auto">
+            <table class="table m-2">
                 @*<tr>
                 <th>Id:</th>
                 <td>@Model.Elevator.Id</td>
@@ -39,7 +39,7 @@
             </table>
         </div>
 
-        <div class="col-6 d-flex flex-row">
+        <div class="col-6 card d-flex flex-row">
             <div class="card-group gap-1 p-2 flex-column-reverse me-5">
                 @for (int i = Model.Elevator.MinLevel; i < Model.Elevator.MaxLevel+1; i++)
                 {
