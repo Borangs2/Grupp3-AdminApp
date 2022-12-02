@@ -31,7 +31,8 @@ namespace Grupp3_Elevator.Services.Errand
         {
             var result = _context.Errands
                 .Include(errand => errand.Technician)
-                .Include(errand => errand.Comments)
+                .Include(errand => errand.Comments
+                    .OrderByDescending(comment => comment.PostedAt))
                 .FirstOrDefault(e => e.Id == Guid.Parse(errandId));
 
             if (result == null)
@@ -42,7 +43,10 @@ namespace Grupp3_Elevator.Services.Errand
         public async Task<List<ErrandModel>> GetErrandsAsync()
         {
             var result = _context.Errands
-                .Include(errand => errand.Comments)
+                .OrderByDescending(errand => errand.Status == ErrandStatus.InProgress)
+                .ThenByDescending(errand => errand.Status == ErrandStatus.NotStarted)
+                .Include(errand => errand.Comments
+                    .OrderByDescending(comment => comment.PostedAt))
                 .Include(errand => errand.Technician).ToList();
             return result;
         }
@@ -51,8 +55,11 @@ namespace Grupp3_Elevator.Services.Errand
         public async Task<List<ErrandModel>> GetErrandsFromElevatorIdAsync(string elevatorId)
         {
             var result = _context.Elevators
-                .Include(elevator => elevator.Errands)
-                .ThenInclude(errand => errand.Comments)
+                .Include(elevator => elevator.Errands
+                    .OrderByDescending(errand => errand.Status == ErrandStatus.InProgress)
+                    .ThenByDescending(errand => errand.Status == ErrandStatus.NotStarted))
+                .ThenInclude(errand => errand.Comments
+                    .OrderByDescending(comment => comment.PostedAt))
                 .Include(elevator => elevator.Errands)
                 .ThenInclude(errand => errand.Technician)
                 .FirstOrDefault(e => e.Id == Guid.Parse(elevatorId));
