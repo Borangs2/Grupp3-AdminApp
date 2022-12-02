@@ -41,7 +41,7 @@
 
         <div class="col-6 d-flex flex-row">
             <div class="card-group gap-1 p-2 flex-column-reverse me-5">
-                @for (int i = Model.Elevator.MinLevel; i < Model.Elevator.MaxLevel+1; i++)
+                @for (var i = Model.Elevator.MinLevel; i < Model.Elevator.MaxLevel + 1; i++)
                 {
                     <form method="post" asp-page-handler="ChangeLevel" asp-route-elevatorId="@Model.Elevator.Id" asp-route-targetLevel="@i">
                         <button type="submit" class="btn btn-primary">@i</button>
@@ -97,8 +97,12 @@
                     <td class="col-1">@errand.LastEdited.Date.ToString("d")</td>
                     <td class="col-2">@errand.Technician.Name</td>
                     <td class="col-1">@errand.Comments.Count()</td>
-                    <td class="col-1"><a asp-page="/Errand/ErrandDetails" asp-route-elevatorId="@Model.Elevator.Id" asp-route-errandId="@errand.Id" class="btn btn-primary">Select</a></td>
-                    <td class="col-1"><a asp-page="/Errand/ErrandEdit" asp-route-elevatorId="@Model.Elevator.Id" asp-route-errandId="@errand.Id" class="btn btn-success">Edit</a></td>
+                    <td class="col-1">
+                        <a asp-page="/Errand/ErrandDetails" asp-route-elevatorId="@Model.Elevator.Id" asp-route-errandId="@errand.Id" class="btn btn-primary">Select</a>
+                    </td>
+                    <td class="col-1">
+                        <a asp-page="/Errand/ErrandEdit" asp-route-elevatorId="@Model.Elevator.Id" asp-route-errandId="@errand.Id" class="btn btn-success">Edit</a>
+                    </td>
                 </tr>
             }
         </table>
