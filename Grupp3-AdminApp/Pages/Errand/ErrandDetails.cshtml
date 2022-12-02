@@ -11,7 +11,7 @@
                 <a asp-page="/Errand/ErrandEdit" asp-route-elevatorId="@Model.Elevator.Id" asp-route-errandId="@Model.Errand.Id" class="btn btn-success">Edit</a>
             </div>
             <form asp-page-handler="DeleteErrand" method="post" asp-route-elevatorId="@Model.Elevator.Id" asp-route-errandId="@Model.Errand.Id">
-                <button type="submit" >DeleteErrand</button>
+                <button type="submit">DeleteErrand</button>
 
             </form>
         </div>
