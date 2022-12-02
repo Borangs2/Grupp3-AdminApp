@@ -39,10 +39,6 @@ namespace Grupp3_Elevator.Pages
         }
 
 
-        //En lista med alla hissars errands
-        //textarea som är hidden som renderar ut alla värden, sätt ett id på textarea
-        //I javascript,  GetElementbyId
-
         public async Task OnGet()
         {
             ErrandsAmount = _context.Errands.Select(a => a.Id).Count().ToString();
@@ -63,21 +59,6 @@ namespace Grupp3_Elevator.Pages
             }
 
             ElevatorsList = JsonConvert.SerializeObject(elevators);
-
-            //var elevatorList = await _elevatorService.GetElevatorsAsync();
-
-            //List<ElevatorChartModel> fetchedElevators = _context.Elevators.Include(e => e.Errands).Select(e =>
-
-            //new ElevatorChartModel
-            //{
-            //    Name = elevatorList.FirstOrDefault(i => i.Id == e.Id)!.Name,
-            //    ErrandCount = e.Errands.Count(),
-            //}).ToList();
-
-
-            //ElevatorsList = JsonConvert.SerializeObject(fetchedElevators);
-
-
         }
     }   
 }

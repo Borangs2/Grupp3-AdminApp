@@ -13,15 +13,6 @@ function generateChart() {
         });
     }
 
-    //const data = [
-    //    { elevator: getElementById('elevatorslist'), count: 15 },
-    //    { elevator: "Hiss 1", count: 10 },
-    //    { elevator: "Hiss 1", count: 20 },
-    //    { elevator: "Hiss 1", count: 25 },
-    //    { elevator: "Hiss 1", count: 22 },
-        
-    //];
-
     new Chart(
         document.getElementById('chart'),
         {
