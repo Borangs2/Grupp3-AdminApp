@@ -4,8 +4,11 @@ using Grupp3_Elevator.Models;
 using Grupp3_Elevator.Services;
 using Grupp3_Elevator.Services.Errand;
 using Grupp3_Elevator.Services.Technician;
+using Grupp3_AdminApp.Services.ErrandComment;
+using Grupp3_AdminApp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Grupp3_Elevator.Pages.Errand;
@@ -36,17 +39,37 @@ public class ErrandDetailsModel : PageModel
 
     [BindProperty] public string Content { get; set; }
 
-    public async Task<IActionResult> OnGetAsync(string elevatorId, string errandId)
-    {
-        Elevator = await _elevatorService.GetElevatorDeviceByIdAsync(elevatorId);
-        Errand = await _errandService.GetErrandByIdAsync(errandId);
+        public List<ErrandCommentViewModel> ErrandComments { get; set; }
 
-        SelectTechnician = await _technicianService.SelectTechniciansAsync();
+        private async Task PopulateViewModel()
+        {
+            ErrandComments = new List<ErrandCommentViewModel>();
+            foreach (var comment in Errand.Comments)
+            {
+                var commentViewModel = new ErrandCommentViewModel
+                {
+                    Id = comment.Id,
+                    Author = await _technicianService.GetTechnicianByIdAsync(comment.Author.ToString()),
+                    Content = comment.Content,
+                    PostedAt = comment.PostedAt,
+                };
+                ErrandComments.Add(commentViewModel);
+            }
+        }
 
-        if (Errand == null) return NotFound();
+        public async Task<IActionResult> OnGetAsync(string elevatorId, string errandId)
+        {
+            Elevator = await _elevatorService.GetElevatorDeviceByIdAsync(elevatorId);
+            Errand = await _errandService.GetErrandByIdAsync(errandId);
+            SelectTechnician = await _technicianService.SelectTechniciansAsync();
 
-        return Page();
-    }
+            if (Errand == null)
+            {
+                return NotFound();
+            }
+            await PopulateViewModel();
+            return Page();
+        }
 
     public async Task<IActionResult> OnPostAsync(string elevatorId, string errandId)
     {
