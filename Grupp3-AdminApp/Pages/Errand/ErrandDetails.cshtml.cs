@@ -11,6 +11,7 @@ using Grupp3_Elevator.Services.Errand;
 using Grupp3_Elevator.Services;
 using Grupp3_Elevator.Services.Technician;
 using Grupp3_AdminApp.Services.ErrandComment;
+using Grupp3_AdminApp.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using NToastNotify;
@@ -43,18 +44,35 @@ namespace Grupp3_Elevator.Pages.Errand
         [BindProperty]
         public string Content { get; set; }
 
+        public List<ErrandCommentViewModel> ErrandComments { get; set; }
+
+        private async Task PopulateViewModel()
+        {
+            ErrandComments = new List<ErrandCommentViewModel>();
+            foreach (var comment in Errand.Comments)
+            {
+                var commentViewModel = new ErrandCommentViewModel
+                {
+                    Id = comment.Id,
+                    Author = await _technicianService.GetTechnicianByIdAsync(comment.Author.ToString()),
+                    Content = comment.Content,
+                    PostedAt = comment.PostedAt,
+                };
+                ErrandComments.Add(commentViewModel);
+            }
+        }
+
         public async Task<IActionResult> OnGetAsync(string elevatorId, string errandId)
         {
             Elevator = await _elevatorService.GetElevatorDeviceByIdAsync(elevatorId);
             Errand = await _errandService.GetErrandByIdAsync(errandId);
-
             SelectTechnician = await _technicianService.SelectTechniciansAsync();
 
             if (Errand == null)
             {
                 return NotFound();
             }
-
+            await PopulateViewModel();
             return Page();
         }
 
