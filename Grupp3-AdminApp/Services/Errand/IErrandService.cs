@@ -8,8 +8,7 @@ public interface IErrandService
     Task<ErrandModel> GetErrandByIdAsync(string errandId);
     Task<List<ErrandModel>> GetErrandsAsync();
 
-    Task<string> CreateErrandAsync(string elevatorId, string Title, string Description, string CreatedBy,
-        string TechnicianId);
+    Task<string> CreateErrandAsync(string elevatorId, string title, string description, string createdBy, string technicianId);
 
     Task<List<ErrandModel>> GetErrandsFromElevatorIdAsync(string elevatorId);
 

@@ -39,37 +39,37 @@ public class ErrandDetailsModel : PageModel
 
     [BindProperty] public string Content { get; set; }
 
-        public List<ErrandCommentViewModel> ErrandComments { get; set; }
+    public List<ErrandCommentViewModel> ErrandComments { get; set; }
 
-        private async Task PopulateViewModel()
+    private async Task PopulateViewModel()
+    {
+        ErrandComments = new List<ErrandCommentViewModel>();
+        foreach (var comment in Errand.Comments)
         {
-            ErrandComments = new List<ErrandCommentViewModel>();
-            foreach (var comment in Errand.Comments)
+            var commentViewModel = new ErrandCommentViewModel
             {
-                var commentViewModel = new ErrandCommentViewModel
-                {
-                    Id = comment.Id,
-                    Author = await _technicianService.GetTechnicianByIdAsync(comment.Author.ToString()),
-                    Content = comment.Content,
-                    PostedAt = comment.PostedAt,
-                };
-                ErrandComments.Add(commentViewModel);
-            }
+                Id = comment.Id,
+                Author = await _technicianService.GetTechnicianByIdAsync(comment.Author.ToString()),
+                Content = comment.Content,
+                PostedAt = comment.PostedAt,
+            };
+            ErrandComments.Add(commentViewModel);
         }
+    }
 
-        public async Task<IActionResult> OnGetAsync(string elevatorId, string errandId)
+    public async Task<IActionResult> OnGetAsync(string elevatorId, string errandId)
+    {
+        Elevator = await _elevatorService.GetElevatorDeviceByIdAsync(elevatorId);
+        Errand = await _errandService.GetErrandByIdAsync(errandId);
+        SelectTechnician = await _technicianService.SelectTechniciansAsync();
+
+        if (Errand == null)
         {
-            Elevator = await _elevatorService.GetElevatorDeviceByIdAsync(elevatorId);
-            Errand = await _errandService.GetErrandByIdAsync(errandId);
-            SelectTechnician = await _technicianService.SelectTechniciansAsync();
-
-            if (Errand == null)
-            {
-                return NotFound();
-            }
-            await PopulateViewModel();
-            return Page();
+            return NotFound();
         }
+        await PopulateViewModel();
+        return Page();
+    }
 
     public async Task<IActionResult> OnPostAsync(string elevatorId, string errandId)
     {
