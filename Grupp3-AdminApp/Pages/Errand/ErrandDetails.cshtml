@@ -4,7 +4,7 @@
 }
 <section>
     <div class="container">
-        <h1>Errand Details</h1>
+        <h1>Errand details</h1>
         <div class="row">
             <div class="mb-3 d-flex flex-row justify-content-start gap-1">
                 <div>
@@ -23,6 +23,10 @@
                 <div class="card shadow">
                     <table class="table my-auto">
                         <tr>
+                            <th>Elevator:</th>
+                            <td>@Model.Elevator.Name</td>
+                        </tr>
+                        <tr>
                             <th>Title:</th>
                             <td>@Model.Errand.Title</td>
                         </tr>
@@ -32,11 +36,11 @@
                         </tr>
                         <tr>
                             <th>Last Edited:</th>
-                            <td>@Model.Errand.LastEdited</td>
+                            <td>@Model.Errand.LastEdited.ToString("g")</td>
                         </tr>
                         <tr>
                             <th>Created At:</th>
-                            <td>@Model.Errand.CreatedAt.ToString("d")</td>
+                            <td>@Model.Errand.CreatedAt.ToString("g")</td>
                         </tr>
                         <tr>
                             <th>Created By:</th>
@@ -65,7 +69,7 @@
                     {
                         <tr class="d-flex flex-column">
                             <th class="d-flex flex-row justify-content-between bg-light">
-                                <div>@comment.PostedAt</div>
+                                <div>@comment.PostedAt.ToString("g")</div>
                                 <div>By: @comment.Author.Name</div>
                             </th>
                             <td>@comment.Content</td>
