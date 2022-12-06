@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Grupp3_AdminApp.Models;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Grupp3_Elevator.Models;
@@ -17,7 +18,7 @@ public class CreateErrandModel
 
     [Required]
     [Column(TypeName = "nvarchar(100)")]
-    public ErrandStatus Status { get; set; } = ErrandStatus.InProgress;
+    public ErrandStatus Status { get; set; } = ErrandStatus.NotStarted;
 
     public DateTime LastEdited { get; set; } = DateTime.Now;
     public DateTime CreatedAt { get; set; } = DateTime.Now;

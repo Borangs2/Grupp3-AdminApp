@@ -1,14 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Grupp3_AdminApp.Models;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Grupp3_Elevator.Models;
-
-public enum ErrandStatus
-{
-    NotStarted,
-    InProgress,
-    Done
-}
 
 public class ErrandModel
 {

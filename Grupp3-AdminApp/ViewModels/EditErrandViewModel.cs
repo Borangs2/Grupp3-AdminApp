@@ -1,15 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Grupp3_AdminApp.Models;
 using Grupp3_Elevator.Models;
 
 namespace Grupp3_AdminApp.ViewModels;
-
-public enum ErrandStatus
-{
-    NotStarted,
-    InProgress,
-    Done
-}
 
 public class EditErrandViewModel
 {
