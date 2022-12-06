@@ -36,11 +36,11 @@
                         </tr>
                         <tr>
                             <th>Last Edited:</th>
-                            <td>@Model.Errand.LastEdited</td>
+                            <td>@Model.Errand.LastEdited.ToString("g")</td>
                         </tr>
                         <tr>
                             <th>Created At:</th>
-                            <td>@Model.Errand.CreatedAt.ToString("d")</td>
+                            <td>@Model.Errand.CreatedAt.ToString("g")</td>
                         </tr>
                         <tr>
                             <th>Created By:</th>
@@ -69,7 +69,7 @@
                     {
                         <tr class="d-flex flex-column">
                             <th class="d-flex flex-row justify-content-between bg-light">
-                                <div>@comment.PostedAt</div>
+                                <div>@comment.PostedAt.ToString("g")</div>
                                 <div>By: @comment.Author.Name</div>
                             </th>
                             <td>@comment.Content</td>
