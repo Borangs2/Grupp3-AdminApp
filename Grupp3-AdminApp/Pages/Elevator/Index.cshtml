@@ -2,41 +2,6 @@
 @model Grupp3_Elevator.Pages.Elevator.IndexModel
 @{
 }
-
-@*<div class="container mb-5">
-    <div class="row">
-        @foreach (var elevator in Model.ElevatorsTwin)
-        {
-            <div class="col-3 p-3 border bg-transparent text-center">
-                <h5 class="card-title">@elevator.Name</h5>
-                <p class="card-text">Status: @elevator.Status</p>
-                <p class="card-text">Door Status: @elevator.DoorStatus</p>
-                <p class="card-text">Level: @elevator.CurrentLevel - @elevator.TargetLevel</p>
-                <a asp-page="/Elevator/ElevatorDetails" asp-route-elevatorId="@elevator.Id" class="btn btn-primary">Select</a>
-            </div>
-        }
-    </div>
-</div>
-
-<div>---------------------------------------------------------------------------</div>
-
-<div class="container">
-    <div class="row d-flex justify-content-center gap-3">
-        @foreach (var elevator in Model.ElevatorsTwin)
-        {
-            <div class="col-3 card p-2">
-                <h5 class="card-title">@elevator.Name</h5>
-                <p class="card-text">Status: @elevator.Status</p>
-                <p class="card-text">Door Status: @elevator.DoorStatus</p>
-                <p class="card-text">Level: @elevator.CurrentLevel - @elevator.TargetLevel</p>
-                <a asp-page="/Elevator/ElevatorDetails" asp-route-elevatorId="@elevator.Id" class="btn btn-primary">Select</a>
-            </div>
-        }
-    </div>
-</div>
-
-<div>---------------------------------------------------------------------------</div>*@
-
 <section>
     <div class="container">
         <h1 style="margin-left: 35px">Elevators</h1>
