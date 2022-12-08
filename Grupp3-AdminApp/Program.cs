@@ -1,12 +1,11 @@
+using Azure.Identity;
 using Grupp3_AdminApp.Services.ErrandComment;
 using Grupp3_Elevator.Data;
 using Grupp3_Elevator.Services;
 using Grupp3_Elevator.Services.Errand;
 using Grupp3_Elevator.Services.Technician;
-using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 using Microsoft.EntityFrameworkCore;
 using NToastNotify;
-using Azure.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,7 +24,7 @@ builder.Services.AddTransient<IErrandService, ErrandService>();
 builder.Services.AddTransient<ITechnicianService, TechnicianService>();
 builder.Services.AddTransient<IErrandCommentService, ErrandCommentService>();
 
-builder.Services.AddMvc().AddNToastNotifyToastr(new ToastrOptions()
+builder.Services.AddMvc().AddNToastNotifyToastr(new ToastrOptions
 {
     ProgressBar = false,
     PositionClass = ToastPositions.BottomRight

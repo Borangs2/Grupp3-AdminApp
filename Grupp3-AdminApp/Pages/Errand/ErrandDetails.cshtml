@@ -4,57 +4,88 @@
 }
 <section>
     <div class="container">
-        <h1 class="mb-5">
-            Errand Details
-            <a asp-page="/Elevator/ElevatorDetails" asp-route-elevatorId="@Model.Elevator.Id" class="btn btn-primary">Return</a>
-            <a asp-page="/Errand/ErrandEdit" asp-route-elevatorId="@Model.Elevator.Id" asp-route-errandId="@Model.Errand.Id" class="btn btn-success">Edit</a>
-            </h1>
-        <div class="row mb-5">
-            <div class="col-4">
-                <div class="container card">
-                    <h4>Info</h4>
-                    <table class="table">
-                        <tr><td>Id: @Model.Errand.Id</td></tr>
-                        <tr><td>Title: @Model.Errand.Title</td></tr>
-                        <tr><td>Status: @Model.Errand.Status</td></tr>
-                        <tr><td>Last Edited: @Model.Errand.LastEdited</td></tr>
-                        <tr><td>Created at: @Model.Errand.CreatedAt</td></tr>
-                        <tr><td>Created by: @Model.Errand.CreatedBy</td></tr>
-                        <tr><td>Technician: @Model.Errand.Technician.Name</td></tr>
+        <h1>Errand Details</h1>
+        <div class="row">
+            <div class="mb-3 d-flex flex-row justify-content-start gap-1">
+                <div>
+                    <a asp-page="/Elevator/ElevatorDetails" asp-route-elevatorId="@Model.Elevator.Id" class="btn btn-primary">Return</a>
+                </div>
+                <div>
+                    <a asp-page="/Errand/ErrandEdit" asp-route-elevatorId="@Model.Elevator.Id" asp-route-errandId="@Model.Errand.Id" class="btn btn-success">Edit</a>
+                </div>
+                <form asp-page-handler="DeleteErrand" method="post" asp-route-elevatorId="@Model.Elevator.Id" asp-route-errandId="@Model.Errand.Id">
+                    <button class="btn btn-danger" type="submit">DeleteErrand</button>
+                </form>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-6">
+                <div class="card shadow">
+                    <table class="table my-auto">
+                        <tr>
+                            <th>Elevator:</th>
+                            <td class="text-capitalize">@Model.Elevator.Name</td>
+                        </tr>
+                        <tr>
+                            <th>Title:</th>
+                            <td>@Model.Errand.Title</td>
+                        </tr>
+                        <tr>
+                            <th>Status:</th>
+                            <td>@Model.Errand.Status</td>
+                        </tr>
+                        <tr>
+                            <th>Last Edited:</th>
+                            <td>@Model.Errand.LastEdited.ToString("g")</td>
+                        </tr>
+                        <tr>
+                            <th>Created At:</th>
+                            <td>@Model.Errand.CreatedAt.ToString("g")</td>
+                        </tr>
+                        <tr>
+                            <th>Created By:</th>
+                            <td>@Model.Errand.CreatedBy</td>
+                        </tr>
+                        <tr>
+                            <th>Technician:</th>
+                            <td>@Model.Errand.Technician.Name</td>
+                        </tr>
                     </table>
                 </div>
             </div>
-            <div class="col-8">
-                <div class="container card">
-                    <h4>Description</h4>
-                    <p>
-                        @Model.Errand.Description
-                    </p>
+            <div class="col-6">
+                <div class="card shadow p-1">
+                    <h4 class="m-1">Description</h4>
+                    <p class="m-1">@Model.Errand.Description</p>
                 </div>
             </div>
 
         </div>
         <div class="col">
-            <div class="container card">
+            <h4 class="mb-3">Comments</h4>
+            <div class="card shadow">
                 <table class="table">
-                    @foreach (var comment in Model.Errand.Comments)
+                    @foreach (var comment in Model.ErrandComments)
                     {
                         <tr class="d-flex flex-column">
-                            <th>(PostedAt:@comment.PostedAt) - (Author ID:@comment.Author) - (Comment ID:@comment.Id)</th>
+                            <th class="d-flex flex-row justify-content-between bg-light">
+                                <div>@comment.PostedAt.ToString("g")</div>
+                                <div>By: @comment.Author.Name</div>
+                            </th>
                             <td>@comment.Content</td>
                         </tr>
                     }
                 </table>
-                <div class="mx-auto">
+                <div class="mx-auto mb-3">
+                    <h5>Add Comment</h5>
                     <form method="post">
                         <div class="form-group">
-                            <label asp-for="ChosenSelectTechnician">Technician</label>
                             <select class="form-control" asp-for="ChosenSelectTechnician" asp-items="@Model.SelectTechnician"></select>
                             <span asp-validation-for="ChosenSelectTechnician" class="field-validation-error"></span>
                         </div>
                         <div class="form-group text-center">
                             <textarea asp-for="Content" class="form-control mt-3" placeholder="Write comment here..." cols="70" rows="4"></textarea>
-                            <button asp-route-elevatorId="@Model.Elevator.Id" asp-route-errandId="@Model.Errand.Id" class="mt-3 mb-3 btn btn-primary" type="submit">Save</button>
+                            <button asp-route-elevatorId="@Model.Elevator.Id" asp-route-errandId="@Model.Errand.Id" class="mt-3 mb-2 btn btn-primary" type="submit">Save</button>
                         </div>
                     </form>
                 </div>

@@ -35,52 +35,52 @@ namespace Grupp3_AdminApp.Tests.Services.Technician
         }
 
         [TestMethod]
-        public void EnsureGetTechnicianByIdReturnsTechnician_ReturnsTechnician()
+        public async Task EnsureGetTechnicianByIdReturnsTechnician_ReturnsTechnician()
         {
             //Arrange
 
 
             //Act
-            var result = _sut.GetTechnicianById("62e4a265-ceb7-4254-81f9-7d4a78cfbed8");
+            var result = await _sut.GetTechnicianByIdAsync("62e4a265-ceb7-4254-81f9-7d4a78cfbed8");
 
             //Assert
             Assert.IsInstanceOfType(result, typeof(TechnicianModel));
         }
 
         [TestMethod]
-        public void EnsureGetTechnicianByIdReturnsNotNull_ReturnsNotNull()
+        public async Task EnsureGetTechnicianByIdReturnsNotNull_ReturnsNotNull()
         {
             //Arrange
             var guid = "62e4a265-ceb7-4254-81f9-7d4a78cfbed8";
 
             //Act
-            var result = _sut.GetTechnicianById(guid);
+            var result = await _sut.GetTechnicianByIdAsync(guid);
 
             //Assert
             Assert.IsNotNull(result);
         }
 
         [TestMethod]
-        public void EnsureCorrectTechnicianIsReturned_ReturnsCorrectTechnician()
+        public async Task EnsureCorrectTechnicianIsReturned_ReturnsCorrectTechnician()
         {
             //Arrange
             var guid = "62e4a265-ceb7-4254-81f9-7d4a78cfbed8";
 
             //Act
-            var result = _sut.GetTechnicianById(guid)!;
+            var result = await _sut.GetTechnicianByIdAsync(guid)!;
 
             //Assert
             Assert.AreEqual(result.Id.ToString(), guid);
         }
 
         [TestMethod]
-        public void EnsureGetTechniciansReturnsNotNull_ReturnsNotNull()
+        public async Task EnsureGetTechniciansReturnsNotNull_ReturnsNotNull()
         {
             //Arrange
 
 
             //Act
-            var result = _sut.GetTechnicians();
+            var result = await _sut.GetTechniciansAsync();
 
             //Assert
             Assert.IsNotNull(result);
@@ -88,13 +88,13 @@ namespace Grupp3_AdminApp.Tests.Services.Technician
         }
 
         [TestMethod]
-        public void EnsureGetTechniciansGetsAllTechnicians_ReturnsAListOfAllTechnicians()
+        public async Task EnsureGetTechniciansGetsAllTechnicians_ReturnsAListOfAllTechnicians()
         {
             //Arrange
             var technicianCount = _context.Technicians.Count();
 
             //Act
-            var result = _sut.GetTechnicians();
+            var result = await _sut.GetTechniciansAsync();
 
             //Assert
             Assert.AreEqual(result.Count(), technicianCount);
@@ -102,13 +102,13 @@ namespace Grupp3_AdminApp.Tests.Services.Technician
 
 
         [TestMethod]
-        public void EnsureGetTechnicianFromErrandIdReturnsNotNull_ReturnsNotNull()
+        public async Task EnsureGetTechnicianFromErrandIdReturnsNotNull_ReturnsNotNull()
         {
             //Arrange
 
 
             //Act
-            var result = _sut.GetTechnicianFromErrandId("9f091fd6-9657-4db3-a41c-7bb9e24a43fd");
+            var result = await _sut.GetTechnicianFromErrandIdAsync("9f091fd6-9657-4db3-a41c-7bb9e24a43fd");
 
             //Assert
             Assert.IsNotNull(result);
@@ -116,20 +116,20 @@ namespace Grupp3_AdminApp.Tests.Services.Technician
         }
 
         [TestMethod]
-        public void EnsureGetTechnicianFromErrandIdReturnsTechnicianModel_ReturnsTechnicianModel()
+        public async Task EnsureGetTechnicianFromErrandIdReturnsTechnicianModel_ReturnsTechnicianModel()
         {
             //Arrange
 
 
             //Act
-            var result = _sut.GetTechnicianFromErrandId("9f091fd6-9657-4db3-a41c-7bb9e24a43fd");
+            var result = await _sut.GetTechnicianFromErrandIdAsync("9f091fd6-9657-4db3-a41c-7bb9e24a43fd");
 
             //Assert
             Assert.IsInstanceOfType(result, typeof(TechnicianModel));
         }
 
         [TestMethod]
-        public void EnsureGetTechniciansFromErrandIdReturnsCorrectTechnician_ReturnsCorrectTechnician()
+        public async Task EnsureGetTechniciansFromErrandIdReturnsCorrectTechnician_ReturnsCorrectTechnician()
         {
             var errandGuid = Guid.Parse("9f091fd6-9657-4db3-a41c-7bb9e24a43fd");
             var technicianName = "tested";
@@ -140,30 +140,30 @@ namespace Grupp3_AdminApp.Tests.Services.Technician
             _context.SaveChanges();
 
             //Act
-            var result = _sut.GetTechnicianFromErrandId(errandGuid.ToString())!;
+            var result = await _sut.GetTechnicianFromErrandIdAsync(errandGuid.ToString())!;
 
             //Assert
             Assert.AreEqual(result.Name, technicianName);
         }
         [TestMethod]
-        public void SelectTechnician_ShouldReturnListOfSelectListItem()
+        public async Task SelectTechnician_ShouldReturnListOfSelectListItem()
         {
             //Arrange
 
             //Act
-            var technicians = _sut.SelectTechnician();
+            var technicians = await _sut.SelectTechniciansAsync();
 
             //Assert
             Assert.IsInstanceOfType(technicians, typeof(List<SelectListItem>));
         }
 
         [TestMethod]
-        public void SelectTechnicianEdit_ShouldReturnListOfSelectListItem()
+        public async Task SelectTechnicianEdit_ShouldReturnListOfSelectListItem()
         {
             //Arrange
 
             //Act
-            var technicians = _sut.SelectTechnicianEdit("62e4a265-ceb7-4254-81f9-7d4a78cfbed8");
+            var technicians = await _sut.SelectListTechniciansEditAsync("62e4a265-ceb7-4254-81f9-7d4a78cfbed8");
 
             //Assert
             Assert.IsInstanceOfType(technicians, typeof(List<SelectListItem>));

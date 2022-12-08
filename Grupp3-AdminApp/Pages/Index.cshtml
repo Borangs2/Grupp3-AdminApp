@@ -1,11 +1,8 @@
 ﻿@page
 @model IndexModel
-@{
-    ViewData["Title"] = "Home page";
-}
 
-<div class="row" style="padding-top: 5rem;">
-    <div class="col-sm-6">
+<div class="row" style="padding-bottom: 3rem;">
+    <div class="col-sm-6 mb-3 mt-3">
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title" style="text-align: center;">Errands</h5>
@@ -13,7 +10,7 @@
             </div>
         </div>
     </div>
-    <div class="col-sm-6">
+    <div class="col-sm-6 mb-3 mt-3">
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title" style="text-align: center;">Elevators</h5>
@@ -21,15 +18,15 @@
             </div>
         </div>
     </div>
-        <div class="col-sm-6">
+    <div class="col-sm-6 mb-3 mt-3">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title" style="text-align: center;">Technichans</h5>
-                <p class="card-text" style="text-align: center;">@Model.TechnichansAmount</p>
+                <h5 class="card-title" style="text-align: center;">Technicians</h5>
+                <p class="card-text" style="text-align: center;">@Model.TechniciansAmount</p>
             </div>
         </div>
     </div>
-    <div class="col-sm-6">
+    <div class="col-sm-6 mb-3 mt-3">
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title" style="text-align: center;">Comments</h5>
@@ -37,4 +34,14 @@
             </div>
         </div>
     </div>
+</div>
+
+<textarea hidden id="elevatorslist">@Model.ElevatorsList</textarea>
+
+<div class="card d-flex flex-row justify-content-around">
+        <div style="width: 800px;">
+            <canvas id="chart"></canvas>
+        <script>generateChart()</script>
+    </div>
+
 </div>

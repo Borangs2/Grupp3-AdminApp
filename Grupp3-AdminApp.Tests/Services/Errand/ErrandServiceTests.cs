@@ -9,6 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -211,6 +212,34 @@ namespace AdminAppTests.Services.Errand
             var errand = result.First();
             //ASSERT
             Assert.IsInstanceOfType(errand.Comments, typeof(List<ErrandCommentModel>));
+        }
+
+        [TestMethod]
+        public async Task EnsureDeleteErrandDeletesErrand_ReturnsOk()
+        {
+            //Arrange
+            await _sut.CreateErrandAsync("5435f3c3-56f7-49da-8ef4-24937f71fd70", "ShouldBeDeleted", "", "", "62e4a265-ceb7-4254-81f9-7d4a78cfbed8");
+
+            //Act
+            var errand = _context.Errands.FirstOrDefault(e => e.Title == "ShouldBeDeleted");
+            var result = await _sut.DeleteErrandAsync(errand.Id.ToString());
+
+            //Assert
+            Assert.AreEqual(result, HttpStatusCode.OK);
+            Assert.IsNull(_context.Errands.FirstOrDefault(e => e.Title == "ShouldBeDeleted"));
+        }
+
+        [TestMethod]
+        public async Task EnsureDeleteErrandAsyncThrowsWhenIncorrectIdUsed_ReturnsBadRequest()
+        {
+            //Arrange
+
+
+            //Act
+            var result = await _sut.DeleteErrandAsync("93a0b8df-093a-484c-a4e1-89d55f9ea829"); //Doesn't exist
+
+            //Assert
+            Assert.AreEqual(result, HttpStatusCode.NotFound);
         }
     }
 }

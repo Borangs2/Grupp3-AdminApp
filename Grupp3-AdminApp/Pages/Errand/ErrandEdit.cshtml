@@ -1,16 +1,17 @@
 ﻿@page
+@using Grupp3_AdminApp.Models;
 @model Grupp3_Elevator.Pages.Errand.ErrandEditModel
 @{
 }
 
 <section>
     <div class="container">
-        <h1 class="mb-5">
+        <h1>
             Edit Errand
             <a asp-page="/Errand/ErrandDetails" asp-route-elevatorId="@Model.Elevator.Id" asp-route-errandId="@Model.Errand.Id" class="btn btn-primary">Return</a>
         </h1>
         <div class="row mb-5">
-            <div class="col-4">
+            <div class="col">
                 <div class="container card">
                     <h4 class="mt-3">Info</h4>
                     <form method="post">
@@ -18,7 +19,7 @@
                         <table class="table">
                             <tr>
                                 <td>
-                                    <label >Title</label>
+                                    <label>Title</label>
                                     <input asp-for="@Model.Errand.Title" class="form-control" />
                                     <span asp-validation-for="@Model.Errand.Title" class="text-danger"></span>
                                 </td>
@@ -44,24 +45,17 @@
                                     <label asp-for="@Model.Errand.CreatedBy">Created by</label>
                                     <input asp-for="@Model.Errand.CreatedBy" class="form-control" />
                                 </td>
-                                <td>
-                                    <label asp-for="@Model.Errand.Comments">Comments</label>
                                     <input hidden asp-for="@Model.Errand.Comments" class="form-control" />
-                                </td>
                             </tr>
                         </table>
-                        <div class="col-8">
-                            <div class="container card"></div>
-                            <h4 class="mt-3">Description</h4>
-                            <textarea asp-for="@Model.Errand.Description" class="form-control mt-3" placeholder="Write description here..." cols="80" rows="10"></textarea>
-                            <div>
-                                <button asp-route-elevatorId="@Model.Elevator.Id" asp-route-errandId="@Model.Errand.Id" class="mt-3 mb-3 btn btn-primary" type="submit">Save</button>
-                            </div>
+                        <div class="col-6" @*style="margin: auto; width: 50%; text-align:center"*@>
+                        <h4 class="mt">Description</h4>
+                        <textarea asp-for="@Model.Errand.Description" class="form-control mt" placeholder="Write description here..." cols="50" rows="5"></textarea>
+                        <button asp-route-elevatorId="@Model.Elevator.Id" asp-route-errandId="@Model.Errand.Id" class="mt-3 mb-3 btn btn-primary" type="submit">Save</button>
                         </div>
                     </form>
                 </div>
             </div>
-
         </div>
     </div>
 </section>

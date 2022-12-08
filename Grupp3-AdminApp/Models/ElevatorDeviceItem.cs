@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Grupp3_Elevator.Models;
+
 public class ElevatorDeviceItem
 {
     public enum ElevatorStatus
@@ -13,33 +13,15 @@ public class ElevatorDeviceItem
     }
 
     public Guid Id { get; set; } = Guid.NewGuid();
-    [Column(TypeName = "nvarchar(250)")]
-    public string Name { get; set; } = "";
-    [Column(TypeName = "nvarchar(100)")]
-    public ElevatorStatus Status { get; set; } = ElevatorStatus.Disabled;
-    [Column(TypeName = "bit")]
-    public bool DoorStatus { get; set; } = false;
+
+    [Column(TypeName = "nvarchar(250)")] public string Name { get; set; } = "";
+
+    [Column(TypeName = "nvarchar(100)")] public ElevatorStatus Status { get; set; } = ElevatorStatus.Disabled;
+
+    [Column(TypeName = "bit")] public bool DoorStatus { get; set; }
+
     public int CurrentLevel { get; set; } = 0;
     public int TargetLevel { get; set; } = 0;
-
-
-    public void OpenDoors()
-    {
-        DoorStatus = true;
-    }
-
-    public void CloseDoors()
-    {
-        DoorStatus = false;
-    }
-
-    public void GoToFloor()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void ResetElevator()
-    {
-        throw new NotImplementedException();
-    }
+    public int MinLevel { get; set; } = 0;
+    public int MaxLevel { get; set; } = 0;
 }

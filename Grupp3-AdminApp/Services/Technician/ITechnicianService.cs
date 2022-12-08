@@ -1,14 +1,13 @@
 ﻿using Grupp3_Elevator.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace Grupp3_Elevator.Services.Technician
+namespace Grupp3_Elevator.Services.Technician;
+
+public interface ITechnicianService
 {
-    public interface ITechnicianService
-    {
-        TechnicianModel? GetTechnicianById(string technicianId);
-        List<TechnicianModel> GetTechnicians();
-        TechnicianModel GetTechnicianFromErrandId(string errandId);
-        List<SelectListItem> SelectTechnician();
-        List<SelectListItem> SelectTechnicianEdit(string technicianId);
-    }
+    Task<TechnicianModel> GetTechnicianByIdAsync(string technicianId);
+    Task<List<TechnicianModel>> GetTechniciansAsync();
+    Task<TechnicianModel> GetTechnicianFromErrandIdAsync(string errandId);
+    Task<List<SelectListItem>> SelectTechniciansAsync();
+    Task<List<SelectListItem>> SelectListTechniciansEditAsync(string technicianId);
 }

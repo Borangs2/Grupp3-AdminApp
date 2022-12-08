@@ -10,6 +10,8 @@
   <ItemGroup>
     <PackageReference Include="Azure.Extensions.AspNetCore.Configuration.Secrets" Version="1.2.2" />
     <PackageReference Include="azure.identity" Version="1.7.0" />
+    <PackageReference Include="BlazorStrap" Version="5.0.106" />
+    <PackageReference Include="chartjs" Version="22.1.6" />
     <PackageReference Include="Dapper" Version="2.0.123" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.10" />
     <PackageReference Include="Microsoft.Azure.Devices" Version="1.38.1" />
@@ -22,6 +24,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="newtonsoft.json" Version="13.0.2" />
     <PackageReference Include="NToastNotify" Version="8.0.0" />
   </ItemGroup>
 
